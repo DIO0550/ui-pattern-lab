@@ -1,0 +1,330 @@
+import type {ReactNode} from 'react';
+import clsx from 'clsx';
+import Heading from '@theme/Heading';
+import type {DemoKind, TablePatternEntry} from '@site/src/data/tablePatternEntries';
+
+import styles from './styles.module.css';
+
+type TablePatternGalleryProps = {
+  entries: TablePatternEntry[];
+};
+
+type MetadataItemProps = {
+  label: string;
+  value: string;
+};
+
+type DemoRenderer = () => ReactNode;
+
+const responsiveRows = [
+  {
+    plan: 'スターター',
+    owner: 'Ava',
+    status: '準備完了',
+    updated: '2時間前',
+  },
+  {
+    plan: 'グロース',
+    owner: 'Kai',
+    status: '要確認',
+    updated: '1日前',
+  },
+  {
+    plan: 'スケール',
+    owner: 'Mina',
+    status: 'レビュー中',
+    updated: '3日前',
+  },
+];
+
+const horizontalColumns = ['プラン', '席数', '地域', '請求', '担当', '最終確認'];
+const horizontalRows = [
+  ['スターター', '24', 'APAC', '月次', 'Ava', '今日'],
+  ['グロース', '68', 'EMEA', '年次', 'Kai', '2日前'],
+  ['スケール', '120', 'NA', '年次', 'Mina', '来週'],
+  ['エンタープライズ', '240', 'Global', '四半期', 'Iris', '昨日'],
+];
+
+const stickyColumns = ['チーム', '担当', '進捗', 'リスク', '更新'];
+const stickyRows = [
+  ['Revenue Ops', 'Ava', '順調', '低', '今日'],
+  ['CX Platform', 'Kai', '注意', '中', '今日'],
+  ['Data Quality', 'Mina', '順調', '低', '昨日'],
+  ['Global Sales', 'Nia', '停止', '高', '昨日'],
+  ['Partner Ops', 'Theo', '順調', '低', '2日前'],
+  ['Support Desk', 'Luca', 'レビュー中', '中', '2日前'],
+  ['Security', 'Iris', '順調', '低', '3日前'],
+  ['Finance Ops', 'Jae', '注意', '中', '3日前'],
+];
+
+const truncationRows = [
+  {
+    field: '移行計画',
+    priority: '高',
+    owner: 'Ava',
+    note: 'エンタープライズ向けワークスペース移行計画。地域ごとの依存関係を含む。',
+  },
+  {
+    field: '担当メモ',
+    priority: '中',
+    owner: 'Kai',
+    note: '公開文言、請求ルール、切り戻し時の案内文をまとめて調整する。',
+  },
+  {
+    field: 'エスカレーション',
+    priority: '高',
+    owner: 'Mina',
+    note: '最終切替の承認前に法務と購買へ事前連絡を入れる。',
+  },
+];
+
+function EmptyState(): ReactNode {
+  return (
+    <div className={styles.emptyState}>
+      <Heading as="h3">テーブルパターンはまだありません</Heading>
+      <p>
+        ギャラリーの受け皿はできていますが、比較対象のエントリはまだ登録
+        されていません。
+      </p>
+    </div>
+  );
+}
+
+function ResponsiveStackDemo(): ReactNode {
+  return (
+    <div className={styles.demoFrame}>
+      <div className={styles.previewSplit}>
+        <section className={styles.previewPanel}>
+          <span className={styles.previewLabel}>広い画面の表</span>
+          <table className={styles.demoTable}>
+            <thead>
+              <tr>
+                <th scope="col">プラン</th>
+                <th scope="col">担当</th>
+                <th scope="col">進捗</th>
+                <th scope="col">更新</th>
+              </tr>
+            </thead>
+            <tbody>
+              {responsiveRows.map((row) => (
+                <tr key={row.plan}>
+                  <td>{row.plan}</td>
+                  <td>{row.owner}</td>
+                  <td>{row.status}</td>
+                  <td>{row.updated}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        <section className={clsx(styles.previewPanel, styles.mobileViewport)}>
+          <span className={styles.previewLabel}>モバイルの積み上げ</span>
+          <div className={styles.mobileCardList}>
+            {responsiveRows.map((row) => (
+              <article key={row.plan} className={styles.mobileCard}>
+                <strong className={styles.mobileCardTitle}>{row.plan}</strong>
+                <dl className={styles.mobileCardMeta}>
+                  <div>
+                    <dt>担当</dt>
+                    <dd>{row.owner}</dd>
+                  </div>
+                  <div>
+                    <dt>進捗</dt>
+                    <dd>{row.status}</dd>
+                  </div>
+                  <div>
+                    <dt>更新</dt>
+                    <dd>{row.updated}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+      <p className={styles.demoNote}>
+        積み上げ後も各値の前にラベルを残し、1行ごとの意味を保ちます。
+      </p>
+    </div>
+  );
+}
+
+function HorizontalScrollDemo(): ReactNode {
+  return (
+    <div className={styles.demoFrame}>
+      <div className={styles.scrollHintRow}>
+        <span className={styles.previewLabel}>横スクロール</span>
+        <span className={styles.scrollHintText}>横にスクロールして列を表示</span>
+      </div>
+      <div
+        aria-label="横スクロールパターンを示すスクロール可能な表のサンプル"
+        className={styles.horizontalScrollViewport}
+        tabIndex={0}>
+        <table className={clsx(styles.demoTable, styles.wideDemoTable)}>
+          <thead>
+            <tr>
+              {horizontalColumns.map((column) => (
+                <th key={column} scope="col">
+                  {column}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {horizontalRows.map((row) => (
+              <tr key={row[0]}>
+                {row.map((cell) => (
+                  <td key={`${row[0]}-${cell}`}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className={styles.demoNote}>
+        比較を優先したいときは、列を減らさずそのまま保ちます。
+      </p>
+    </div>
+  );
+}
+
+function StickyHeaderDemo(): ReactNode {
+  return (
+    <div className={styles.demoFrame}>
+      <span className={styles.previewLabel}>固定ヘッダー</span>
+      <div
+        aria-label="固定ヘッダーパターンを示すスクロール可能な表のサンプル"
+        className={styles.stickyScrollArea}
+        tabIndex={0}>
+        <table className={styles.demoTable}>
+          <thead className={styles.stickyHead}>
+            <tr>
+              {stickyColumns.map((column) => (
+                <th key={column} scope="col">
+                  {column}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {stickyRows.map((row) => (
+              <tr key={row[0]}>
+                {row.map((cell) => (
+                  <td key={`${row[0]}-${cell}`}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className={styles.demoNote}>
+        ヘッダーはページ全体ではなく、このスクロール領域の中だけで固定します。
+      </p>
+    </div>
+  );
+}
+
+function CellTruncationDemo(): ReactNode {
+  return (
+    <div className={styles.demoFrame}>
+      <span className={styles.previewLabel}>1行で省略表示</span>
+      <table className={styles.demoTable}>
+        <thead>
+          <tr>
+            <th scope="col">項目</th>
+            <th scope="col">優先度</th>
+            <th scope="col">担当</th>
+            <th scope="col">表示中のメモ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {truncationRows.map((row) => (
+            <tr key={row.field}>
+              <td>{row.field}</td>
+              <td>{row.priority}</td>
+              <td>{row.owner}</td>
+              <td className={styles.truncatedCell}>{row.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className={styles.fullValueList}>
+        {truncationRows.map((row) => (
+          <p className={styles.demoNote} key={row.field}>
+            <strong>{row.field}:</strong> {row.note}
+          </p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const demoByKind: Record<DemoKind, DemoRenderer> = {
+  'responsive-stack': ResponsiveStackDemo,
+  'horizontal-scroll': HorizontalScrollDemo,
+  'sticky-header': StickyHeaderDemo,
+  'cell-truncation': CellTruncationDemo,
+};
+
+function MetadataItem({
+  label,
+  value,
+}: MetadataItemProps): ReactNode {
+  return (
+    <div className={styles.metadataItem}>
+      <dt>{label}</dt>
+      <dd>{value}</dd>
+    </div>
+  );
+}
+
+export default function TablePatternGallery({
+  entries,
+}: TablePatternGalleryProps): ReactNode {
+  if (entries.length === 0) {
+    return <EmptyState />;
+  }
+
+  return (
+    <section aria-label="テーブルデザインパターンギャラリー" className={styles.root}>
+      <div className={styles.grid}>
+        {entries.map((entry) => {
+          const Demo = demoByKind[entry.demoKind];
+
+          return (
+            <article className={styles.card} id={entry.id} key={entry.id}>
+              <div className={styles.cardHeader}>
+                <Heading as="h3" className={styles.cardTitle}>
+                  {entry.title}
+                </Heading>
+                <p className={styles.cardSummary}>{entry.summary}</p>
+                <ul aria-label={`${entry.title}のタグ`} className={styles.tagList}>
+                  {entry.tags.map((tag) => (
+                    <li className={styles.tag} key={tag}>
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className={styles.demoPanel}>
+                <Demo />
+              </div>
+
+              <dl className={styles.metadataList}>
+                <MetadataItem label="課題" value={entry.problem} />
+                <MetadataItem label="解決方法" value={entry.solution} />
+                <MetadataItem label="使いどころ" value={entry.whenToUse} />
+                <MetadataItem
+                  label="アクセシビリティの注意"
+                  value={entry.accessibilityNotes}
+                />
+              </dl>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
