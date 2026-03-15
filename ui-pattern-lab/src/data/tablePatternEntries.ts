@@ -1,22 +1,25 @@
-export type DemoKind =
-  | 'responsive-stack'
-  | 'horizontal-scroll'
-  | 'sticky-header'
-  | 'cell-truncation';
+import {tablePatternSnippets} from '@site/src/data/tablePatternSnippets';
+import type {
+  TablePatternEntry,
+  TablePatternSnippets,
+} from '@site/src/data/tablePatternTypes';
 
-export type TablePatternEntry = {
-  id: string;
-  title: string;
-  summary: string;
-  problem: string;
-  solution: string;
-  whenToUse: string;
-  accessibilityNotes: string;
-  tags: string[];
-  demoKind: DemoKind;
-};
+function normalizeSnippets(
+  snippets: TablePatternSnippets,
+): TablePatternSnippets | undefined {
+  const items = snippets.items.filter((item) => item.code.trim().length > 0);
 
-export const tablePatternEntries: TablePatternEntry[] = [
+  if (items.length === 0) {
+    return undefined;
+  }
+
+  return {
+    ...snippets,
+    items,
+  };
+}
+
+const baseTablePatternEntries = [
   {
     id: 'responsive-stack',
     title: 'レスポンシブスタック',
@@ -81,4 +84,11 @@ export const tablePatternEntries: TablePatternEntry[] = [
     tags: ['コンパクトな行', '長文対応', '高さを一定化'],
     demoKind: 'cell-truncation',
   },
-];
+] satisfies Array<Omit<TablePatternEntry, 'snippets'>>;
+
+export const tablePatternEntries: TablePatternEntry[] = baseTablePatternEntries.map(
+  (entry) => ({
+    ...entry,
+    snippets: normalizeSnippets(tablePatternSnippets[entry.id]),
+  }),
+);

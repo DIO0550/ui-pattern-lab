@@ -1,17 +1,21 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
-import type {DemoKind, TablePatternEntry} from '@site/src/data/tablePatternEntries';
+import TablePatternMetadataPanel, {
+  type TablePatternMetadataItem,
+} from '@site/src/components/TablePatternMetadataPanel';
+import TablePatternSectionCard from '@site/src/components/TablePatternSectionCard';
+import TablePatternSnippetPanel from '@site/src/components/TablePatternSnippetPanel';
+import type {
+  DemoKind,
+  TablePatternEntry,
+} from '@site/src/data/tablePatternTypes';
 
 import styles from './styles.module.css';
 
 type TablePatternGalleryProps = {
   entries: TablePatternEntry[];
-};
-
-type MetadataItemProps = {
-  label: string;
-  value: string;
+  density: 'list' | 'detail';
 };
 
 type DemoRenderer = () => ReactNode;
@@ -267,33 +271,78 @@ const demoByKind: Record<DemoKind, DemoRenderer> = {
   'cell-truncation': CellTruncationDemo,
 };
 
-function MetadataItem({
-  label,
-  value,
-}: MetadataItemProps): ReactNode {
-  return (
-    <div className={styles.metadataItem}>
-      <dt>{label}</dt>
-      <dd>{value}</dd>
-    </div>
-  );
-}
-
 export default function TablePatternGallery({
   entries,
+  density,
 }: TablePatternGalleryProps): ReactNode {
   if (entries.length === 0) {
     return <EmptyState />;
   }
 
   return (
-    <section aria-label="テーブルデザインパターンギャラリー" className={styles.root}>
-      <div className={styles.grid}>
+    <section
+      aria-label="テーブルデザインパターンギャラリー"
+      className={clsx(styles.root, density === 'detail' && styles.detailRoot)}>
+      <div className={clsx(styles.grid, density === 'detail' && styles.detailGrid)}>
         {entries.map((entry) => {
           const Demo = demoByKind[entry.demoKind];
+          const metadataItems: TablePatternMetadataItem[] = [
+            {label: '課題', tone: 'problem', value: entry.problem},
+            {label: '解決方法', tone: 'solution', value: entry.solution},
+            {label: '使いどころ', tone: 'usage', value: entry.whenToUse},
+            {
+              label: 'アクセシビリティの注意',
+              tone: 'accessibility',
+              value: entry.accessibilityNotes,
+            },
+          ];
+
+          if (density === 'detail') {
+            return (
+              <div key={entry.id} id={entry.id} className={styles.detailContent}>
+                <div className={styles.cardHeader}>
+                  <Heading as="h3" className={styles.cardTitle}>
+                    {entry.title}
+                  </Heading>
+                  <p className={styles.cardSummary}>{entry.summary}</p>
+                  <ul aria-label={`${entry.title}のタグ`} className={styles.tagList}>
+                    {entry.tags.map((tag) => (
+                      <li className={styles.tag} key={tag}>
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <TablePatternSectionCard
+                  ariaLabel={`${entry.title}のプレビュー`}
+                  label="見た目"
+                  title="プレビュー">
+                  <div className={styles.demoPanel}>
+                    <Demo />
+                  </div>
+                </TablePatternSectionCard>
+
+                <TablePatternSnippetPanel
+                  density={density}
+                  entryTitle={entry.title}
+                  snippets={entry.snippets}
+                />
+
+                <TablePatternMetadataPanel
+                  density={density}
+                  entryTitle={entry.title}
+                  items={metadataItems}
+                />
+              </div>
+            );
+          }
 
           return (
-            <article className={styles.card} id={entry.id} key={entry.id}>
+            <article
+              className={styles.card}
+              id={entry.id}
+              key={entry.id}>
               <div className={styles.cardHeader}>
                 <Heading as="h3" className={styles.cardTitle}>
                   {entry.title}
@@ -312,15 +361,17 @@ export default function TablePatternGallery({
                 <Demo />
               </div>
 
-              <dl className={styles.metadataList}>
-                <MetadataItem label="課題" value={entry.problem} />
-                <MetadataItem label="解決方法" value={entry.solution} />
-                <MetadataItem label="使いどころ" value={entry.whenToUse} />
-                <MetadataItem
-                  label="アクセシビリティの注意"
-                  value={entry.accessibilityNotes}
-                />
-              </dl>
+              <TablePatternSnippetPanel
+                density={density}
+                entryTitle={entry.title}
+                snippets={entry.snippets}
+              />
+
+              <TablePatternMetadataPanel
+                density={density}
+                entryTitle={entry.title}
+                items={metadataItems}
+              />
             </article>
           );
         })}

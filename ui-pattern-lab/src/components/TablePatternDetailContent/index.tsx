@@ -2,9 +2,10 @@ import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import TablePatternGallery from '@site/src/components/TablePatternGallery';
 import {tablePatternEntries} from '@site/src/data/tablePatternEntries';
+import type {TablePatternEntryId} from '@site/src/data/tablePatternTypes';
 
 type TablePatternDetailContentProps = {
-  entryId: string;
+  entryId: TablePatternEntryId;
 };
 
 export default function TablePatternDetailContent({
@@ -19,10 +20,14 @@ export default function TablePatternDetailContent({
   return (
     <div className="container margin-vert--lg">
       <p>
-        このページでは「{entry.title}」を個別に確認できます。テーブルカテゴリへ
-        戻る場合は <Link to="/table">テーブル</Link> を参照してください。
+        このページでは「{entry.title}」のプレビューに加えて、対応する CSS /
+        コード例もまとめて確認できます。比較一覧へ戻る場合は
+        {' '}
+        <Link to="/patterns/table-designs">テーブルデザインパターン</Link>
+        、テーブルカテゴリ全体へ戻る場合は <Link to="/table">テーブル</Link>
+        {' '}を参照してください。
       </p>
-      <TablePatternGallery entries={[entry]} />
+      <TablePatternGallery density="detail" entries={[entry]} />
     </div>
   );
 }
