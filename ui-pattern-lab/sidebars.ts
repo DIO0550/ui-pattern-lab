@@ -31,6 +31,24 @@ const sidebars: SidebarsConfig = {
         'table/cell-truncation',
       ],
     },
+    {
+      type: 'category',
+      label: 'ボタン',
+      link: {
+        type: 'doc',
+        id: 'button',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        'button/hierarchy-and-emphasis',
+        'button/interactive-states',
+        'button/destructive-actions',
+        'button/icon-and-compound-actions',
+        'button/toggle-and-selection',
+        'button/spacing-and-sizing',
+      ],
+    },
   ],
 };
 

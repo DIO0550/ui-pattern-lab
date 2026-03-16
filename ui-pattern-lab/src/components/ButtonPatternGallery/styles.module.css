@@ -1,0 +1,389 @@
+.root {
+  --button-gallery-surface: var(
+    --ifm-card-background-color,
+    var(--ifm-background-surface-color)
+  );
+  --button-gallery-border: var(--ifm-color-emphasis-200);
+  --button-gallery-muted: var(--ifm-color-emphasis-700);
+  --button-gallery-emphasis: var(--ifm-color-primary);
+  --button-primary-bg: var(--ifm-color-primary);
+  --button-primary-text: #ffffff;
+  --button-danger-bg: color-mix(
+    in srgb,
+    var(--ifm-color-danger) 14%,
+    var(--button-gallery-surface)
+  );
+  --button-danger-border: color-mix(
+    in srgb,
+    var(--ifm-color-danger) 42%,
+    var(--button-gallery-border)
+  );
+  --button-danger-text: var(--ifm-font-color-base);
+  --button-warning-bg: color-mix(
+    in srgb,
+    var(--ifm-color-warning) 14%,
+    var(--button-gallery-surface)
+  );
+  --button-warning-border: color-mix(
+    in srgb,
+    var(--ifm-color-warning) 42%,
+    var(--button-gallery-border)
+  );
+  --button-warning-text: var(--ifm-font-color-base);
+  display: block;
+}
+
+[data-theme='dark'] .root {
+  --button-gallery-border: var(--ifm-color-emphasis-300);
+  --button-gallery-muted: var(--ifm-color-emphasis-600);
+  --button-danger-bg: color-mix(
+    in srgb,
+    var(--ifm-color-danger) 18%,
+    var(--button-gallery-surface)
+  );
+  --button-warning-bg: color-mix(
+    in srgb,
+    var(--ifm-color-warning) 18%,
+    var(--button-gallery-surface)
+  );
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+
+.detailGrid {
+  grid-template-columns: 1fr;
+}
+
+.detailContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--button-gallery-surface);
+  border: 1px solid var(--button-gallery-border);
+  border-radius: 1rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  padding: 1.5rem;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cardTitle {
+  display: -webkit-box;
+  margin-bottom: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.cardSummary {
+  color: var(--button-gallery-muted);
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.detailContent .cardTitle,
+.detailContent .cardSummary {
+  display: block;
+  -webkit-line-clamp: unset;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  background: color-mix(in srgb, var(--button-gallery-emphasis) 12%, transparent);
+  border-radius: 999px;
+  color: var(--ifm-font-color-base);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+}
+
+.demoPanel {
+  background: color-mix(
+    in srgb,
+    var(--button-gallery-emphasis) 3%,
+    var(--button-gallery-surface)
+  );
+  border: 1px solid var(--button-gallery-border);
+  border-radius: 0.9rem;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.demoFrame {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.previewGrid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
+}
+
+.previewCard {
+  background: var(--button-gallery-surface);
+  border: 1px solid var(--button-gallery-border);
+  border-radius: 0.85rem;
+  display: grid;
+  gap: 0.85rem;
+  min-width: 0;
+  padding: 0.9rem;
+}
+
+.previewHeader {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.previewLabel {
+  color: var(--button-gallery-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.previewDescription,
+.demoNote,
+.selectionNote,
+.specItem {
+  color: var(--button-gallery-muted);
+  margin: 0;
+}
+
+.previewDescription {
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.previewContent {
+  align-items: flex-start;
+  display: flex;
+  min-width: 0;
+}
+
+.demoButton {
+  align-items: center;
+  background: var(--button-gallery-surface);
+  border: 1px solid var(--button-gallery-border);
+  border-radius: 999px;
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.9rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.demoButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.primaryButton {
+  background: var(--button-primary-bg);
+  border-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+
+.secondaryButton {
+  background: transparent;
+  border-color: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 45%,
+    var(--button-gallery-border)
+  );
+  color: var(--ifm-color-primary);
+}
+
+.tertiaryButton {
+  background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
+  border-color: transparent;
+  color: var(--ifm-color-primary);
+}
+
+.ghostButton {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--button-gallery-border) 65%, transparent);
+}
+
+.warningButton {
+  background: var(--button-warning-bg);
+  border-color: var(--button-warning-border);
+  color: var(--button-warning-text);
+}
+
+.dangerButton {
+  background: var(--button-danger-bg);
+  border-color: var(--button-danger-border);
+  color: var(--button-danger-text);
+}
+
+.segmentButton,
+.toggleButton {
+  background: transparent;
+}
+
+.isHovered {
+  box-shadow: 0 0.6rem 1.2rem
+    color-mix(in srgb, var(--button-gallery-emphasis) 12%, transparent);
+  transform: translateY(-1px);
+}
+
+.isFocusVisible {
+  outline: 3px solid color-mix(in srgb, var(--ifm-color-primary) 32%, white);
+  outline-offset: 2px;
+}
+
+.isSelected {
+  background: color-mix(in srgb, var(--ifm-color-primary) 14%, transparent);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.buttonStack {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.buttonIcon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.iconOnlyButton {
+  inline-size: 2.75rem;
+  padding-inline: 0;
+}
+
+.splitButton {
+  display: inline-flex;
+}
+
+.splitPrimary {
+  border-bottom-right-radius: 0;
+  border-right-width: 0;
+  border-top-right-radius: 0;
+}
+
+.splitSecondary {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  min-width: 2.75rem;
+  padding-inline: 0.75rem;
+}
+
+.segmentedGroup {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.spinner {
+  animation: spin 0.8s linear infinite;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 999px;
+  height: 0.85rem;
+  width: 0.85rem;
+}
+
+.compactButton {
+  gap: 0.35rem;
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+}
+
+.defaultButton {
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.9rem;
+}
+
+.comfortableButton {
+  gap: 0.65rem;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.1rem;
+}
+
+.specList {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.specItem {
+  font-size: 0.84rem;
+}
+
+.demoNote {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.emptyState {
+  background: var(--button-gallery-surface);
+  border: 1px dashed var(--button-gallery-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 996px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
+}

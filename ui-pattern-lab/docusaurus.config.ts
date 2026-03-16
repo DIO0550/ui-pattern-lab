@@ -82,6 +82,10 @@ const config: Config = {
               label: 'テーブル',
               to: '/table',
             },
+            {
+              label: 'ボタン',
+              to: '/button',
+            },
           ],
         },
         {
