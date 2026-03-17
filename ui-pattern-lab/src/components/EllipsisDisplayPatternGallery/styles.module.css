@@ -118,6 +118,13 @@
   gap: 0.75rem;
 }
 
+.resizableFrame {
+  max-width: 30rem;
+  min-width: 14rem;
+  overflow: auto;
+  resize: horizontal;
+}
+
 .singleLineCard,
 .clampCard,
 .supplementCard,
@@ -134,6 +141,27 @@
 .supplementPreview {
   margin: 0;
   max-width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.responsiveLineRow {
+  align-items: baseline;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.responsiveLinePrefix {
+  color: var(--gallery-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.responsiveLineValue {
+  margin: 0;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -233,6 +261,7 @@
   }
 
   .singleLineValue,
+  .responsiveLineValue,
   .supplementPreview {
     max-width: 100%;
   }

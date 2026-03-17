@@ -20,7 +20,7 @@ export default function EllipsisDisplayPatternPageContent(): ReactNode {
               例をまとめて確認できます。
             </p>
             <ul className={styles.bulletList}>
-              <li>1行のまま密度を保つ基本形</li>
+              <li>固定幅でも可変幅でも1行のまま密度を保つ基本形</li>
               <li>3行程度の要約を残す複数行 clamp</li>
               <li>要約の近くに全文を補足する構成</li>
               <li>キーボードで開閉できる disclosure</li>
@@ -52,7 +52,8 @@ export default function EllipsisDisplayPatternPageContent(): ReactNode {
           <article className={styles.guideCard}>
             <Heading as="h3">1行省略</Heading>
             <p>
-              ラベル列や通知一覧など、行高をそろえることが最優先の場面に向いています。
+              ラベル列や通知一覧に加えて、横幅が変わる分割ビューやサイドパネルでも
+              `min-width: 0` を組み合わせると 1 行省略を保ちやすくなります。
             </p>
           </article>
           <article className={styles.guideCard}>

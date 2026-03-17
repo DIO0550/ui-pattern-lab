@@ -46,6 +46,14 @@ const singleLineExamples = [
   },
 ];
 
+const responsiveSingleLineExample = {
+  label: '可変幅の行',
+  prefix: '件名',
+  value:
+    '横幅が変わる分割ビューでも、契約更新の案内文を1行のまま保ちながら省略位置を追従させます。',
+  meta: 'ドラッグで横幅を変えると省略位置も追従',
+};
+
 const clampExamples = [
   {
     title: '短文の要約',
@@ -112,8 +120,25 @@ function SingleLineEllipsisDemo(_props: DemoRendererProps): ReactNode {
           </article>
         ))}
       </div>
+      <div className={styles.resizableFrame}>
+        <article className={styles.singleLineCard}>
+          <span className={styles.singleLineLabel}>
+            {responsiveSingleLineExample.label}
+          </span>
+          <div className={styles.responsiveLineRow}>
+            <span className={styles.responsiveLinePrefix}>
+              {responsiveSingleLineExample.prefix}
+            </span>
+            <p className={styles.responsiveLineValue}>
+              {responsiveSingleLineExample.value}
+            </p>
+          </div>
+          <p className={styles.singleLineMeta}>{responsiveSingleLineExample.meta}</p>
+        </article>
+      </div>
       <p className={styles.demoNote}>
-        幅制約と 1 行省略をセットで扱い、一覧の高さをそろえます。
+        固定幅では `max-width`、可変幅では `minmax(0, 1fr)` と `min-width: 0`
+        を使い、リサイズ中も 1 行省略を維持します。
       </p>
     </div>
   );

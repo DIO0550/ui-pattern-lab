@@ -9,7 +9,7 @@ export const ellipsisDisplayPatternSnippets: Record<
 > = {
   'single-line-ellipsis': {
     snippetSummary:
-      '1行の密度を保つため、幅制約と `text-overflow: ellipsis` をセットで使います。',
+      '固定幅では `max-width: 16rem`、可変幅では `minmax(0, 1fr)` と `min-width: 0` を使って1行省略を保ちます。',
     items: [
       {
         id: 'single-line-ellipsis-css',
@@ -22,12 +22,26 @@ export const ellipsisDisplayPatternSnippets: Record<
   white-space: nowrap;
 }
 
+.titleRow {
+  align-items: baseline;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.fluidTitleLine {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .metaRow {
   color: var(--ifm-color-emphasis-700);
   font-size: 0.875rem;
 }`,
         note:
-          '省略表示は幅制約がないと発火しないため、`max-width` などの境界条件を先に決めます。',
+          '固定幅だけでなく、flex / grid 子要素では `min-width: 0` や `minmax(0, 1fr)` を入れないと可変幅で ellipsis が効かないことがあります。',
       },
       {
         id: 'single-line-ellipsis-tsx',
@@ -39,9 +53,22 @@ export const ellipsisDisplayPatternSnippets: Record<
     支払い条件の更新に伴う請求タイミング調整のご案内
   </p>
   <p className={styles.metaRow}>詳細画面で全文を確認</p>
-</article>`,
+</article>
+
+<div className={styles.resizableFrame}>
+  <article className={styles.card}>
+    <span className={styles.label}>可変幅の行</span>
+    <div className={styles.titleRow}>
+      <span>件名</span>
+      <p className={styles.fluidTitleLine}>
+        横幅が変わる分割ビューでも、契約更新の案内文を1行のまま保ちながら省略位置を追従させます。
+      </p>
+    </div>
+    <p className={styles.metaRow}>ドラッグで横幅を変えると省略位置も追従</p>
+  </article>
+</div>`,
         note:
-          '一覧では 1 行に揃え、全文を読む導線は別面に逃がすと密度と可読性の両方を保ちやすくなります。',
+          '一覧では 1 行に揃えつつ、固定幅だけでなくリサイズするレイアウトでも省略位置を追従させると実運用に近いパターンになります。',
       },
     ],
   },
