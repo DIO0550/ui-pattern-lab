@@ -127,7 +127,7 @@ export const ellipsisDisplayPatternSnippets: Record<
   },
   'accessible-disclosure': {
     snippetSummary:
-      '明示的な開閉ボタンで全文を見せ、`aria-expanded` と `aria-controls` を同期させます。',
+      '明示的な開閉ボタンで全文を見せ、`aria-expanded` / `aria-controls` / 補助テキストを同期させます。',
     items: [
       {
         id: 'accessible-disclosure-css',
@@ -142,22 +142,29 @@ export const ellipsisDisplayPatternSnippets: Record<
   padding: 0.45rem 0.9rem;
 }
 
+.statusText {
+  color: var(--ifm-color-emphasis-700);
+  margin: 0;
+}
+
 .disclosurePanel {
   border-top: 1px solid var(--ifm-color-emphasis-300);
   overflow-wrap: anywhere;
   padding-top: 0.75rem;
 }`,
         note:
-          'tooltip や hover だけでは全文へ到達しにくいため、キーボードとタッチの両方で使える明示的なトリガーを用意します。',
+          'tooltip や hover だけでは全文へ到達しにくいため、キーボードとタッチの両方で使えるトリガーに加えて、状態が見える補助テキストも置きます。',
       },
       {
         id: 'accessible-disclosure-tsx',
         label: 'TSX',
         language: 'tsx',
         code: `const panelId = 'accessible-disclosure-panel';
+const statusId = 'accessible-disclosure-status';
 
 <button
   aria-controls={panelId}
+  aria-describedby={statusId}
   aria-expanded={isOpen}
   className={styles.toggleButton}
   onClick={() => setIsOpen((current) => !current)}
@@ -165,11 +172,15 @@ export const ellipsisDisplayPatternSnippets: Record<
   {isOpen ? '全文を閉じる' : '全文を表示'}
 </button>
 
+<p aria-live="polite" id={statusId} className={styles.statusText}>
+  {isOpen ? '現在: 全文を表示中です。' : '現在: 要約のみを表示しています。'}
+</p>
+
 <div hidden={!isOpen} id={panelId} className={styles.disclosurePanel}>
   レビュー条件や例外パスを含む完全な文面をここに表示します。
 </div>`,
         note:
-          '展開後もトリガーにフォーカスを残すと、状態変化を確認してから次の移動先を自分で選べます。',
+          '展開後もトリガーにフォーカスを残しつつ、ラベル・補助テキスト・パネル表示を同時に変えると状態変化が視覚的にも伝わりやすくなります。',
       },
     ],
   },

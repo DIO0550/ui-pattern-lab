@@ -1,5 +1,5 @@
 import type {ReactNode} from 'react';
-import {useState} from 'react';
+import {useId, useState} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import EllipsisDisplayPatternMetadataPanel, {
@@ -169,8 +169,14 @@ function AccessibleDisclosureDemo({
   entry,
   density,
 }: DemoRendererProps): ReactNode {
+  const reactId = useId();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const panelId = `${entry.id}-panel-${density}`;
+  const panelId = `${entry.id}-panel-${density}-${reactId}`;
+  const buttonId = `${entry.id}-button-${density}-${reactId}`;
+  const statusId = `${entry.id}-status-${density}-${reactId}`;
+  const statusText = isOpen
+    ? '現在: 全文を表示中です。'
+    : '現在: 要約のみを表示しています。';
 
   return (
     <div className={styles.demoFrame}>
@@ -179,19 +185,42 @@ function AccessibleDisclosureDemo({
         <p className={styles.disclosureSummary}>{disclosureSummary}</p>
         <button
           aria-controls={panelId}
+          aria-describedby={statusId}
           aria-expanded={isOpen}
+          id={buttonId}
           className={styles.disclosureButton}
           onClick={() => setIsOpen((current) => !current)}
           type="button">
-          {isOpen ? '全文を閉じる' : '全文を表示'}
+          <span className={styles.disclosureButtonLabel}>
+            {isOpen ? '全文を閉じる' : '全文を表示'}
+          </span>
+          <span
+            aria-hidden="true"
+            className={clsx(
+              styles.disclosureButtonIcon,
+              isOpen && styles.disclosureButtonIconOpen,
+            )}>
+            ▾
+          </span>
         </button>
-        <div className={styles.disclosurePanel} hidden={!isOpen} id={panelId}>
+        <p
+          aria-live="polite"
+          className={styles.disclosureStatus}
+          id={statusId}>
+          {statusText}
+        </p>
+        <div
+          aria-labelledby={buttonId}
+          className={styles.disclosurePanel}
+          hidden={!isOpen}
+          id={panelId}
+          role="region">
           <span className={styles.disclosureLabel}>全文</span>
           <p className={styles.disclosureText}>{disclosureBody}</p>
         </div>
       </article>
       <p className={styles.demoNote}>
-        展開後もトリガーにフォーカスを残し、`aria-expanded` と表示状態を同期します。
+        ボタンラベル、状態テキスト、全文パネルを同時に切り替え、展開後もトリガーにフォーカスを残します。
       </p>
     </div>
   );

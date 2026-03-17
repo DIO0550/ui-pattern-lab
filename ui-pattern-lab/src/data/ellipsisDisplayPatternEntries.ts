@@ -78,11 +78,11 @@ const baseEllipsisDisplayPatternEntries = [
     problem:
       '全文を常時表示すると一覧が伸びますが、tooltip や hover だけではタッチやキーボードで読みにくくなります。',
     solution:
-      '明示的な開閉ボタンと `aria-expanded` / `aria-controls` を使い、必要なときだけ全文を展開します。',
+      '明示的な開閉ボタンと `aria-expanded` / `aria-controls` を使い、ボタンラベル・状態テキスト・全文パネルを同期させながら必要なときだけ全文を展開します。',
     whenToUse:
       'FAQ の抜粋、監査メモ、カード内の詳細説明など、要約と全文の切り替えを利用者に委ねたい場面に向いています。',
     accessibilityNotes:
-      'トリガーボタンにフォーカスを維持したまま、表示状態と属性値を同期させ、予期しないフォーカスジャンプを避けます。',
+      'トリガーボタンにフォーカスを維持したまま、表示状態・属性値・補助テキストを同期させ、予期しないフォーカスジャンプを避けます。',
     tags: ['開閉', 'aria-expanded', 'キーボード対応'],
     demoKind: 'accessible-disclosure',
   },
