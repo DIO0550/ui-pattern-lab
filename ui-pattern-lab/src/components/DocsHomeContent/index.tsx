@@ -3,6 +3,7 @@ import {useState} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
+import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
 import {tablePatternEntries} from '@site/src/data/tablePatternEntries';
 
 import styles from './styles.module.css';
@@ -19,6 +20,31 @@ const buttonDetailLinks = buttonPatternEntries.map((entry) => ({
   description: entry.summary,
   meta: '詳細ページ',
 }));
+
+const ellipsisDisplayDetailLinks = ellipsisDisplayPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/ellipsis-display/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const ellipsisDisplayLinks = [
+  {
+    title: '省略表示カテゴリ',
+    to: '/ellipsis-display',
+    description:
+      'generic な省略表示カテゴリの入口です。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: '省略表示パターン比較',
+    to: '/patterns/ellipsis-display-designs',
+    description:
+      '1行省略、複数行 clamp、全文補足、アクセシブルな開閉を横断して比較できます。',
+    meta: '比較一覧',
+  },
+  ...ellipsisDisplayDetailLinks,
+];
 
 const buttonLinks = [
   {
@@ -38,7 +64,7 @@ type LinkCard = {
   meta?: string;
 };
 
-type CategoryId = 'table' | 'button';
+type CategoryId = 'table' | 'ellipsis-display' | 'button';
 
 type CategoryCard = {
   id: CategoryId;
@@ -58,6 +84,15 @@ const categoryCards: CategoryCard[] = [
     links: tableLinks,
     expandedMeta: 'クリックしてサブカテゴリを閉じる',
     collapsedMeta: 'クリックしてサブカテゴリを表示',
+  },
+  {
+    id: 'ellipsis-display',
+    title: '省略表示',
+    description:
+      'list / card / summary / disclosure を横断する generic な省略表示カテゴリです。table 専用の `cell-truncation` は別ページに残しています。',
+    links: ellipsisDisplayLinks,
+    expandedMeta: 'クリックして省略表示関連の導線を閉じる',
+    collapsedMeta: 'クリックして省略表示関連の導線を表示',
   },
   {
     id: 'button',
@@ -93,6 +128,7 @@ function NavigationCard({
 export default function DocsHomeContent(): ReactNode {
   const [openStates, setOpenStates] = useState<Record<CategoryId, boolean>>({
     table: false,
+    'ellipsis-display': false,
     button: false,
   });
 

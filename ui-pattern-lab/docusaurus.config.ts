@@ -83,6 +83,10 @@ const config: Config = {
               to: '/table',
             },
             {
+              label: '省略表示',
+              to: '/ellipsis-display',
+            },
+            {
               label: 'ボタン',
               to: '/button',
             },
