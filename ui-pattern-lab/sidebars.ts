@@ -33,6 +33,22 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: '省略表示',
+      link: {
+        type: 'doc',
+        id: 'ellipsis-display',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        'ellipsis-display/single-line-ellipsis',
+        'ellipsis-display/multi-line-clamp',
+        'ellipsis-display/full-text-supplement',
+        'ellipsis-display/accessible-disclosure',
+      ],
+    },
+    {
+      type: 'category',
       label: 'ボタン',
       link: {
         type: 'doc',

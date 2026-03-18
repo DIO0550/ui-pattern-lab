@@ -1,0 +1,268 @@
+.root {
+  --gallery-surface: var(--ifm-card-background-color, var(--ifm-background-surface-color));
+  --gallery-border: var(--ifm-color-emphasis-200);
+  --gallery-muted: var(--ifm-color-emphasis-700);
+  --gallery-emphasis: var(--ifm-color-primary);
+  display: block;
+}
+
+[data-theme='dark'] .root {
+  --gallery-border: var(--ifm-color-emphasis-300);
+  --gallery-muted: var(--ifm-color-emphasis-600);
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+.detailGrid {
+  grid-template-columns: 1fr;
+}
+
+.detailContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--gallery-surface);
+  border: 1px solid var(--gallery-border);
+  border-radius: 1rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  padding: 1.5rem;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cardTitle {
+  display: -webkit-box;
+  margin-bottom: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.cardSummary {
+  color: var(--gallery-muted);
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.detailContent .cardTitle,
+.detailContent .cardSummary {
+  display: block;
+  -webkit-line-clamp: unset;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  background: color-mix(in srgb, var(--gallery-emphasis) 12%, transparent);
+  border-radius: 999px;
+  color: var(--ifm-font-color-base);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+}
+
+.demoPanel {
+  background: color-mix(in srgb, var(--gallery-emphasis) 3%, var(--gallery-surface));
+  border: 1px solid var(--gallery-border);
+  border-radius: 0.9rem;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.demoFrame {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.previewLabel,
+.singleLineLabel,
+.supplementLabel,
+.disclosureLabel {
+  color: var(--gallery-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.singleLineList,
+.clampList,
+.supplementList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.resizableFrame {
+  max-width: 30rem;
+  min-width: 14rem;
+  overflow: auto;
+  resize: horizontal;
+}
+
+.singleLineCard,
+.clampCard,
+.supplementCard,
+.disclosureCard {
+  background: var(--gallery-surface);
+  border: 1px solid var(--gallery-border);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.85rem;
+}
+
+.singleLineValue,
+.supplementPreview {
+  margin: 0;
+  max-width: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.responsiveLineRow {
+  align-items: baseline;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.responsiveLinePrefix {
+  color: var(--gallery-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.responsiveLineValue {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.singleLineMeta,
+.demoNote,
+.supplementText,
+.disclosureSummary,
+.disclosureStatus,
+.disclosureText,
+.clampSummary {
+  color: var(--gallery-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.clampTitle,
+.supplementTitle {
+  margin-bottom: 0;
+}
+
+.clampSummary {
+  display: -webkit-box;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.supplementFullText,
+.disclosurePanel {
+  border-top: 1px solid var(--gallery-border);
+  display: grid;
+  gap: 0.45rem;
+  overflow-wrap: anywhere;
+  padding-top: 0.75rem;
+}
+
+.disclosureButton {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 999px;
+  color: var(--ifm-color-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.45rem 0.9rem;
+  width: fit-content;
+}
+
+.disclosureButtonLabel {
+  line-height: 1;
+}
+
+.disclosureButtonIcon {
+  flex-shrink: 0;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.disclosureButtonIconOpen {
+  transform: rotate(180deg);
+}
+
+.disclosureButton:hover,
+.disclosureButton:focus-visible {
+  background: color-mix(in srgb, var(--ifm-color-primary) 8%, transparent);
+}
+
+.disclosureSummary,
+.disclosureText,
+.supplementText {
+  overflow-wrap: anywhere;
+}
+
+.emptyState {
+  background: var(--gallery-surface);
+  border: 1px dashed var(--gallery-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 996px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .singleLineValue,
+  .responsiveLineValue,
+  .supplementPreview {
+    max-width: 100%;
+  }
+}
