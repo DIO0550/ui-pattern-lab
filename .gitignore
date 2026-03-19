@@ -140,3 +140,5 @@ vite.config.ts.timestamp-*
 
 .pnpm-store
 .init-done
+# devcontainer init flag
+.devcontainer/.init-done
