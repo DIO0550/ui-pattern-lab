@@ -90,6 +90,10 @@ const config: Config = {
               label: 'ボタン',
               to: '/button',
             },
+            {
+              label: 'チェックボックス',
+              to: '/checkbox',
+            },
           ],
         },
         {
