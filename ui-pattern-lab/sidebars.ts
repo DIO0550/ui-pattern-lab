@@ -76,6 +76,7 @@ const sidebars: SidebarsConfig = {
       collapsed: true,
       items: [
         'checkbox/multiple-independent-selection',
+        'checkbox/selectable-cards',
         'checkbox/single-checkbox-and-indeterminate',
         'checkbox/states-and-accessibility',
         'checkbox/mobile-and-touch-targets',

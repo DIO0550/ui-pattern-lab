@@ -133,7 +133,7 @@ const categoryCards: CategoryCard[] = [
     id: 'checkbox',
     title: 'チェックボックス',
     description:
-      'checkbox を radio button / switch / select と比較しながら、複数選択、mixed state、モバイルでの押しやすさを確認できるカテゴリです。',
+      'checkbox を radio button / switch / select と比較しながら、複数選択、カード型 UI、mixed state、モバイルでの押しやすさを確認できるカテゴリです。',
     links: checkboxLinks,
     expandedMeta: 'クリックしてチェックボックス関連の導線を閉じる',
     collapsedMeta: 'クリックしてチェックボックス関連の導線を表示',

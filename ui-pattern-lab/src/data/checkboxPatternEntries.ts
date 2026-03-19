@@ -43,6 +43,28 @@ const baseCheckboxPatternEntries = [
     demoKind: 'multiple-independent-selection',
   },
   {
+    id: 'selectable-cards',
+    title: 'カード型の複数選択',
+    summary:
+      'カード全体が選択状態になる selectable card として、情報量の多い複数選択を整理します。',
+    problem:
+      '説明量の多い候補を小さな checkbox だけで並べると、どこを押せるかや何が選ばれているかが一覧で把握しにくくなります。',
+    solution:
+      'input[type="checkbox"] の semantics を維持したままカード全体を label として扱い、selected 時は border / background / badge をまとめて変えて状態を示します。',
+    whenToUse:
+      '料金オプション、通知パック、属性タグなど、各候補にタイトル・説明・補足情報があり、複数選択をさせたい場面に向いています。',
+    comparisonTip:
+      '1 件だけ選ばせるなら radio button、押した瞬間に状態が切り替わる操作なら toggle button や switch を検討します。checkbox card は情報量の多い候補を複数選択させたいときに向いています。',
+    layoutNotes:
+      'カードの高さ、タイトル開始位置、補足情報の行間をそろえ、selected / unselected の差が一覧で比較しやすいグリッドにします。',
+    stateNotes:
+      'selected / hover / focus-visible / disabled を border、background、badge、outline で重ねて表現し、色だけに依存しません。',
+    accessibilityNotes:
+      '見た目をカードに変えても input[type="checkbox"] を残し、label 全体を押下可能にして、fieldset / legend でグループ文脈を渡します。',
+    tags: ['カード型UI', '情報量の多い候補', '複数選択'],
+    demoKind: 'selectable-cards',
+  },
+  {
     id: 'single-checkbox-and-indeterminate',
     title: '単独同意と indeterminate',
     summary:

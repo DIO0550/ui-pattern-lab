@@ -209,6 +209,109 @@
   padding-block: 0.85rem;
 }
 
+.selectableCardList {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.selectableCardOption {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.selectableCardInput {
+  block-size: 1px;
+  inline-size: 1px;
+  inset-block-start: 1rem;
+  inset-inline-start: 1rem;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.selectableCardSurface {
+  background: var(--checkbox-gallery-surface);
+  border: 1px solid
+    color-mix(in srgb, var(--checkbox-gallery-emphasis) 12%, var(--checkbox-gallery-border));
+  border-radius: 1rem;
+  cursor: pointer;
+  display: grid;
+  gap: 0.65rem;
+  min-height: 7rem;
+  padding: 1rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.selectableCardOption:hover .selectableCardSurface {
+  transform: translateY(-1px);
+}
+
+.selectableCardInput:focus-visible + .selectableCardSurface {
+  outline: 3px solid color-mix(in srgb, var(--ifm-color-primary) 30%, white);
+  outline-offset: 2px;
+}
+
+.selectableCardInput:checked + .selectableCardSurface {
+  background: color-mix(
+    in srgb,
+    var(--checkbox-gallery-emphasis) 10%,
+    var(--checkbox-gallery-surface)
+  );
+  border-color: var(--checkbox-gallery-emphasis);
+  box-shadow: 0 0 0 1px
+    color-mix(in srgb, var(--checkbox-gallery-emphasis) 25%, transparent);
+}
+
+.selectableCardHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.selectableCardTitle {
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.selectableCardBadge {
+  border: 1px solid var(--checkbox-gallery-border);
+  border-radius: 999px;
+  color: var(--checkbox-gallery-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  white-space: nowrap;
+}
+
+.selectableCardInput:checked + .selectableCardSurface .selectableCardBadge {
+  background: var(--checkbox-gallery-emphasis);
+  border-color: var(--checkbox-gallery-emphasis);
+  color: white;
+}
+
+.selectableCardDescription,
+.selectableCardDetail {
+  line-height: 1.6;
+}
+
+.selectableCardDescription {
+  color: var(--ifm-font-color-base);
+}
+
+.selectableCardDetail {
+  color: var(--checkbox-gallery-muted);
+  font-size: 0.88rem;
+}
+
 .focusField {
   outline: 3px solid color-mix(in srgb, var(--ifm-color-primary) 30%, white);
   outline-offset: 2px;
@@ -350,5 +453,9 @@
 
   .childGroup {
     padding-left: 0.75rem;
+  }
+
+  .selectableCardHeader {
+    flex-direction: column;
   }
 }

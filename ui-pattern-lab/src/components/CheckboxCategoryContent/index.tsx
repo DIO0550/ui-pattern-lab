@@ -6,11 +6,14 @@ import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import styles from './styles.module.css';
 
 export default function CheckboxCategoryContent(): ReactNode {
+  const patternCount = checkboxPatternEntries.length;
+
   return (
     <div className={`container margin-vert--lg ${styles.root}`}>
       <p className={styles.lead}>
         checkbox カテゴリでは、まず比較一覧で radio button / switch / select
-        との使い分けを確認し、そのあと必要な個別パターンへ進めます。
+        との使い分けを確認し、そのあと通常の checkbox、カード型、mixed state
+        などの個別パターンへ進めます。
       </p>
 
       <section className={styles.section}>
@@ -22,7 +25,7 @@ export default function CheckboxCategoryContent(): ReactNode {
               チェックボックスデザインパターン
             </Heading>
             <p className={styles.cardDescription}>
-              4 種類の checkbox パターンを、選択モデル、送信タイミング、タップ領域、アクセシビリティの観点で比較できます。
+              {patternCount} 種類の checkbox パターンを、選択モデル、送信タイミング、カード型 UI、タップ領域、アクセシビリティの観点で比較できます。
             </p>
             <p className={styles.cardMeta}>
               比較マトリクスから preview と CSS / TSX サンプルへ進む

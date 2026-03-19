@@ -39,6 +39,14 @@ type CheckboxFieldProps = {
   className?: string;
 };
 
+type SelectableCardFieldProps = {
+  title: string;
+  description: string;
+  detail: string;
+  selected: boolean;
+  onChange: () => void;
+};
+
 const multiSelectOptions = [
   {
     id: 'comments',
@@ -83,6 +91,29 @@ const mobileOptions = [
     description: '未読の更新を 1 つの通知にまとめて確認できます。',
   },
 ] as const;
+
+const selectableCardOptions = [
+  {
+    id: 'analytics',
+    title: '分析レポート',
+    description: '週次の利用状況レポートを受け取る',
+    detail: 'CSV と PDF をまとめて配信',
+  },
+  {
+    id: 'security',
+    title: 'セキュリティ通知',
+    description: '重要な権限変更だけを優先表示する',
+    detail: '異常ログインや権限追加を分離して確認',
+  },
+  {
+    id: 'templates',
+    title: '共有テンプレート',
+    description: 'チーム共通の初期設定をまとめて追加する',
+    detail: '新メンバーへの配布作業を短縮',
+  },
+] as const;
+
+type SelectableCardOptionId = (typeof selectableCardOptions)[number]['id'];
 
 function PreviewCard({label, description, children}: PreviewCardProps): ReactNode {
   return (
@@ -148,6 +179,35 @@ function CheckboxField({
         ) : null}
         {helperText ? <span className={styles.checkboxHelper}>{helperText}</span> : null}
         {errorText ? <span className={styles.checkboxError}>{errorText}</span> : null}
+      </span>
+    </label>
+  );
+}
+
+function SelectableCardField({
+  title,
+  description,
+  detail,
+  selected,
+  onChange,
+}: SelectableCardFieldProps): ReactNode {
+  return (
+    <label className={styles.selectableCardOption}>
+      <input
+        checked={selected}
+        className={styles.selectableCardInput}
+        onChange={onChange}
+        type="checkbox"
+      />
+      <span className={styles.selectableCardSurface}>
+        <span className={styles.selectableCardHeader}>
+          <span className={styles.selectableCardTitle}>{title}</span>
+          <span className={styles.selectableCardBadge}>
+            {selected ? '選択中' : '未選択'}
+          </span>
+        </span>
+        <span className={styles.selectableCardDescription}>{description}</span>
+        <span className={styles.selectableCardDetail}>{detail}</span>
       </span>
     </label>
   );
@@ -316,6 +376,87 @@ function SingleCheckboxAndIndeterminateDemo(): ReactNode {
   );
 }
 
+function SelectableCardsDemo(): ReactNode {
+  const [selectedIds, setSelectedIds] = useState<Array<SelectableCardOptionId>>([
+    'security',
+  ]);
+  const selectedTitles = selectableCardOptions
+    .filter((option) => selectedIds.includes(option.id))
+    .map((option) => option.title);
+  const summaryItems =
+    selectedTitles.length > 0 ? selectedTitles : ['未選択の状態も許容できます'];
+
+  function toggleCard(optionId: SelectableCardOptionId): void {
+    setSelectedIds((current) => {
+      if (current.includes(optionId)) {
+        return current.filter((item) => item !== optionId);
+      }
+
+      return [...current, optionId];
+    });
+  }
+
+  return (
+    <div className={styles.demoFrame}>
+      <div className={styles.previewGrid}>
+        <PreviewCard
+          label="selectable card"
+          description="カード全体を押下対象にしつつ、semantics は checkbox のまま維持します。">
+          <fieldset className={styles.checkboxGroup}>
+            <legend className={styles.groupLegend}>追加する機能パック</legend>
+            <div className={styles.selectableCardList}>
+              {selectableCardOptions.map((option) => (
+                <SelectableCardField
+                  description={option.description}
+                  detail={option.detail}
+                  key={option.id}
+                  onChange={() => toggleCard(option.id)}
+                  selected={selectedIds.includes(option.id)}
+                  title={option.title}
+                />
+              ))}
+            </div>
+          </fieldset>
+        </PreviewCard>
+        <PreviewCard
+          label="判断軸"
+          description="情報量の多い候補を複数選択させるときに向く派生パターンです。">
+          <div className={styles.selectionSummary}>
+            <p className={styles.selectionNote}>
+              {selectedTitles.length > 0
+                ? `現在は ${selectedTitles.length} 件のカードを選択中です。`
+                : '未選択のまま送信する設計もできます。'}
+            </p>
+            <ul className={styles.summaryPillList}>
+              {summaryItems.map((item) => (
+                <li className={styles.summaryPill} key={item}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <ul className={styles.specList}>
+              <li className={styles.specItem}>
+                カード全体を label にして、小さな checkbox だけを押させない
+              </li>
+              <li className={styles.specItem}>
+                selected は border / background / badge を重ねて見せる
+              </li>
+              <li className={styles.specItem}>
+                1 件だけの排他選択なら radio button を選ぶ
+              </li>
+            </ul>
+          </div>
+        </PreviewCard>
+      </div>
+      <p className={styles.demoNote}>
+        1 件だけをカードから選ばせるなら radio button を検討します。押した瞬間に状態を切り替える操作なら{' '}
+        <Link to="/button/toggle-and-selection">ボタン / トグル・選択</Link>{' '}
+        を参照してください。checkbox card は説明量の多い候補を複数選択させたいときに使います。
+      </p>
+    </div>
+  );
+}
+
 function StatesAndAccessibilityDemo(): ReactNode {
   return (
     <div className={styles.demoFrame}>
@@ -436,6 +577,7 @@ function MobileAndTouchTargetsDemo(): ReactNode {
 
 const demoByKind: Record<CheckboxPatternEntry['demoKind'], DemoRenderer> = {
   'multiple-independent-selection': MultipleIndependentSelectionDemo,
+  'selectable-cards': SelectableCardsDemo,
   'single-checkbox-and-indeterminate': SingleCheckboxAndIndeterminateDemo,
   'states-and-accessibility': StatesAndAccessibilityDemo,
   'mobile-and-touch-targets': MobileAndTouchTargetsDemo,

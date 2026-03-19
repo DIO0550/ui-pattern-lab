@@ -98,14 +98,14 @@ export default function CheckboxPatternPageContent(): ReactNode {
           <div className={styles.introCopy}>
             <Heading as="h2">このページで比較できること</Heading>
             <p>
-              ここでは、checkbox そのものの見た目ではなく、radio button /
-              switch / select とどう使い分けるべきか、という判断軸を先に整理します。
-              そのうえで、個別パターンごとに preview、設計メモ、CSS / TSX
-              サンプルを並べて参照できます。
+              ここでは、標準的な checkbox だけでなくカード型に展開する場合も含めて、
+              radio button / switch / select とどう使い分けるべきか、という判断軸を先に整理します。
+              そのうえで、個別パターンごとに preview、設計メモ、CSS / TSX サンプルを並べて参照できます。
             </p>
             <ul className={styles.bulletList}>
               <li>複数選択か、単一選択か、単独トグルか</li>
               <li>送信前の確認か、操作直後の反映か</li>
+              <li>カード型にしても checkbox semantics を維持するか</li>
               <li>長いラベルとモバイルでの押しやすさ</li>
               <li>checked / mixed / error を支援技術にどう伝えるか</li>
               <li>候補の見えやすさと認知負荷のバランス</li>
@@ -130,7 +130,7 @@ export default function CheckboxPatternPageContent(): ReactNode {
       <section className={`container margin-bottom--xl ${styles.matrixSection}`}>
         <Heading as="h2">checkbox / radio / switch / select を比較する</Heading>
         <p className={styles.matrixLead}>
-          まずは「選択可能数」「反映タイミング」「モバイルでの押しやすさ」の違いを横断で確認し、
+          まずは「選択可能数」「反映タイミング」「カード型にしても保つべき semantics」「モバイルでの押しやすさ」の違いを横断で確認し、
           checkbox を選ぶべき理由を明確にします。
         </p>
         <div className={styles.matrixWrapper}>

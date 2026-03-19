@@ -79,6 +79,157 @@ export const checkboxPatternSnippets: Record<
       },
     ],
   },
+  'selectable-cards': {
+    snippetSummary:
+      'checkbox の semantics を保ったまま、カード全体を選択状態として見せる selectable card の例です。',
+    items: [
+      {
+        id: 'selectable-cards-css',
+        label: 'CSS',
+        language: 'css',
+        code: `.cardList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cardOption {
+  display: block;
+  position: relative;
+}
+
+.cardInput {
+  block-size: 1px;
+  inline-size: 1px;
+  inset-block-start: 1rem;
+  inset-inline-start: 1rem;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.cardSurface {
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 1rem;
+  display: grid;
+  gap: 0.65rem;
+  min-height: 7rem;
+  padding: 1rem;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cardOption:hover .cardSurface {
+  transform: translateY(-1px);
+}
+
+.cardInput:focus-visible + .cardSurface {
+  outline: 3px solid color-mix(in srgb, var(--ifm-color-primary) 30%, white);
+  outline-offset: 2px;
+}
+
+.cardInput:checked + .cardSurface {
+  background: color-mix(in srgb, var(--ifm-color-primary) 9%, white);
+  border-color: var(--ifm-color-primary);
+}
+
+.cardHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.cardBadge {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+}
+
+.cardInput:checked + .cardSurface .cardBadge {
+  background: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+  color: white;
+}`,
+        note:
+          '四角い checkbox を消しても、input[type="checkbox"] 自体は残し、カード全体を label として押せる構造にします。',
+      },
+      {
+        id: 'selectable-cards-tsx',
+        label: 'TSX',
+        language: 'tsx',
+        code: `const optionCards = [
+  {
+    id: 'analytics',
+    title: '分析レポート',
+    description: '週次の利用状況レポートを受け取る',
+    meta: 'CSV と PDF をまとめて配信',
+  },
+  {
+    id: 'security',
+    title: 'セキュリティ通知',
+    description: '重要な権限変更だけを優先表示する',
+    meta: '異常ログインや権限追加を分離して確認',
+  },
+  {
+    id: 'templates',
+    title: '共有テンプレート',
+    description: 'チーム共通の初期設定をまとめて追加する',
+    meta: '新メンバーへの配布作業を短縮',
+  },
+] as const;
+
+const [selectedIds, setSelectedIds] = useState<
+  Array<(typeof optionCards)[number]['id']>
+>(['security']);
+
+function toggleOption(optionId: (typeof optionCards)[number]['id']): void {
+  setSelectedIds((current) => {
+    if (current.includes(optionId)) {
+      return current.filter((item) => item !== optionId);
+    }
+
+    return [...current, optionId];
+  });
+}
+
+<fieldset className={styles.cardList}>
+  <legend>追加する機能パックを選択</legend>
+  {optionCards.map((option) => {
+    const isSelected = selectedIds.includes(option.id);
+
+    return (
+      <label className={styles.cardOption} key={option.id}>
+        <input
+          checked={isSelected}
+          className={styles.cardInput}
+          onChange={() => toggleOption(option.id)}
+          type="checkbox"
+        />
+        <span className={styles.cardSurface}>
+          <span className={styles.cardHeader}>
+            <span>{option.title}</span>
+            <span className={styles.cardBadge}>
+              {isSelected ? '選択中' : '未選択'}
+            </span>
+          </span>
+          <span>{option.description}</span>
+          <span>{option.meta}</span>
+        </span>
+      </label>
+    );
+  })}
+</fieldset>`,
+        note:
+          '1 件だけの排他選択なら radio に寄せ、カード型でも複数選択・未選択の両方を許容したいときに checkbox を選びます。',
+      },
+    ],
+  },
   'single-checkbox-and-indeterminate': {
     snippetSummary:
       '単独の同意 checkbox と、select-all で indeterminate を扱う親子パターンの最小例です。',

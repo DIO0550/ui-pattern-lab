@@ -1,5 +1,6 @@
 export type CheckboxPatternEntryId =
   | 'multiple-independent-selection'
+  | 'selectable-cards'
   | 'single-checkbox-and-indeterminate'
   | 'states-and-accessibility'
   | 'mobile-and-touch-targets';
