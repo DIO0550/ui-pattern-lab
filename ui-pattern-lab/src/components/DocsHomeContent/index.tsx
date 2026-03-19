@@ -3,6 +3,7 @@ import {useState} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
+import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
 import {tablePatternEntries} from '@site/src/data/tablePatternEntries';
 
@@ -17,6 +18,13 @@ const tableLinks = tablePatternEntries.map((entry) => ({
 const buttonDetailLinks = buttonPatternEntries.map((entry) => ({
   title: entry.title,
   to: `/button/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const checkboxDetailLinks = checkboxPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/checkbox/${entry.id}`,
   description: entry.summary,
   meta: '詳細ページ',
 }));
@@ -57,6 +65,24 @@ const buttonLinks = [
   ...buttonDetailLinks,
 ];
 
+const checkboxLinks = [
+  {
+    title: 'チェックボックスカテゴリ',
+    to: '/checkbox',
+    description:
+      'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'チェックボックスパターン比較',
+    to: '/patterns/checkbox-designs',
+    description:
+      'checkbox を radio button / switch / select と比較しながら、使い分けの判断軸を確認できます。',
+    meta: '比較一覧',
+  },
+  ...checkboxDetailLinks,
+];
+
 type LinkCard = {
   title: string;
   to: string;
@@ -64,7 +90,7 @@ type LinkCard = {
   meta?: string;
 };
 
-type CategoryId = 'table' | 'ellipsis-display' | 'button';
+type CategoryId = 'table' | 'ellipsis-display' | 'button' | 'checkbox';
 
 type CategoryCard = {
   id: CategoryId;
@@ -103,6 +129,15 @@ const categoryCards: CategoryCard[] = [
     expandedMeta: 'クリックしてボタン関連の導線を閉じる',
     collapsedMeta: 'クリックしてボタン関連の導線を表示',
   },
+  {
+    id: 'checkbox',
+    title: 'チェックボックス',
+    description:
+      'checkbox を radio button / switch / select と比較しながら、複数選択、mixed state、モバイルでの押しやすさを確認できるカテゴリです。',
+    links: checkboxLinks,
+    expandedMeta: 'クリックしてチェックボックス関連の導線を閉じる',
+    collapsedMeta: 'クリックしてチェックボックス関連の導線を表示',
+  },
 ];
 
 function NavigationCard({
@@ -130,6 +165,7 @@ export default function DocsHomeContent(): ReactNode {
     table: false,
     'ellipsis-display': false,
     button: false,
+    checkbox: false,
   });
 
   function toggleCategory(categoryId: CategoryId): void {

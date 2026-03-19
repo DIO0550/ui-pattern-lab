@@ -1,0 +1,354 @@
+.root {
+  --checkbox-gallery-surface: var(
+    --ifm-card-background-color,
+    var(--ifm-background-surface-color)
+  );
+  --checkbox-gallery-border: var(--ifm-color-emphasis-200);
+  --checkbox-gallery-muted: var(--ifm-color-emphasis-700);
+  --checkbox-gallery-emphasis: var(--ifm-color-primary);
+  display: block;
+}
+
+[data-theme='dark'] .root {
+  --checkbox-gallery-border: var(--ifm-color-emphasis-300);
+  --checkbox-gallery-muted: var(--ifm-color-emphasis-600);
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+
+.detailGrid {
+  grid-template-columns: 1fr;
+}
+
+.detailContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--checkbox-gallery-surface);
+  border: 1px solid var(--checkbox-gallery-border);
+  border-radius: 1rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  padding: 1.5rem;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cardTitle {
+  display: -webkit-box;
+  margin-bottom: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.cardSummary {
+  color: var(--checkbox-gallery-muted);
+  display: -webkit-box;
+  line-height: 1.6;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.detailContent .cardTitle,
+.detailContent .cardSummary {
+  display: block;
+  -webkit-line-clamp: unset;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  background: color-mix(in srgb, var(--checkbox-gallery-emphasis) 12%, transparent);
+  border-radius: 999px;
+  color: var(--ifm-font-color-base);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+}
+
+.demoPanel {
+  background: color-mix(
+    in srgb,
+    var(--checkbox-gallery-emphasis) 3%,
+    var(--checkbox-gallery-surface)
+  );
+  border: 1px solid var(--checkbox-gallery-border);
+  border-radius: 0.9rem;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.demoFrame {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.previewGrid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.previewCard {
+  background: var(--checkbox-gallery-surface);
+  border: 1px solid var(--checkbox-gallery-border);
+  border-radius: 0.85rem;
+  display: grid;
+  gap: 0.85rem;
+  min-width: 0;
+  padding: 0.9rem;
+}
+
+.previewHeader {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.previewLabel {
+  color: var(--checkbox-gallery-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.previewDescription {
+  color: var(--checkbox-gallery-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.previewContent {
+  align-items: flex-start;
+  display: flex;
+  min-width: 0;
+  width: 100%;
+}
+
+.checkboxGroup {
+  border: 0;
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.groupLegend {
+  color: var(--checkbox-gallery-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.checkboxStack,
+.touchStack,
+.selectionSummary {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.childGroup {
+  display: grid;
+  gap: 0.65rem;
+  padding-left: 1.5rem;
+}
+
+.checkboxField {
+  align-items: flex-start;
+  background: var(--checkbox-gallery-surface);
+  border: 1px solid
+    color-mix(in srgb, var(--checkbox-gallery-emphasis) 12%, var(--checkbox-gallery-border));
+  border-radius: 0.9rem;
+  cursor: pointer;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto 1fr;
+  min-width: 0;
+  padding: 0.75rem;
+  width: 100%;
+}
+
+.childField {
+  min-height: auto;
+}
+
+.touchField {
+  min-height: 3rem;
+  padding-block: 0.85rem;
+}
+
+.focusField {
+  outline: 3px solid color-mix(in srgb, var(--ifm-color-primary) 30%, white);
+  outline-offset: 2px;
+}
+
+.errorField {
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-danger) 8%,
+    var(--checkbox-gallery-surface)
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--ifm-color-danger) 35%,
+    var(--checkbox-gallery-border)
+  );
+}
+
+.checkboxControlSlot {
+  display: flex;
+  padding-top: 0.15rem;
+}
+
+.checkboxInput {
+  accent-color: var(--ifm-color-primary);
+  block-size: 1.125rem;
+  cursor: pointer;
+  inline-size: 1.125rem;
+  margin: 0;
+}
+
+.checkboxInput:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ifm-color-primary) 30%, white);
+  outline-offset: 2px;
+}
+
+.checkboxInput:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.errorField .checkboxInput {
+  accent-color: var(--ifm-color-danger);
+}
+
+.checkboxText {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.checkboxLabel {
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.checkboxDescription,
+.checkboxHelper,
+.checkboxError,
+.demoNote,
+.selectionNote,
+.specItem,
+.crossReference {
+  line-height: 1.6;
+  margin: 0;
+}
+
+.checkboxDescription,
+.checkboxHelper,
+.selectionNote,
+.specItem,
+.crossReference {
+  color: var(--checkbox-gallery-muted);
+}
+
+.checkboxDescription,
+.checkboxHelper,
+.checkboxError {
+  font-size: 0.88rem;
+}
+
+.checkboxError {
+  color: var(--ifm-color-danger);
+  font-weight: 600;
+}
+
+.summaryPillList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.summaryPill {
+  background: color-mix(in srgb, var(--checkbox-gallery-emphasis) 12%, transparent);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+}
+
+.specList {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.crossReference a,
+.demoNote a {
+  font-weight: 600;
+}
+
+.emptyState {
+  background: var(--checkbox-gallery-surface);
+  border: 1px dashed var(--checkbox-gallery-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 996px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .childGroup {
+    padding-left: 0.75rem;
+  }
+}

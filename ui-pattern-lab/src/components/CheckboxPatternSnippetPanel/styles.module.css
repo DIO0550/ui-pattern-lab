@@ -1,0 +1,137 @@
+.root {
+  border-top: 1px solid var(--checkbox-gallery-border);
+  padding-top: 0.9rem;
+}
+
+.details {
+  background: color-mix(
+    in srgb,
+    var(--checkbox-gallery-emphasis) 3%,
+    var(--checkbox-gallery-surface)
+  );
+  border: 1px solid var(--checkbox-gallery-border);
+  border-radius: 0.9rem;
+  overflow: hidden;
+}
+
+.summary {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  padding: 0.9rem 1rem;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summaryLabel {
+  color: var(--checkbox-gallery-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.summaryText,
+.emptyMessage,
+.note {
+  color: var(--checkbox-gallery-muted);
+  margin: 0;
+}
+
+.summaryText {
+  color: var(--ifm-font-color-base);
+}
+
+.details[open] .summary {
+  border-bottom: 1px solid var(--checkbox-gallery-border);
+}
+
+.content {
+  min-width: 0;
+}
+
+.details .content {
+  padding: 1rem;
+}
+
+.tabs {
+  margin-bottom: 0;
+}
+
+.tabs :global(.tabs) {
+  margin-bottom: 0.75rem;
+}
+
+.tabs :global(.tabs__item) {
+  font-weight: 700;
+}
+
+.tabs :global(.margin-top--md) {
+  margin-top: 0 !important;
+}
+
+.codeItem {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.codeHeader {
+  align-items: center;
+  display: flex;
+}
+
+.codeLabel {
+  color: var(--checkbox-gallery-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.codePanel {
+  min-width: 0;
+}
+
+.codePanel :global(.theme-code-block) {
+  margin-bottom: 0;
+}
+
+.codePanel :global(pre) {
+  overflow-x: auto;
+}
+
+.emptyMessage {
+  background: color-mix(
+    in srgb,
+    var(--checkbox-gallery-emphasis) 4%,
+    var(--checkbox-gallery-surface)
+  );
+  border: 1px dashed var(--checkbox-gallery-border);
+  border-radius: 0.9rem;
+  padding: 1rem;
+}
+
+[data-theme='dark'] .details {
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-emphasis-200) 8%,
+    var(--checkbox-gallery-surface)
+  );
+}
+
+[data-theme='dark'] .summary {
+  color: var(--ifm-font-color-base);
+}
+
+@media screen and (max-width: 640px) {
+  .summary,
+  .details .content,
+  .emptyMessage {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+}

@@ -65,6 +65,22 @@ const sidebars: SidebarsConfig = {
         'button/spacing-and-sizing',
       ],
     },
+    {
+      type: 'category',
+      label: 'チェックボックス',
+      link: {
+        type: 'doc',
+        id: 'checkbox',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        'checkbox/multiple-independent-selection',
+        'checkbox/single-checkbox-and-indeterminate',
+        'checkbox/states-and-accessibility',
+        'checkbox/mobile-and-touch-targets',
+      ],
+    },
   ],
 };
 
