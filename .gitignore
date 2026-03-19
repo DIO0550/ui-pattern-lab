@@ -142,3 +142,6 @@ vite.config.ts.timestamp-*
 .init-done
 # devcontainer init flag
 .devcontainer/.init-done
+
+# local spec workflow artifacts
+.specs/
