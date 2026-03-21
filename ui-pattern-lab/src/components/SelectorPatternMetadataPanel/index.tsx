@@ -1,0 +1,48 @@
+import type {ReactNode} from 'react';
+import clsx from 'clsx';
+import SelectorPatternSectionCard from '@site/src/components/SelectorPatternSectionCard';
+import type {SelectorPatternMetadataItem} from '@site/src/data/selectorPatternTypes';
+
+import styles from './styles.module.css';
+
+type Props = {
+  density: 'list' | 'detail';
+  entryTitle: string;
+  items: SelectorPatternMetadataItem[];
+};
+
+export default function SelectorPatternMetadataPanel({
+  density,
+  entryTitle,
+  items,
+}: Props): ReactNode {
+  const metadataList = (
+    <dl className={clsx(styles.root, density === 'detail' && styles.detailRoot)}>
+      {items.map((item) => (
+        <div
+          className={clsx(styles.item, styles[item.tone])}
+          key={`${item.tone}-${item.label}`}>
+          <dt className={styles.label}>{item.label}</dt>
+          <dd className={styles.value}>{item.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+
+  if (density === 'detail') {
+    return (
+      <SelectorPatternSectionCard
+        ariaLabel={`${entryTitle}の設計メモ`}
+        label="設計メモ"
+        title="課題 / 解決方法 / 使いどころ / 比較メモ">
+        {metadataList}
+      </SelectorPatternSectionCard>
+    );
+  }
+
+  return (
+    <section aria-label={`${entryTitle}の設計メモ`} className={styles.wrapper}>
+      {metadataList}
+    </section>
+  );
+}

@@ -5,6 +5,8 @@ import Heading from '@theme/Heading';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
+import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
+import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
 import {tablePatternEntries} from '@site/src/data/tablePatternEntries';
 
 import styles from './styles.module.css';
@@ -90,16 +92,70 @@ type LinkCard = {
   meta?: string;
 };
 
-type CategoryId = 'table' | 'ellipsis-display' | 'button' | 'checkbox';
+type LinkSection = {
+  title: string;
+  links: LinkCard[];
+};
+
+type CategoryId = 'table' | 'ellipsis-display' | 'button' | 'checkbox' | 'selector';
 
 type CategoryCard = {
   id: CategoryId;
   title: string;
   description: string;
   links: LinkCard[];
+  sections?: LinkSection[];
   expandedMeta: string;
   collapsedMeta: string;
 };
+
+const selectorOverviewLinks: LinkCard[] = [
+  {
+    title: 'セレクタカテゴリ',
+    to: '/selector',
+    description:
+      'カテゴリの入口ページです。family ごとの compare page と detail page への導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'セレクタパターン比較',
+    to: '/patterns/selector-designs',
+    description:
+      'selector 全体の判断ハブです。radio / native select / custom select / combobox / reference family の役割を整理できます。',
+    meta: '比較一覧',
+  },
+  {
+    title: 'Custom select 比較',
+    to: '/patterns/selector-custom-select-designs',
+    description:
+      'outline / soft / card の custom select variation を比較できます。',
+    meta: 'family 比較',
+  },
+  {
+    title: 'Combobox 比較',
+    to: '/patterns/selector-combobox-designs',
+    description:
+      'baseline / grouped results / empty and loading states を比較できます。',
+    meta: 'family 比較',
+  },
+];
+
+const selectorSections: LinkSection[] = groupSelectorPatternEntries(selectorPatternEntries).map(
+  (group) => ({
+    title: group.label,
+    links: group.entries.map((entry) => ({
+      title: entry.title,
+      to: `/selector/${entry.id}`,
+      description: entry.summary,
+      meta:
+        entry.id === 'native-select-compact-options' || entry.id === 'combobox-search-and-filter'
+          ? 'baseline'
+          : entry.entryType === 'reference'
+            ? 'reference'
+            : '詳細ページ',
+    })),
+  }),
+);
 
 const categoryCards: CategoryCard[] = [
   {
@@ -138,6 +194,16 @@ const categoryCards: CategoryCard[] = [
     expandedMeta: 'クリックしてチェックボックス関連の導線を閉じる',
     collapsedMeta: 'クリックしてチェックボックス関連の導線を表示',
   },
+  {
+    id: 'selector',
+    title: 'セレクタ',
+    description:
+      'フォーム入力として 1 つの値を選ぶ radio / native select / custom select / combobox を family ごとに整理し、states / validation reference へ繋ぐカテゴリです。',
+    links: selectorOverviewLinks,
+    sections: selectorSections,
+    expandedMeta: 'クリックしてセレクタ関連の導線を閉じる',
+    collapsedMeta: 'クリックしてセレクタ関連の導線を表示',
+  },
 ];
 
 function NavigationCard({
@@ -160,12 +226,47 @@ function NavigationCard({
   );
 }
 
+function CategoryLinks({category}: {category: CategoryCard}): ReactNode {
+  if (!category.sections || category.sections.length === 0) {
+    return (
+      <div className={styles.subcategoryGrid}>
+        {category.links.map((link) => (
+          <NavigationCard key={link.to} {...link} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.subcategoryStack}>
+      <div className={styles.subcategoryGrid}>
+        {category.links.map((link) => (
+          <NavigationCard key={link.to} {...link} />
+        ))}
+      </div>
+      {category.sections.map((section) => (
+        <section className={styles.subcategorySection} key={section.title}>
+          <Heading as="h3" className={styles.subcategoryTitle}>
+            {section.title}
+          </Heading>
+          <div className={styles.subcategoryGrid}>
+            {section.links.map((link) => (
+              <NavigationCard key={link.to} {...link} />
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
 export default function DocsHomeContent(): ReactNode {
   const [openStates, setOpenStates] = useState<Record<CategoryId, boolean>>({
     table: false,
     'ellipsis-display': false,
     button: false,
     checkbox: false,
+    selector: false,
   });
 
   function toggleCategory(categoryId: CategoryId): void {
@@ -179,12 +280,10 @@ export default function DocsHomeContent(): ReactNode {
     <div className={styles.root}>
       <div className={styles.intro}>
         <p className={styles.lead}>
-          UIパターンラボは、実装時に迷いやすい UI の見せ方を整理して
-          比較するためのドキュメントです。
+          UIパターンラボは、実装時に迷いやすい UI の見せ方を整理して比較するためのドキュメントです。
         </p>
         <p className={styles.muted}>
-          まずはカテゴリカードを開いて、見たいサブカテゴリへそのまま移動して
-          ください。
+          まずはカテゴリカードを開いて、見たいサブカテゴリへそのまま移動してください。
         </p>
       </div>
 
@@ -220,13 +319,8 @@ export default function DocsHomeContent(): ReactNode {
                   </article>
                 </button>
 
-                <div
-                  className={styles.subcategoryGrid}
-                  hidden={!isOpen}
-                  id={controlId}>
-                  {category.links.map((link) => (
-                    <NavigationCard key={link.to} {...link} />
-                  ))}
+                <div className={styles.subcategoryWrap} hidden={!isOpen} id={controlId}>
+                  <CategoryLinks category={category} />
                 </div>
               </div>
             );

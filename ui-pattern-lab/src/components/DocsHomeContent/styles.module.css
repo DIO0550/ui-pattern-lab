@@ -52,8 +52,23 @@
   grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
 }
 
-.subcategoryGrid[hidden] {
+.subcategoryWrap[hidden] {
   display: none;
+}
+
+.subcategoryWrap,
+.subcategoryStack,
+.subcategorySection {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.subcategoryStack {
+  gap: 1rem;
+}
+
+.subcategoryTitle {
+  margin: 0;
 }
 
 .cardButton {
