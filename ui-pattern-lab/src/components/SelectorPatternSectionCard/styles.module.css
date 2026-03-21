@@ -1,0 +1,55 @@
+.root {
+  --selector-gallery-surface-fallback: var(
+    --selector-gallery-surface,
+    var(--ifm-card-background-color, var(--ifm-background-surface-color))
+  );
+  --selector-gallery-border-fallback: var(
+    --selector-gallery-border,
+    var(--ifm-color-emphasis-200)
+  );
+  --selector-gallery-muted-fallback: var(
+    --selector-gallery-muted,
+    var(--ifm-color-emphasis-700)
+  );
+  --selector-gallery-emphasis-fallback: var(
+    --selector-gallery-emphasis,
+    var(--ifm-color-primary)
+  );
+  background: color-mix(
+    in srgb,
+    var(--selector-gallery-emphasis-fallback) 4%,
+    var(--selector-gallery-surface-fallback)
+  );
+  border: 1px solid var(--selector-gallery-border-fallback);
+  border-radius: 0.95rem;
+  display: grid;
+  gap: 0.9rem;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.label {
+  color: var(--selector-gallery-muted-fallback);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.description {
+  color: var(--selector-gallery-muted-fallback);
+  margin: 0;
+}
+
+.content {
+  min-width: 0;
+}

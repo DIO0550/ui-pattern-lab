@@ -82,6 +82,64 @@ const sidebars: SidebarsConfig = {
         'checkbox/mobile-and-touch-targets',
       ],
     },
+    {
+      type: 'category',
+      label: 'セレクタ',
+      link: {
+        type: 'doc',
+        id: 'selector',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        {
+          type: 'category',
+          label: 'Radio',
+          collapsible: true,
+          collapsed: false,
+          items: [
+            'selector/radio-group-single-selection',
+            'selector/selectable-radio-cards',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Native select',
+          collapsible: true,
+          collapsed: false,
+          items: ['selector/native-select-compact-options'],
+        },
+        {
+          type: 'category',
+          label: 'Custom select',
+          collapsible: true,
+          collapsed: false,
+          items: [
+            'selector/custom-select-outline-listbox',
+            'selector/custom-select-soft-options',
+            'selector/custom-select-card-options',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Combobox',
+          collapsible: true,
+          collapsed: false,
+          items: [
+            'selector/combobox-search-and-filter',
+            'selector/combobox-grouped-results',
+            'selector/combobox-empty-and-loading-states',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'States / validation',
+          collapsible: true,
+          collapsed: false,
+          items: ['selector/states-and-validation'],
+        },
+      ],
+    },
   ],
 };
 

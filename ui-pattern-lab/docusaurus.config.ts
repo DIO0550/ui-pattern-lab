@@ -94,6 +94,10 @@ const config: Config = {
               label: 'チェックボックス',
               to: '/checkbox',
             },
+            {
+              label: 'セレクタ',
+              to: '/selector',
+            },
           ],
         },
         {

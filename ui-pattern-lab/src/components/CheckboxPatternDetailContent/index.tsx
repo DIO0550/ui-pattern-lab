@@ -18,6 +18,7 @@ export default function CheckboxPatternDetailContent({entryId}: Props): ReactNod
   }
 
   const showToggleReference = entry.id === 'single-checkbox-and-indeterminate';
+  const showSelectorReference = entry.id === 'selectable-cards';
 
   return (
     <div className={`container margin-vert--lg ${styles.root}`}>
@@ -33,6 +34,13 @@ export default function CheckboxPatternDetailContent({entryId}: Props): ReactNod
         、カテゴリ全体へ戻る場合は <Link to="/checkbox">チェックボックス</Link>
         を参照してください。
       </p>
+      {showSelectorReference ? (
+        <p className={styles.contextNote}>
+          card 見た目でも最終的に 1 つの field value を選ばせるなら{' '}
+          <Link to="/selector/selectable-radio-cards">セレクタ / カード型の radio selection</Link>{' '}
+          を参照してください。checkbox card では 0 件以上の複数選択と確認入力を優先します。
+        </p>
+      ) : null}
       {showToggleReference ? (
         <p className={styles.contextNote}>
           押下状態のトグル UI を見せたい場合は{' '}

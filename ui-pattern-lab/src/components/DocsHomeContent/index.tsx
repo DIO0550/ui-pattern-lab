@@ -1,10 +1,13 @@
 import type {ReactNode} from 'react';
 import {useState} from 'react';
+import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
+import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
+import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
 import {tablePatternEntries} from '@site/src/data/tablePatternEntries';
 
 import styles from './styles.module.css';
@@ -90,16 +93,70 @@ type LinkCard = {
   meta?: string;
 };
 
-type CategoryId = 'table' | 'ellipsis-display' | 'button' | 'checkbox';
+type LinkSection = {
+  title: string;
+  links: LinkCard[];
+};
+
+type CategoryId = 'table' | 'ellipsis-display' | 'button' | 'checkbox' | 'selector';
 
 type CategoryCard = {
   id: CategoryId;
   title: string;
   description: string;
   links: LinkCard[];
+  sections?: LinkSection[];
   expandedMeta: string;
   collapsedMeta: string;
 };
+
+const selectorOverviewLinks: LinkCard[] = [
+  {
+    title: 'セレクタカテゴリ',
+    to: '/selector',
+    description:
+      'カテゴリの入口ページです。family ごとの compare page と detail page への導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'セレクタパターン比較',
+    to: '/patterns/selector-designs',
+    description:
+      'selector 全体の判断ハブです。radio / native select / custom select / combobox / reference family の役割を整理できます。',
+    meta: '比較一覧',
+  },
+  {
+    title: 'Custom select 比較',
+    to: '/patterns/selector-custom-select-designs',
+    description:
+      'outline / soft / card の custom select variation を比較できます。',
+    meta: 'family 比較',
+  },
+  {
+    title: 'Combobox 比較',
+    to: '/patterns/selector-combobox-designs',
+    description:
+      'baseline / grouped results / empty and loading states を比較できます。',
+    meta: 'family 比較',
+  },
+];
+
+const selectorSections: LinkSection[] = groupSelectorPatternEntries(selectorPatternEntries).map(
+  (group) => ({
+    title: group.label,
+    links: group.entries.map((entry) => ({
+      title: entry.title,
+      to: `/selector/${entry.id}`,
+      description: entry.summary,
+      meta:
+        entry.id === 'native-select-compact-options' || entry.id === 'combobox-search-and-filter'
+          ? 'baseline'
+          : entry.entryType === 'reference'
+            ? 'reference'
+            : '詳細ページ',
+    })),
+  }),
+);
 
 const categoryCards: CategoryCard[] = [
   {
@@ -138,99 +195,188 @@ const categoryCards: CategoryCard[] = [
     expandedMeta: 'クリックしてチェックボックス関連の導線を閉じる',
     collapsedMeta: 'クリックしてチェックボックス関連の導線を表示',
   },
+  {
+    id: 'selector',
+    title: 'セレクタ',
+    description:
+      'フォーム入力として 1 つの値を選ぶ radio / native select / custom select / combobox を family ごとに整理し、states / validation reference へ繋ぐカテゴリです。',
+    links: selectorOverviewLinks,
+    sections: selectorSections,
+    expandedMeta: 'クリックしてセレクタ関連の導線を閉じる',
+    collapsedMeta: 'クリックしてセレクタ関連の導線を表示',
+  },
 ];
 
-function NavigationCard({
+type NavigationListItemProps = LinkCard;
+
+/**
+ * Renders a single navigation row inside an expanded category panel.
+ */
+function NavigationListItem({
   title,
   to,
   description,
   meta,
-}: LinkCard): ReactNode {
+}: NavigationListItemProps): ReactNode {
   return (
-    <Link className={styles.cardLink} to={to}>
-      <article className={styles.card}>
-        <span className={styles.cardEyebrow}>リンク</span>
-        <Heading as="h3" className={styles.cardTitle}>
-          {title}
-        </Heading>
-        <p className={styles.cardDescription}>{description}</p>
-        {meta ? <p className={styles.cardMeta}>{meta}</p> : null}
+    <Link className={styles.listLink} to={to}>
+      <article className={styles.listLinkCard}>
+        <div className={styles.listLinkHeaderRow}>
+          <span className={styles.listLinkTitle}>{title}</span>
+          {meta ? <span className={styles.listLinkMeta}>{meta}</span> : null}
+        </div>
+        <p className={styles.listLinkDescription}>{description}</p>
       </article>
     </Link>
   );
 }
 
+type CategoryLinksProps = {
+  category: CategoryCard;
+};
+
+/**
+ * Renders the expanded navigation content for one home category.
+ */
+function CategoryLinks({category}: CategoryLinksProps): ReactNode {
+  if (!category.sections || category.sections.length === 0) {
+    return (
+      <div className={styles.linkStack}>
+        {category.links.map((link) => (
+          <NavigationListItem key={link.to} {...link} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.linkGroupStack}>
+      <div className={styles.linkStack}>
+        {category.links.map((link) => (
+          <NavigationListItem key={link.to} {...link} />
+        ))}
+      </div>
+      {category.sections.map((section) => (
+        <section className={styles.linkSection} key={section.title}>
+          <Heading as="h4" className={styles.linkSectionTitle}>
+            {section.title}
+          </Heading>
+          <div className={styles.linkStack}>
+            {section.links.map((link) => (
+              <NavigationListItem key={link.to} {...link} />
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+type CategoryAccordionItemProps = {
+  category: CategoryCard;
+  isOpen: boolean;
+  onToggle: (categoryId: CategoryId) => void;
+};
+
+/**
+ * Renders one top-level category as a single-open accordion item.
+ */
+function CategoryAccordionItem({
+  category,
+  isOpen,
+  onToggle,
+}: CategoryAccordionItemProps): ReactNode {
+  const buttonId = `${category.id}-category-trigger`;
+  const panelId = `${category.id}-category-panel`;
+
+  return (
+    <section className={styles.accordionItem}>
+      <Heading as="h3" className={styles.accordionHeading}>
+        <button
+          aria-controls={panelId}
+          aria-expanded={isOpen}
+          className={styles.accordionTrigger}
+          id={buttonId}
+          onClick={() => onToggle(category.id)}
+          type="button">
+          <span className={styles.accordionLabel}>カテゴリ</span>
+          <span className={styles.accordionHeaderRow}>
+            <span className={styles.accordionTitle}>{category.title}</span>
+            <span className={styles.accordionStatus}>
+              {isOpen ? '開いています' : '閉じています'}
+            </span>
+          </span>
+          <span className={styles.accordionDescription}>{category.description}</span>
+          <span className={styles.accordionMetaRow}>
+            <span className={styles.accordionMetaText}>
+              {isOpen ? category.expandedMeta : category.collapsedMeta}
+            </span>
+            <span
+              aria-hidden="true"
+              className={clsx(
+                styles.accordionChevron,
+                isOpen && styles.accordionChevronOpen,
+              )}>
+              ▾
+            </span>
+          </span>
+        </button>
+      </Heading>
+
+      <div
+        aria-hidden={!isOpen}
+        aria-labelledby={buttonId}
+        className={clsx(styles.accordionPanel, isOpen && styles.accordionPanelOpen)}
+        id={panelId}
+        role="region">
+        <div className={styles.accordionPanelInner}>
+          <div className={styles.accordionPanelContent}>
+            <CategoryLinks category={category} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Renders the top-level home navigation for all pattern categories.
+ */
 export default function DocsHomeContent(): ReactNode {
-  const [openStates, setOpenStates] = useState<Record<CategoryId, boolean>>({
-    table: false,
-    'ellipsis-display': false,
-    button: false,
-    checkbox: false,
-  });
+  const [activeCategoryId, setActiveCategoryId] = useState<CategoryId | null>(null);
 
   function toggleCategory(categoryId: CategoryId): void {
-    setOpenStates((current) => ({
-      ...current,
-      [categoryId]: !current[categoryId],
-    }));
+    setActiveCategoryId((currentCategoryId) => {
+      if (currentCategoryId === categoryId) {
+        return null;
+      }
+
+      return categoryId;
+    });
   }
 
   return (
     <div className={styles.root}>
       <div className={styles.intro}>
         <p className={styles.lead}>
-          UIパターンラボは、実装時に迷いやすい UI の見せ方を整理して
-          比較するためのドキュメントです。
+          UIパターンラボは、実装時に迷いやすい UI の見せ方を整理して比較するためのドキュメントです。
         </p>
         <p className={styles.muted}>
-          まずはカテゴリカードを開いて、見たいサブカテゴリへそのまま移動して
-          ください。
+          まずは気になるカテゴリを開いて、見たいサブカテゴリや比較一覧へそのまま進んでください。
         </p>
       </div>
 
       <section className={styles.section}>
         <Heading as="h2">カテゴリ</Heading>
         <div className={styles.categoryGrid}>
-          {categoryCards.map((category) => {
-            const isOpen = openStates[category.id];
-            const controlId = `${category.id}-subcategory-links`;
-
-            return (
-              <div className={styles.categoryBlock} key={category.id}>
-                <button
-                  aria-controls={controlId}
-                  aria-expanded={isOpen}
-                  className={styles.cardButton}
-                  onClick={() => toggleCategory(category.id)}
-                  type="button">
-                  <article className={styles.card}>
-                    <span className={styles.cardEyebrow}>カテゴリ</span>
-                    <div className={styles.cardHeaderRow}>
-                      <Heading as="h3" className={styles.cardTitle}>
-                        {category.title}
-                      </Heading>
-                      <span className={styles.toggleBadge}>
-                        {isOpen ? '開いています' : '閉じています'}
-                      </span>
-                    </div>
-                    <p className={styles.cardDescription}>{category.description}</p>
-                    <p className={styles.cardMeta}>
-                      {isOpen ? category.expandedMeta : category.collapsedMeta}
-                    </p>
-                  </article>
-                </button>
-
-                <div
-                  className={styles.subcategoryGrid}
-                  hidden={!isOpen}
-                  id={controlId}>
-                  {category.links.map((link) => (
-                    <NavigationCard key={link.to} {...link} />
-                  ))}
-                </div>
-              </div>
-            );
-          })}
+          {categoryCards.map((category) => (
+            <CategoryAccordionItem
+              category={category}
+              isOpen={activeCategoryId === category.id}
+              key={category.id}
+              onToggle={toggleCategory}
+            />
+          ))}
         </div>
       </section>
     </div>

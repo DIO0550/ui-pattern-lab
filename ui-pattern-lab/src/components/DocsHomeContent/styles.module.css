@@ -28,40 +28,200 @@
 .grid {
   display: grid;
   gap: 1rem;
-}
-
-.grid {
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 }
 
 .categoryGrid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-}
-
-.categoryBlock {
-  align-content: start;
-  display: grid;
   gap: 0.9rem;
+  grid-template-columns: 1fr;
 }
 
-.subcategoryGrid {
-  display: grid;
-  gap: 0.85rem;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+.accordionItem {
+  background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 1rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
 }
 
-.subcategoryGrid[hidden] {
-  display: none;
+.accordionItem:hover,
+.accordionItem:focus-within {
+  border-color: var(--ifm-color-primary);
 }
 
-.cardButton {
+.accordionHeading {
+  margin: 0;
+}
+
+.accordionTrigger {
   background: transparent;
   border: 0;
+  color: inherit;
   cursor: pointer;
-  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.1rem 1.25rem;
   text-align: left;
+  width: 100%;
+}
+
+.accordionTrigger:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: -2px;
+}
+
+.accordionLabel {
+  color: var(--ifm-color-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.accordionHeaderRow {
+  align-items: start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.accordionTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.accordionStatus {
+  background: color-mix(in srgb, var(--ifm-color-primary) 14%, transparent);
+  border-radius: 999px;
+  color: var(--ifm-font-color-base);
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+}
+
+.accordionDescription {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+}
+
+.accordionMetaRow {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.accordionMetaText {
+  color: var(--ifm-color-primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.accordionChevron {
+  color: var(--ifm-color-primary);
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.accordionChevronOpen {
+  transform: rotate(180deg);
+}
+
+.accordionPanel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.24s ease,
+    opacity 0.24s ease,
+    visibility 0.24s ease;
+  visibility: hidden;
+}
+
+.accordionPanelOpen {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+.accordionPanelInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.accordionPanelContent {
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  display: grid;
+  gap: 1rem;
+  padding: 0.3rem 1.25rem 1.25rem;
+}
+
+.linkGroupStack,
+.linkStack,
+.linkSection {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.linkGroupStack {
+  gap: 1rem;
+}
+
+.linkSectionTitle {
+  margin: 0;
+}
+
+.listLink {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.listLinkCard {
+  background: color-mix(
+    in srgb,
+    var(--ifm-card-background-color, var(--ifm-background-surface-color)) 94%,
+    var(--ifm-color-primary) 6%
+  );
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0.9rem;
+  display: grid;
+  gap: 0.6rem;
+  padding: 1rem;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.listLinkHeaderRow {
+  align-items: start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.listLinkTitle {
+  margin: 0;
+}
+
+.listLinkDescription {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.listLinkMeta {
+  color: var(--ifm-color-primary);
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .cardLink {
@@ -97,26 +257,9 @@
   margin: 0;
 }
 
-.cardHeaderRow {
-  align-items: start;
-  display: flex;
-  gap: 0.75rem;
-  justify-content: space-between;
-}
-
 .cardDescription {
   color: var(--ifm-color-emphasis-700);
   margin: 0;
-}
-
-.toggleBadge {
-  background: color-mix(in srgb, var(--ifm-color-primary) 14%, transparent);
-  border-radius: 999px;
-  color: var(--ifm-font-color-base);
-  flex-shrink: 0;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 0.25rem 0.6rem;
 }
 
 .cardMeta {
@@ -126,16 +269,22 @@
   margin: 0;
 }
 
-[data-theme='dark'] .cardButton .card,
+[data-theme='dark'] .accordionItem,
+[data-theme='dark'] .listLinkCard,
 [data-theme='dark'] .card {
   border-color: var(--ifm-color-emphasis-300);
 }
 
-.cardButton:hover .card,
-.cardButton:focus-visible .card,
+.listLink:hover .listLinkCard,
+.listLink:focus-visible .listLinkCard,
 .cardLink:hover .card,
 .cardLink:focus-visible .card {
   border-color: var(--ifm-color-primary);
+  transform: translateY(-1px);
+}
+
+.cardLink:hover .card,
+.cardLink:focus-visible .card {
   transform: translateY(-2px);
 }
 
@@ -148,8 +297,24 @@
     font-size: 1rem;
   }
 
-  .categoryGrid,
-  .subcategoryGrid {
-    grid-template-columns: 1fr;
+  .accordionHeaderRow,
+  .accordionMetaRow,
+  .listLinkHeaderRow {
+    flex-direction: column;
+  }
+
+  .accordionStatus,
+  .listLinkMeta {
+    align-self: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordionItem,
+  .accordionPanel,
+  .accordionChevron,
+  .listLinkCard,
+  .card {
+    transition: none;
   }
 }
