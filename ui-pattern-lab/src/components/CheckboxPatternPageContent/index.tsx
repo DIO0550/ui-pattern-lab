@@ -165,7 +165,9 @@ export default function CheckboxPatternPageContent(): ReactNode {
           </table>
         </div>
         <p className={styles.matrixNote}>
-          押下状態のトグル UI を見せたい場合は{' '}
+          1 つの field value を選ぶ radio / native select / combobox は{' '}
+          <Link to="/patterns/selector-designs">セレクタデザインパターン</Link>{' '}
+          を参照してください。押下状態のトグル UI を見せたい場合は{' '}
           <Link to="/button/toggle-and-selection">ボタン / トグル・選択</Link>{' '}
           を参照してください。checkbox は送信前の確認や複数項目の一括管理に向きます。
         </p>

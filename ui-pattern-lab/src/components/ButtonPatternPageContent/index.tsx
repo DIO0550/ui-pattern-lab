@@ -1,4 +1,5 @@
 import type {ReactNode} from 'react';
+import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import ButtonPatternGallery from '@site/src/components/ButtonPatternGallery';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
@@ -62,6 +63,11 @@ export default function ButtonPatternPageContent(): ReactNode {
             <p>icon-only の accessible name、toggle の `aria-pressed`、danger の明示ラベルを欠かさず扱います。</p>
           </article>
         </div>
+        <p className={styles.compareLead}>
+          フォーム入力として 1 つの値を選ぶ radio / native select / combobox は{' '}
+          <Link to="/patterns/selector-designs">セレクタデザインパターン</Link>{' '}
+          を参照してください。button / toggle は押した瞬間に状態や表示モードが変わる UI を扱います。
+        </p>
       </section>
 
       <section className="container margin-bottom--xl">
