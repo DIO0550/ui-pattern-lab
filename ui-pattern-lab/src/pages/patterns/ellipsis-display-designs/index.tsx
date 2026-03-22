@@ -7,15 +7,15 @@ export default function EllipsisDisplayDesignPatternsPage(): ReactNode {
   return (
     <Layout
       title="省略表示パターン"
-      description="1行省略、複数行 clamp、全文補足、アクセシブルな開閉を含む省略表示パターンを、preview と CSS / TSX 例つきで比較します。">
+      description="1行省略、複数行 clamp、全文補足、アクセシブルな開閉を、比較要点と preview を先に見ながら選び分けるページです。">
       <header className="hero hero--primary">
         <div className="container">
           <Heading as="h1" className="hero__title">
             省略表示パターン
           </Heading>
           <p className="hero__subtitle">
-            1行省略、複数行 clamp、全文補足、アクセシブルな開閉を横断し、
-            一覧では要約つきの CSS / TSX 例を折りたたみ、詳細ページでは全文を
+            1行省略、複数行 clamp、全文補足、アクセシブルな開閉を先に比較し、
+            一覧では要点と preview を並べ、詳細ページで CSS / TSX 例全文を
             確認できます。
           </p>
         </div>

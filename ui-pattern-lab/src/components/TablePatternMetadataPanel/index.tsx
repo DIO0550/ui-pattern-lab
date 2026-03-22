@@ -27,14 +27,26 @@ export default function TablePatternMetadataPanel({
   entryTitle,
   items,
 }: TablePatternMetadataPanelProps): ReactNode {
+  const visibleItems = density === 'list' ? items.slice(0, 2) : items;
+
   const metadataList = (
-    <dl className={clsx(styles.root, density === 'detail' && styles.detailRoot)}>
-      {items.map((item) => (
+    <dl
+      className={clsx(
+        styles.root,
+        density === 'detail' ? styles.detailRoot : styles.listRoot,
+      )}>
+      {visibleItems.map((item) => (
         <div
-          className={clsx(styles.item, styles[item.tone])}
+          className={clsx(
+            styles.item,
+            density === 'list' && styles.listItem,
+            styles[item.tone],
+          )}
           key={`${item.tone}-${item.label}`}>
           <dt className={styles.label}>{item.label}</dt>
-          <dd className={styles.value}>{item.value}</dd>
+          <dd className={clsx(styles.value, density === 'list' && styles.listValue)}>
+            {item.value}
+          </dd>
         </div>
       ))}
     </dl>

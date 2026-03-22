@@ -14,9 +14,9 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.25rem;
   list-style: none;
-  padding: 0.9rem 1rem;
+  padding: 0.75rem 0.85rem;
 }
 
 .summary::-webkit-details-marker {
@@ -40,7 +40,7 @@
 
 .summaryLabel {
   color: var(--gallery-muted);
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -55,6 +55,11 @@
 
 .summaryText {
   color: var(--ifm-font-color-base);
+  display: -webkit-box;
+  line-height: 1.5;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .details[open] .summary {
@@ -70,7 +75,7 @@
 }
 
 .details .content {
-  padding: 1rem;
+  padding: 0.85rem;
 }
 
 .tabs {
@@ -138,7 +143,7 @@
   .summary,
   .details .content,
   .emptyMessage {
-    padding-left: 0.85rem;
-    padding-right: 0.85rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 }

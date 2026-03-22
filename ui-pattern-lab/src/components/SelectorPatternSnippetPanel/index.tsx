@@ -86,7 +86,12 @@ export default function SelectorPatternSnippetPanel({
       <section aria-label={`${entryTitle}のCSS / TSXサンプル`} className={styles.root}>
         <details className={styles.details}>
           <summary className={styles.summary}>
-            <span className={styles.summaryLabel}>CSS / TSX サンプルを見る</span>
+            <span className={styles.summaryHeader}>
+              <span className={styles.summaryLabel}>CSS / TSX サンプルを見る</span>
+              <span aria-hidden="true" className={styles.summaryIndicator}>
+                ▾
+              </span>
+            </span>
             <span className={styles.summaryText}>{snippets.snippetSummary}</span>
           </summary>
           <div className={styles.content}>

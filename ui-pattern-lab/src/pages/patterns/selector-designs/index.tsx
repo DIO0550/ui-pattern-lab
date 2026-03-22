@@ -7,7 +7,7 @@ export default function SelectorDesignPatternsPage(): ReactNode {
   return (
     <Layout
       title="セレクタデザインパターン"
-      description="selector 全体の判断ハブとして、radio / native select / custom select / combobox / reference family の導線を整理します。">
+      description="selector 全体の判断ハブとして、radio / native select / custom select / combobox / reference family を比較軸から選び分けるページです。">
       <header className="hero hero--primary">
         <div className="container">
           <Heading as="h1" className="hero__title">
@@ -15,8 +15,8 @@ export default function SelectorDesignPatternsPage(): ReactNode {
           </Heading>
           <p className="hero__subtitle">
             フォーム入力として 1 つの値を選ぶ UI を、候補の見え方、検索必要性、validation、
-            モバイル適性の観点で比較し、そこから family ごとの compare page や baseline
-            detail page へ進みます。
+            モバイル適性の比較から整理し、そこから family ごとの compare page や
+            baseline detail page へ進みます。
           </p>
         </div>
       </header>
