@@ -1,6 +1,6 @@
 import type {ReactNode} from 'react';
-import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import PatternCatalogCard from '@site/src/components/PatternCatalogCard';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 
 import styles from './styles.module.css';
@@ -18,35 +18,30 @@ export default function CheckboxCategoryContent(): ReactNode {
 
       <section className={styles.section}>
         <Heading as="h2">まず比較一覧を見る</Heading>
-        <Link className={styles.overviewLink} to="/patterns/checkbox-designs">
-          <article className={styles.overviewCard}>
-            <span className={styles.cardEyebrow}>比較一覧</span>
-            <Heading as="h3" className={styles.cardTitle}>
-              チェックボックスデザインパターン
-            </Heading>
-            <p className={styles.cardDescription}>
-              {patternCount} 種類の checkbox パターンを、選択モデル、送信タイミング、カード型 UI、タップ領域、アクセシビリティの観点で比較できます。
-            </p>
-            <p className={styles.cardMeta}>
-              比較マトリクスから preview と CSS / TSX サンプルへ進む
-            </p>
-          </article>
-        </Link>
+        <PatternCatalogCard
+          badge={`${patternCount}件`}
+          description="選択モデル、送信タイミング、カード型 UI、タップ領域の違いを先に比較してから、個別パターンへ進めます。"
+          eyebrow="比較一覧"
+          meta="比較マトリクスから preview と CSS / TSX サンプルへ進む"
+          title="チェックボックスデザインパターン"
+          titleId="checkbox-compare-title"
+          to="/patterns/checkbox-designs"
+          variant="featured"
+        />
       </section>
 
       <section className={styles.section}>
         <Heading as="h2">個別のパターンへ進む</Heading>
         <div className={styles.grid}>
           {checkboxPatternEntries.map((entry) => (
-            <Link className={styles.cardLink} key={entry.id} to={`/checkbox/${entry.id}`}>
-              <article className={styles.card}>
-                <span className={styles.cardEyebrow}>詳細ページ</span>
-                <Heading as="h3" className={styles.cardTitle}>
-                  {entry.title}
-                </Heading>
-                <p className={styles.cardDescription}>{entry.summary}</p>
-              </article>
-            </Link>
+            <PatternCatalogCard
+              description={entry.summary}
+              eyebrow="詳細ページ"
+              key={entry.id}
+              title={entry.title}
+              to={`/checkbox/${entry.id}`}
+              variant="default"
+            />
           ))}
         </div>
       </section>
