@@ -1,8 +1,8 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
 import PatternComparisonPageShell from '@site/src/components/PatternComparisonPageShell';
-import SelectorPatternGallery from '@site/src/components/SelectorPatternGallery';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
 import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
 import type {SelectorPatternCategoryId} from '@site/src/data/selectorPatternTypes';
@@ -28,6 +28,13 @@ export default function SelectorPatternCollectionPageContent({
 }: Props): ReactNode {
   const familyEntries = selectorPatternEntries.filter((entry) => categoryIds.includes(entry.category));
   const groupedEntries = groupSelectorPatternEntries(familyEntries);
+  const compareItems = familyEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/selector/${entry.id}`,
+  }));
 
   return (
     <PatternComparisonPageShell
@@ -61,9 +68,9 @@ export default function SelectorPatternCollectionPageContent({
         <>
           <Heading as="h2">パターンを比較する</Heading>
           <p>
-            family 内の preview と比較要点を先に見比べてから、必要な detail page を読み進められます。
+            family 内の比較メモだけを短く見比べてから、必要な detail page で preview や実装例を読み進められます。
           </p>
-          <SelectorPatternGallery density="list" entries={familyEntries} />
+          <PatternCompareCardGrid items={compareItems} />
         </>
       }
     />

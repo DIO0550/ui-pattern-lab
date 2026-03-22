@@ -1,12 +1,20 @@
 import type {ReactNode} from 'react';
+import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
-import PatternCatalogCard from '@site/src/components/PatternCatalogCard';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 
 import styles from './styles.module.css';
 
 export default function ButtonCategoryContent(): ReactNode {
   const patternCount = buttonPatternEntries.length;
+  const compareItems = buttonPatternEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/button/${entry.id}`,
+  }));
 
   return (
     <div className={`container margin-vert--lg ${styles.root}`}>
@@ -15,33 +23,12 @@ export default function ButtonCategoryContent(): ReactNode {
       </p>
 
       <section className={styles.section}>
-        <Heading as="h2">まず比較一覧を見る</Heading>
-        <PatternCatalogCard
-          badge={`${patternCount}件`}
-          description="強調度、状態、危険操作、余白設計の判断軸を先に見比べてから、個別パターンへ進めます。"
-          eyebrow="比較一覧"
-          meta="compare page で preview と CSS / TSX サンプルを確認"
-          title="ボタンデザインパターン"
-          titleId="button-compare-title"
-          to="/patterns/button-designs"
-          variant="featured"
-        />
-      </section>
-
-      <section className={styles.section}>
-        <Heading as="h2">個別のパターンへ進む</Heading>
-        <div className={styles.grid}>
-          {buttonPatternEntries.map((entry) => (
-            <PatternCatalogCard
-              description={entry.summary}
-              eyebrow="詳細ページ"
-              key={entry.id}
-              title={entry.title}
-              to={`/button/${entry.id}`}
-              variant="default"
-            />
-          ))}
-        </div>
+        <Heading as="h2">先に比較軸を整理する</Heading>
+        <p className={styles.sectionLead}>
+          横断ルールの全体像は <Link to="/patterns/button-designs">ボタンデザインパターン</Link>{' '}
+          で確認しつつ、ここでは収録している {patternCount} 件の要点だけを短く見比べます。
+        </p>
+        <PatternCompareCardGrid items={compareItems} />
       </section>
     </div>
   );

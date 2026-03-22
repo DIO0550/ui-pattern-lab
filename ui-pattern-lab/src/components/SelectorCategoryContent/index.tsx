@@ -1,4 +1,5 @@
 import type {ReactNode} from 'react';
+import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import PatternCatalogCard from '@site/src/components/PatternCatalogCard';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
@@ -67,24 +68,12 @@ export default function SelectorCategoryContent(): ReactNode {
       </p>
 
       <section className={styles.section}>
-        <Heading as="h2">まず全体ハブを見る</Heading>
-        <PatternCatalogCard
-          badge={`${categoryGroups.length} family`}
-          description="radio / native select / combobox の判断軸を確認し、そこから custom select と combobox family の比較ページへ進めます。"
-          eyebrow="比較一覧"
-          meta="hub から family 別の比較・詳細ページへ進む"
-          title="セレクタデザインパターン"
-          titleId="selector-overview-title"
-          to="/patterns/selector-designs"
-          variant="featured"
-        />
-      </section>
-
-      <section className={styles.section}>
-        <Heading as="h2">family から探す</Heading>
+        <Heading as="h2">family から比較する</Heading>
         <p className={styles.sectionLead}>
-          family ごとに primary CTA を 1 つだけ置き、必要に応じて detail page を補助リンクとして並べます。
-          radio を第一候補にしつつ、native / custom / combobox を役割で切り分けます。
+          selector 全体の判断軸は{' '}
+          <Link to="/patterns/selector-designs">セレクタデザインパターン</Link> で確認しつつ、
+          ここでは {categoryGroups.length} family の入口を短く比べます。radio を第一候補にしつつ、
+          native / custom / combobox を役割で切り分けます。
         </p>
         <div className={styles.grid}>
           {categoryGroups.map((group) => {

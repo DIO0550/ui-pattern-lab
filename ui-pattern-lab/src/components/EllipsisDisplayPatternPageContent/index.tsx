@@ -1,8 +1,8 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
-import EllipsisDisplayPatternGallery from '@site/src/components/EllipsisDisplayPatternGallery';
 import PatternComparisonAxisGrid from '@site/src/components/PatternComparisonAxisGrid';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
 import PatternComparisonPageShell from '@site/src/components/PatternComparisonPageShell';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
 
@@ -28,6 +28,14 @@ const axisItems = [
 ] as const;
 
 export default function EllipsisDisplayPatternPageContent(): ReactNode {
+  const compareItems = ellipsisDisplayPatternEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/ellipsis-display/${entry.id}`,
+  }));
+
   return (
     <PatternComparisonPageShell
       summary={
@@ -78,12 +86,9 @@ export default function EllipsisDisplayPatternPageContent(): ReactNode {
         <>
           <Heading as="h2">パターンを比較する</Heading>
           <p>
-            一覧では preview と全文到達方法の違いを見比べ、詳細ページで課題・解決方法・CSS / TSX 例を深掘りします。
+            一覧では全文到達方法の違いを短く見比べ、詳細ページで preview、課題・解決方法、CSS / TSX 例を深掘りします。
           </p>
-          <EllipsisDisplayPatternGallery
-            density="list"
-            entries={ellipsisDisplayPatternEntries}
-          />
+          <PatternCompareCardGrid items={compareItems} />
         </>
       }
     />

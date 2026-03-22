@@ -1,8 +1,8 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
-import ButtonPatternGallery from '@site/src/components/ButtonPatternGallery';
 import PatternComparisonAxisGrid from '@site/src/components/PatternComparisonAxisGrid';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
 import PatternComparisonPageShell from '@site/src/components/PatternComparisonPageShell';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 
@@ -28,6 +28,14 @@ const axisItems = [
 ] as const;
 
 export default function ButtonPatternPageContent(): ReactNode {
+  const compareItems = buttonPatternEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/button/${entry.id}`,
+  }));
+
   return (
     <PatternComparisonPageShell
       summary={
@@ -77,9 +85,9 @@ export default function ButtonPatternPageContent(): ReactNode {
         <>
           <Heading as="h2">パターンを比較する</Heading>
           <p>
-            一覧では preview と比較要点を先に見比べ、詳細ページで状態差分や CSS / TSX サンプルを掘り下げます。
+            一覧では各パターンの要点だけを短く見比べ、詳細ページで状態差分や preview、CSS / TSX サンプルを掘り下げます。
           </p>
-          <ButtonPatternGallery density="list" entries={buttonPatternEntries} />
+          <PatternCompareCardGrid items={compareItems} />
         </>
       }
     />

@@ -1,11 +1,21 @@
 import type {ReactNode} from 'react';
+import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
 import PatternCatalogCard from '@site/src/components/PatternCatalogCard';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
 
 import styles from './styles.module.css';
 
 export default function EllipsisDisplayCategoryContent(): ReactNode {
+  const compareItems = ellipsisDisplayPatternEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/ellipsis-display/${entry.id}`,
+  }));
+
   return (
     <div className={`container margin-vert--lg ${styles.root}`}>
       <p className={styles.lead}>
@@ -15,33 +25,13 @@ export default function EllipsisDisplayCategoryContent(): ReactNode {
       </p>
 
       <section className={styles.section}>
-        <Heading as="h2">まず比較一覧を見る</Heading>
-        <PatternCatalogCard
-          badge={`${ellipsisDisplayPatternEntries.length}件`}
-          description="1行省略、複数行 clamp、全文補足、アクセシブルな開閉の判断軸を横断で比較できます。"
-          eyebrow="比較一覧"
-          meta="overview から preview、設計メモ、CSS / TSX 例をまとめて確認"
-          title="省略表示パターン"
-          titleId="ellipsis-display-compare-title"
-          to="/patterns/ellipsis-display-designs"
-          variant="featured"
-        />
-      </section>
-
-      <section className={styles.section}>
-        <Heading as="h2">個別のパターンへ進む</Heading>
-        <div className={styles.grid}>
-          {ellipsisDisplayPatternEntries.map((entry) => (
-            <PatternCatalogCard
-              description={entry.summary}
-              eyebrow="詳細ページ"
-              key={entry.id}
-              title={entry.title}
-              to={`/ellipsis-display/${entry.id}`}
-              variant="default"
-            />
-          ))}
-        </div>
+        <Heading as="h2">先に省略ルールを整理する</Heading>
+        <p className={styles.sectionLead}>
+          generic な判断軸は{' '}
+          <Link to="/patterns/ellipsis-display-designs">省略表示パターン</Link> で確認しつつ、
+          ここでは収録している {ellipsisDisplayPatternEntries.length} 件の要点だけを短く見比べます。
+        </p>
+        <PatternCompareCardGrid items={compareItems} />
       </section>
 
       <section className={styles.section}>

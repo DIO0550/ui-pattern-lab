@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
-import CheckboxPatternGallery from '@site/src/components/CheckboxPatternGallery';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
 import PatternComparisonPageShell from '@site/src/components/PatternComparisonPageShell';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 
@@ -111,6 +111,14 @@ const matrixRows = [
 ] as const satisfies readonly MatrixRow[];
 
 export default function CheckboxPatternPageContent(): ReactNode {
+  const compareItems = checkboxPatternEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/checkbox/${entry.id}`,
+  }));
+
   return (
     <PatternComparisonPageShell
       summary={
@@ -201,9 +209,9 @@ export default function CheckboxPatternPageContent(): ReactNode {
         <>
           <Heading as="h2">パターンを比較する</Heading>
           <p>
-            一覧では preview と比較要点を先に見比べ、詳細ページでカード型 UI や mixed state、CSS / TSX サンプルを確認します。
+            一覧では比較メモだけを短く見比べ、詳細ページでカード型 UI や mixed state、preview、CSS / TSX サンプルを確認します。
           </p>
-          <CheckboxPatternGallery density="list" entries={checkboxPatternEntries} />
+          <PatternCompareCardGrid items={compareItems} />
         </>
       }
     />

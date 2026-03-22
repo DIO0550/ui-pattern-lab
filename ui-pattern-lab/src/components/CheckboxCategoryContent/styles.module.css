@@ -15,6 +15,12 @@
   gap: 1rem;
 }
 
+.sectionLead {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+  margin: 0;
+}
+
 .grid {
   display: grid;
   gap: 1rem;
