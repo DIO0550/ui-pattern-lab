@@ -1,0 +1,62 @@
+.cardGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.card,
+.bulletSurface {
+  background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 1rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.card {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.25rem;
+}
+
+.card h3 {
+  margin-bottom: 0;
+}
+
+.cardDescription,
+.bulletDescription {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.bulletSurface {
+  padding: 1.25rem;
+}
+
+.bulletList {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.bulletItem {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.bulletTitle {
+  font-weight: 700;
+}
+
+[data-theme='dark'] .card,
+[data-theme='dark'] .bulletSurface {
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+@media screen and (max-width: 640px) {
+  .card,
+  .bulletSurface {
+    padding: 1rem;
+  }
+}

@@ -3,13 +3,8 @@
   gap: 1rem;
 }
 
-.axisLead,
-.axisNote {
+.axisLead {
   color: var(--ifm-color-emphasis-700);
   line-height: 1.7;
   margin: 0;
-}
-
-.axisNote a {
-  font-weight: 600;
 }
