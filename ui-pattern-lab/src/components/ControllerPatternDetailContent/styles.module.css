@@ -1,0 +1,38 @@
+.root {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.backLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.95rem;
+}
+
+.lead,
+.contextNote {
+  margin: 0;
+  color: var(--ifm-color-emphasis-800);
+  line-height: 1.8;
+}
+
+.contextNote {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 1rem;
+  background: var(--ifm-color-emphasis-0);
+}
+
+.relatedSection {
+  display: grid;
+  gap: 1rem;
+}
+
+.relatedGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
