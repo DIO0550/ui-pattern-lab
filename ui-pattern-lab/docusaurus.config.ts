@@ -98,6 +98,10 @@ const config: Config = {
               label: 'セレクタ',
               to: '/selector',
             },
+            {
+              label: 'プログレス',
+              to: '/progress',
+            },
           ],
         },
         {

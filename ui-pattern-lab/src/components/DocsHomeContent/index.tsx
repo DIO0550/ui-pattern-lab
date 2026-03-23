@@ -6,6 +6,7 @@ import Heading from '@theme/Heading';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
+import {progressPatternEntries} from '@site/src/data/progressPatternEntries';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
 import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
 import {tablePatternEntries} from '@site/src/data/tablePatternEntries';
@@ -28,6 +29,13 @@ const buttonDetailLinks = buttonPatternEntries.map((entry) => ({
 const checkboxDetailLinks = checkboxPatternEntries.map((entry) => ({
   title: entry.title,
   to: `/checkbox/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const progressDetailLinks = progressPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/progress/${entry.id}`,
   description: entry.summary,
   meta: '詳細ページ',
 }));
@@ -86,6 +94,24 @@ const checkboxLinks = [
   ...checkboxDetailLinks,
 ];
 
+const progressLinks = [
+  {
+    title: 'プログレスカテゴリ',
+    to: '/progress',
+    description:
+      'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'プログレスパターン比較',
+    to: '/patterns/progress-designs',
+    description:
+      'linear / circular determinate、indeterminate、spinner、skeleton、stepper を 5 軸で比較できます。',
+    meta: '比較一覧',
+  },
+  ...progressDetailLinks,
+];
+
 type LinkCard = {
   title: string;
   to: string;
@@ -98,7 +124,13 @@ type LinkSection = {
   links: LinkCard[];
 };
 
-type CategoryId = 'table' | 'ellipsis-display' | 'button' | 'checkbox' | 'selector';
+type CategoryId =
+  | 'table'
+  | 'ellipsis-display'
+  | 'button'
+  | 'checkbox'
+  | 'selector'
+  | 'progress';
 
 type CategoryCard = {
   id: CategoryId;
@@ -204,6 +236,15 @@ const categoryCards: CategoryCard[] = [
     sections: selectorSections,
     expandedMeta: 'クリックしてセレクタ関連の導線を閉じる',
     collapsedMeta: 'クリックしてセレクタ関連の導線を表示',
+  },
+  {
+    id: 'progress',
+    title: 'プログレス',
+    description:
+      'linear / circular determinate、indeterminate、spinner、skeleton、stepper を比較し、known total・layout 保持・適用スコープの違いを確認できるカテゴリです。',
+    links: progressLinks,
+    expandedMeta: 'クリックしてプログレス関連の導線を閉じる',
+    collapsedMeta: 'クリックしてプログレス関連の導線を表示',
   },
 ];
 
