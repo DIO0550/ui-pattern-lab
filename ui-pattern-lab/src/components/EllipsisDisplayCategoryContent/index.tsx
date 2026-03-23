@@ -1,11 +1,21 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
+import PatternCatalogCard from '@site/src/components/PatternCatalogCard';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
 
 import styles from './styles.module.css';
 
 export default function EllipsisDisplayCategoryContent(): ReactNode {
+  const compareItems = ellipsisDisplayPatternEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/ellipsis-display/${entry.id}`,
+  }));
+
   return (
     <div className={`container margin-vert--lg ${styles.root}`}>
       <p className={styles.lead}>
@@ -15,59 +25,27 @@ export default function EllipsisDisplayCategoryContent(): ReactNode {
       </p>
 
       <section className={styles.section}>
-        <Heading as="h2">まず比較一覧を見る</Heading>
-        <Link className={styles.overviewLink} to="/patterns/ellipsis-display-designs">
-          <article className={styles.overviewCard}>
-            <span className={styles.cardEyebrow}>比較一覧</span>
-            <Heading as="h3" className={styles.cardTitle}>
-              省略表示パターン
-            </Heading>
-            <p className={styles.cardDescription}>
-              1行省略、複数行 clamp、全文補足、アクセシブルな開閉を並べて比較できます。
-            </p>
-            <p className={styles.cardMeta}>
-              overview から preview、設計メモ、CSS / TSX 例をまとめて確認
-            </p>
-          </article>
-        </Link>
-      </section>
-
-      <section className={styles.section}>
-        <Heading as="h2">個別のパターンへ進む</Heading>
-        <div className={styles.grid}>
-          {ellipsisDisplayPatternEntries.map((entry) => (
-            <Link
-              className={styles.cardLink}
-              key={entry.id}
-              to={`/ellipsis-display/${entry.id}`}>
-              <article className={styles.card}>
-                <span className={styles.cardEyebrow}>詳細ページ</span>
-                <Heading as="h3" className={styles.cardTitle}>
-                  {entry.title}
-                </Heading>
-                <p className={styles.cardDescription}>{entry.summary}</p>
-              </article>
-            </Link>
-          ))}
-        </div>
+        <Heading as="h2">先に省略ルールを整理する</Heading>
+        <p className={styles.sectionLead}>
+          generic な判断軸は{' '}
+          <Link to="/patterns/ellipsis-display-designs">省略表示パターン</Link> で確認しつつ、
+          ここでは収録している {ellipsisDisplayPatternEntries.length} 件の要点だけを短く見比べます。
+        </p>
+        <PatternCompareCardGrid items={compareItems} />
       </section>
 
       <section className={styles.section}>
         <Heading as="h2">テーブル専用の具体例</Heading>
-        <Link className={styles.supportLink} to="/table/cell-truncation">
-          <article className={styles.supportCard}>
-            <span className={styles.cardEyebrow}>補助リンク</span>
-            <Heading as="h3" className={styles.cardTitle}>
-              cell-truncation
-            </Heading>
-            <p className={styles.cardDescription}>
-              テーブルの行高と列密度を崩さない具体例は table カテゴリ側に残しています。
-            </p>
-            <p className={styles.cardMeta}>
-              表の文脈で省略表示を使う場合はこちらを参照
-            </p>
-          </article>
-        </Link>
+        <PatternCatalogCard
+          className={styles.supportCard}
+          description="テーブルの行高と列密度を崩さない具体例は table カテゴリ側に残しています。"
+          eyebrow="補助リンク"
+          meta="表の文脈で省略表示を使う場合はこちらを参照"
+          title="cell-truncation"
+          to="/table/cell-truncation"
+          tone="muted"
+          variant="default"
+        />
       </section>
     </div>
   );

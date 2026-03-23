@@ -1,6 +1,7 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import PatternCatalogCard from '@site/src/components/PatternCatalogCard';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
 import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
 
@@ -41,6 +42,19 @@ function buildFamilyPrimaryLink(groupId: string, firstEntryId: string): {path: s
   };
 }
 
+function buildSupplementalLinks(
+  entries: Array<{id: string; title: string}>,
+  excludedEntryId?: string,
+): Array<{label: string; to: string}> {
+  return entries
+    .filter((entry) => entry.id !== excludedEntryId)
+    .slice(0, 3)
+    .map((entry) => ({
+      label: entry.title,
+      to: `/selector/${entry.id}`,
+    }));
+}
+
 export default function SelectorCategoryContent(): ReactNode {
   const categoryGroups = groupSelectorPatternEntries(selectorPatternEntries);
 
@@ -54,53 +68,33 @@ export default function SelectorCategoryContent(): ReactNode {
       </p>
 
       <section className={styles.section}>
-        <Heading as="h2">まず全体ハブを見る</Heading>
-        <Link
-          aria-labelledby="selector-overview-title"
-          className={styles.overviewLink}
-          to="/patterns/selector-designs">
-          <article className={styles.overviewCard}>
-            <span className={styles.cardEyebrow}>比較一覧</span>
-            <Heading as="h3" className={styles.cardTitle} id="selector-overview-title">
-              セレクタデザインパターン
-            </Heading>
-            <p className={styles.cardDescription}>
-              radio / native select / combobox の判断軸を確認し、そこから custom select と
-              combobox family の比較ページへ進めます。
-            </p>
-            <p className={styles.cardMeta}>hub から family 別の比較・詳細ページへ進む</p>
-          </article>
-        </Link>
-      </section>
-
-      <section className={styles.section}>
-        <Heading as="h2">family から探す</Heading>
+        <Heading as="h2">family から比較する</Heading>
         <p className={styles.sectionLead}>
-          family ごとに primary CTA を 1 つだけ置き、必要に応じて detail page を補助リンクとして並べます。
-          radio を第一候補にしつつ、native / custom / combobox を役割で切り分けます。
+          selector 全体の判断軸は{' '}
+          <Link to="/patterns/selector-designs">セレクタデザインパターン</Link> で確認しつつ、
+          ここでは {categoryGroups.length} family の入口を短く比べます。radio を第一候補にしつつ、
+          native / custom / combobox を役割で切り分けます。
         </p>
         <div className={styles.grid}>
           {categoryGroups.map((group) => {
             const primaryLink = buildFamilyPrimaryLink(group.id, group.entries[0].id);
+            // Direct-detail primary CTAs should not be repeated in supplemental detail links.
+            const excludedEntryId = group.entries.find(
+              (entry) => `/selector/${entry.id}` === primaryLink.path,
+            )?.id;
 
             return (
-              <article className={styles.card} key={group.id}>
-                <span className={styles.cardEyebrow}>family</span>
-                <Heading as="h3" className={styles.cardTitle}>
-                  {group.label}
-                </Heading>
-                <p className={styles.cardDescription}>{group.description}</p>
-                <p className={styles.cardMeta}>
-                  <Link to={primaryLink.path}>{primaryLink.label}</Link>
-                </p>
-                <ul className={styles.entryList}>
-                  {group.entries.slice(0, 3).map((entry) => (
-                    <li key={entry.id}>
-                      <Link to={`/selector/${entry.id}`}>{entry.title}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </article>
+              <PatternCatalogCard
+                badge={`${group.entries.length}件`}
+                description={group.description}
+                eyebrow="family"
+                key={group.id}
+                primaryLinkLabel={primaryLink.label}
+                supplementalLinks={buildSupplementalLinks(group.entries, excludedEntryId)}
+                title={group.label}
+                to={primaryLink.path}
+                variant="family"
+              />
             );
           })}
         </div>
@@ -109,42 +103,24 @@ export default function SelectorCategoryContent(): ReactNode {
       <section className={styles.section}>
         <Heading as="h2">関連カテゴリ</Heading>
         <div className={styles.relatedGrid}>
-          <Link
-            aria-labelledby="selector-related-checkbox-title"
-            className={styles.cardLink}
-            to="/checkbox">
-            <article className={styles.card}>
-              <span className={styles.cardEyebrow}>関連カテゴリ</span>
-              <Heading
-                as="h3"
-                className={styles.cardTitle}
-                id="selector-related-checkbox-title">
-                チェックボックス
-              </Heading>
-              <p className={styles.cardDescription}>
-                複数選択、select-all、mixed state、確認入力を扱うカテゴリです。単一選択ではなく、
-                0 件以上を選ばせたいときはこちらを参照します。
-              </p>
-            </article>
-          </Link>
-          <Link
-            aria-labelledby="selector-related-button-title"
-            className={styles.cardLink}
-            to="/button/toggle-and-selection">
-            <article className={styles.card}>
-              <span className={styles.cardEyebrow}>関連カテゴリ</span>
-              <Heading
-                as="h3"
-                className={styles.cardTitle}
-                id="selector-related-button-title">
-                ボタン / トグル・選択
-              </Heading>
-              <p className={styles.cardDescription}>
-                押した瞬間に状態や表示モードが切り替わる UI を扱います。selector よりも即時反映が
-                主題のときはこちらを参照します。
-              </p>
-            </article>
-          </Link>
+          <PatternCatalogCard
+            description="複数選択、select-all、mixed state、確認入力を扱うカテゴリです。単一選択ではなく、0 件以上を選ばせたいときはこちらを参照します。"
+            eyebrow="関連カテゴリ"
+            title="チェックボックス"
+            titleId="selector-related-checkbox-title"
+            to="/checkbox"
+            tone="muted"
+            variant="default"
+          />
+          <PatternCatalogCard
+            description="押した瞬間に状態や表示モードが切り替わる UI を扱います。selector よりも即時反映が主題のときはこちらを参照します。"
+            eyebrow="関連カテゴリ"
+            title="ボタン / トグル・選択"
+            titleId="selector-related-button-title"
+            to="/button/toggle-and-selection"
+            tone="muted"
+            variant="default"
+          />
         </div>
       </section>
     </div>

@@ -23,7 +23,7 @@ export default function TablePatternDetailContent({
         このページでは「{entry.title}」のプレビューに加えて、対応する CSS /
         コード例もまとめて確認できます。比較一覧へ戻る場合は
         {' '}
-        <Link to="/patterns/table-designs">テーブルデザインパターン</Link>
+        <Link to="/table">テーブルの比較一覧</Link>
         、テーブルカテゴリ全体へ戻る場合は <Link to="/table">テーブル</Link>
         {' '}を参照してください。
       </p>

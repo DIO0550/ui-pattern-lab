@@ -7,15 +7,15 @@ export default function SelectorCustomSelectDesignsPage(): ReactNode {
   return (
     <Layout
       title="Custom select デザインパターン"
-      description="native select では足りないときの custom select variation を、preview と CSS / TSX サンプルつきで比較します。">
+      description="native select では足りないときの custom select variation を、比較要点と compact preview を先に見ながら選び分けるページです。">
       <header className="hero hero--primary">
         <div className="container">
           <Heading as="h1" className="hero__title">
             Custom select デザインパターン
           </Heading>
           <p className="hero__subtitle">
-            native select を使えるならそちらを優先し、visual richness や option row の自前表現が
-            必要なときだけ custom select family を比較します。
+            native select を使えるならそちらを優先しつつ、visual richness や option row の
+            自前表現が必要な場面だけを、比較要点と compact preview で見分けます。
           </p>
         </div>
       </header>

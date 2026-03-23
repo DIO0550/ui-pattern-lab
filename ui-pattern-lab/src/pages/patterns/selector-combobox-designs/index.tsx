@@ -7,7 +7,7 @@ export default function SelectorComboboxDesignsPage(): ReactNode {
   return (
     <Layout
       title="Combobox デザインパターン"
-      description="single-select combobox の baseline / grouped results / empty and loading states を比較します。">
+      description="single-select combobox の baseline / grouped results / empty and loading states を、比較要点と compact preview で見比べるページです。">
       <header className="hero hero--primary">
         <div className="container">
           <Heading as="h1" className="hero__title">
@@ -15,7 +15,8 @@ export default function SelectorComboboxDesignsPage(): ReactNode {
           </Heading>
           <p className="hero__subtitle">
             single-select の combobox 構造に限定して、baseline、grouped results、empty /
-            loading states を比較します。IME / async / popover はこのラボの実装範囲外です。
+            loading states を比較要点と compact preview で見比べます。IME / async /
+            popover はこのラボの実装範囲外です。
           </p>
         </div>
       </header>

@@ -1,66 +1,58 @@
-.root {
-  display: grid;
-  gap: 1.25rem;
-}
-
-.introSection,
-.matrixSection,
-.guideSection {
+.axisSection {
   display: grid;
   gap: 1rem;
 }
 
-.heroGrid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
-}
-
-.introCopy {
-  display: grid;
-  gap: 1rem;
-}
-
-.introCopy p,
-.summaryNote,
-.matrixLead,
+.axisLead,
 .matrixNote,
-.compareLead,
+.familyLead,
 .guideCard p,
-.decisionItem,
 .linkList li {
   line-height: 1.7;
   margin: 0;
 }
 
-.bulletList,
-.patternList,
-.linkList,
-.decisionList {
-  display: grid;
-  gap: 0.5rem;
-  margin: 0;
-  padding-left: 1.2rem;
+.axisLead,
+.matrixNote,
+.familyLead {
+  color: var(--ifm-color-emphasis-700);
 }
 
-.summaryCard,
+.quickSummaryList {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.quickSummaryItem,
 .guideCard {
   background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
   border: 1px solid var(--ifm-color-emphasis-200);
   border-radius: 1rem;
   box-shadow: var(--ifm-global-shadow-lw);
-  display: grid;
-  gap: 0.85rem;
-  padding: 1.25rem;
 }
 
-.summaryCard h3,
-.guideCard h3 {
-  margin-bottom: 0;
+.quickSummaryItem {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+}
+
+.quickSummaryItem strong {
+  font-size: 0.95rem;
+}
+
+.quickSummaryItem span {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
 }
 
 .summaryGroups,
-.summaryGroup {
+.summaryGroup,
+.familySection {
   display: grid;
   gap: 0.75rem;
 }
@@ -86,13 +78,18 @@
   font-weight: 700;
 }
 
-.countBadge {
+.countBadge,
+.referenceItem {
   background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
   border-radius: 999px;
   font-size: 0.72rem;
   font-weight: 700;
   padding: 0.15rem 0.55rem;
   white-space: nowrap;
+}
+
+.referenceItem {
+  text-transform: uppercase;
 }
 
 .summaryLine {
@@ -100,22 +97,6 @@
   display: flex;
   gap: 0.6rem;
   justify-content: space-between;
-}
-
-.referenceItem {
-  background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 0.15rem 0.55rem;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.summaryNote,
-.matrixNote,
-.compareLead {
-  color: var(--ifm-color-emphasis-700);
 }
 
 .matrixWrapper {
@@ -186,22 +167,40 @@
   line-height: 1.6;
 }
 
-.matrixNote a,
-.linkList a {
-  font-weight: 600;
-}
-
 .guideGrid {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
 }
 
-.decisionList {
-  padding-left: 1.35rem;
+.guideCard {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.1rem;
 }
 
-[data-theme='dark'] .summaryCard,
+.guideCard h4 {
+  margin-bottom: 0;
+}
+
+.primaryLinkRow,
+.matrixNote a,
+.linkList a {
+  font-weight: 600;
+}
+
+.primaryLinkRow {
+  margin: 0;
+}
+
+.linkList {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+[data-theme='dark'] .quickSummaryItem,
 [data-theme='dark'] .guideCard,
 [data-theme='dark'] .matrixWrapper,
 [data-theme='dark'] .matrixTable th,
@@ -213,18 +212,7 @@
   border-color: var(--ifm-color-emphasis-300);
 }
 
-@media screen and (max-width: 996px) {
-  .heroGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media screen and (max-width: 640px) {
-  .summaryCard,
-  .guideCard {
-    padding: 1rem;
-  }
-
   .matrixTable {
     min-width: 44rem;
   }
@@ -234,11 +222,7 @@
     padding: 0.8rem 0.85rem;
   }
 
-  .summaryLine {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
+  .summaryLine,
   .summaryGroupHeader {
     align-items: flex-start;
     flex-direction: column;

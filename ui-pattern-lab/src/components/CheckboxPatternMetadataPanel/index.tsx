@@ -16,14 +16,29 @@ export default function CheckboxPatternMetadataPanel({
   entryTitle,
   items,
 }: Props): ReactNode {
+  const visibleItems =
+    density === 'list'
+      ? items.filter((item) => item.tone === 'problem' || item.tone === 'solution' || item.tone === 'comparison')
+      : items;
+
   const metadataList = (
-    <dl className={clsx(styles.root, density === 'detail' && styles.detailRoot)}>
-      {items.map((item) => (
+    <dl
+      className={clsx(
+        styles.root,
+        density === 'detail' ? styles.detailRoot : styles.listRoot,
+      )}>
+      {visibleItems.map((item) => (
         <div
-          className={clsx(styles.item, styles[item.tone])}
+          className={clsx(
+            styles.item,
+            density === 'list' && styles.listItem,
+            styles[item.tone],
+          )}
           key={`${item.tone}-${item.label}`}>
           <dt className={styles.label}>{item.label}</dt>
-          <dd className={styles.value}>{item.value}</dd>
+          <dd className={clsx(styles.value, density === 'list' && styles.listValue)}>
+            {item.value}
+          </dd>
         </div>
       ))}
     </dl>

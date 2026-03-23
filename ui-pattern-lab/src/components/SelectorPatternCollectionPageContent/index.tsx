@@ -1,10 +1,13 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
-import SelectorPatternGallery from '@site/src/components/SelectorPatternGallery';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
+import PatternComparisonPageShell from '@site/src/components/PatternComparisonPageShell';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
 import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
 import type {SelectorPatternCategoryId} from '@site/src/data/selectorPatternTypes';
+
+import styles from './styles.module.css';
 
 type Props = {
   title: string;
@@ -25,36 +28,51 @@ export default function SelectorPatternCollectionPageContent({
 }: Props): ReactNode {
   const familyEntries = selectorPatternEntries.filter((entry) => categoryIds.includes(entry.category));
   const groupedEntries = groupSelectorPatternEntries(familyEntries);
+  const compareItems = familyEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/selector/${entry.id}`,
+  }));
 
   return (
-    <div className="container margin-vert--xl">
-      <nav aria-label="戻るリンク">
-        <Link to={backLinkPath}>{backLinkLabel}</Link>
-      </nav>
-
-      <section className="margin-top--md">
-        <Heading as="h2">{title}</Heading>
-        <p>{description}</p>
-        <p>{lead}</p>
-      </section>
-
-      <section className="margin-top--lg">
-        <Heading as="h2">このページに含まれるパターン</Heading>
-        <ul>
-          {groupedEntries.map((group) =>
-            group.entries.map((entry) => (
-              <li key={entry.id}>
-                <strong>{group.label}</strong>: <Link to={`/selector/${entry.id}`}>{entry.title}</Link>
-              </li>
-            )),
-          )}
-        </ul>
-      </section>
-
-      <section className="margin-top--lg">
-        <Heading as="h2">パターンを比較する</Heading>
-        <SelectorPatternGallery density="list" entries={familyEntries} />
-      </section>
-    </div>
+    <PatternComparisonPageShell
+      backLink={{label: backLinkLabel, to: backLinkPath}}
+      summary={
+        <>
+          <Heading as="h2">{title}</Heading>
+          <p>{description}</p>
+          <p>{lead}</p>
+        </>
+      }
+      summaryAside={
+        <>
+          <Heading as="h3">このページに含まれるパターン</Heading>
+          <ul className={styles.patternList}>
+            {groupedEntries.flatMap((group) =>
+              group.entries.map((entry) => (
+                <li className={styles.patternItem} key={`${group.id}-${entry.id}`}>
+                  <span className={styles.groupLabel}>{group.label}</span>
+                  <Link to={`/selector/${entry.id}`}>{entry.title}</Link>
+                </li>
+              )),
+            )}
+          </ul>
+          <p>
+            一覧では family 内の差分を比較し、詳細ページで helper / error / disabled、CSS / TSX サンプルを確認します。
+          </p>
+        </>
+      }
+      listSection={
+        <>
+          <Heading as="h2">パターンを比較する</Heading>
+          <p>
+            family 内の比較メモだけを短く見比べてから、必要な detail page で preview や実装例を読み進められます。
+          </p>
+          <PatternCompareCardGrid items={compareItems} />
+        </>
+      }
+    />
   );
 }

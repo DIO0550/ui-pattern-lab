@@ -1,11 +1,21 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 
 import styles from './styles.module.css';
 
 export default function ButtonCategoryContent(): ReactNode {
+  const patternCount = buttonPatternEntries.length;
+  const compareItems = buttonPatternEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/button/${entry.id}`,
+  }));
+
   return (
     <div className={`container margin-vert--lg ${styles.root}`}>
       <p className={styles.lead}>
@@ -13,38 +23,12 @@ export default function ButtonCategoryContent(): ReactNode {
       </p>
 
       <section className={styles.section}>
-        <Heading as="h2">まず比較一覧を見る</Heading>
-        <Link className={styles.overviewLink} to="/patterns/button-designs">
-          <article className={styles.overviewCard}>
-            <span className={styles.cardEyebrow}>比較一覧</span>
-            <Heading as="h3" className={styles.cardTitle}>
-              ボタンデザインパターン
-            </Heading>
-            <p className={styles.cardDescription}>
-              6種類のボタンパターンを、強調度、状態、余白、アクセシビリティの観点で比較できます。
-            </p>
-            <p className={styles.cardMeta}>
-              overview から preview と CSS / TSX サンプルをまとめて確認
-            </p>
-          </article>
-        </Link>
-      </section>
-
-      <section className={styles.section}>
-        <Heading as="h2">個別のパターンへ進む</Heading>
-        <div className={styles.grid}>
-          {buttonPatternEntries.map((entry) => (
-            <Link className={styles.cardLink} key={entry.id} to={`/button/${entry.id}`}>
-              <article className={styles.card}>
-                <span className={styles.cardEyebrow}>詳細ページ</span>
-                <Heading as="h3" className={styles.cardTitle}>
-                  {entry.title}
-                </Heading>
-                <p className={styles.cardDescription}>{entry.summary}</p>
-              </article>
-            </Link>
-          ))}
-        </div>
+        <Heading as="h2">先に比較軸を整理する</Heading>
+        <p className={styles.sectionLead}>
+          横断ルールの全体像は <Link to="/patterns/button-designs">ボタンデザインパターン</Link>{' '}
+          で確認しつつ、ここでは収録している {patternCount} 件の要点だけを短く見比べます。
+        </p>
+        <PatternCompareCardGrid items={compareItems} />
       </section>
     </div>
   );

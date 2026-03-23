@@ -21,16 +21,6 @@
   margin: 0;
 }
 
-.grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-}
-
-.supportCard {
-  max-width: 42rem;
-}
-
 @media screen and (max-width: 640px) {
   .root {
     gap: 1.5rem;
@@ -38,9 +28,5 @@
 
   .lead {
     font-size: 1rem;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
   }
 }

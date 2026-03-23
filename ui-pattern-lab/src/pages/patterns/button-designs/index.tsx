@@ -7,16 +7,16 @@ export default function ButtonDesignPatternsPage(): ReactNode {
   return (
     <Layout
       title="ボタンデザインパターン"
-      description="強調度、状態、危険操作、icon-only、トグル、余白設計を含むボタンUIパターンを、preview と CSS / TSX サンプルつきで比較します。">
+      description="強調度、状態、危険操作、icon-only、トグル、余白設計を、比較要点とプレビューを先に見ながら選び分けられるページです。">
       <header className="hero hero--primary">
         <div className="container">
           <Heading as="h1" className="hero__title">
             ボタンデザインパターン
           </Heading>
           <p className="hero__subtitle">
-            強調度、状態、危険操作、icon-only、トグル、余白設計を横断し、
-            一覧では要約つきの CSS / TSX サンプルを折りたたみ、
-            詳細ページでは全文を確認できます。
+            強調度、状態、危険操作、icon-only、トグル、余白設計を先に比較し、
+            一覧では判断に必要な preview と要点だけを並べ、詳細ページで CSS / TSX
+            サンプル全文を確認できます。
           </p>
         </div>
       </header>

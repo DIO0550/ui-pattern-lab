@@ -1,12 +1,20 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import PatternCompareCardGrid from '@site/src/components/PatternCompareCardGrid';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 
 import styles from './styles.module.css';
 
 export default function CheckboxCategoryContent(): ReactNode {
   const patternCount = checkboxPatternEntries.length;
+  const compareItems = checkboxPatternEntries.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    summary: entry.summary,
+    tags: entry.tags,
+    to: `/checkbox/${entry.id}`,
+  }));
 
   return (
     <div className={`container margin-vert--lg ${styles.root}`}>
@@ -17,38 +25,13 @@ export default function CheckboxCategoryContent(): ReactNode {
       </p>
 
       <section className={styles.section}>
-        <Heading as="h2">まず比較一覧を見る</Heading>
-        <Link className={styles.overviewLink} to="/patterns/checkbox-designs">
-          <article className={styles.overviewCard}>
-            <span className={styles.cardEyebrow}>比較一覧</span>
-            <Heading as="h3" className={styles.cardTitle}>
-              チェックボックスデザインパターン
-            </Heading>
-            <p className={styles.cardDescription}>
-              {patternCount} 種類の checkbox パターンを、選択モデル、送信タイミング、カード型 UI、タップ領域、アクセシビリティの観点で比較できます。
-            </p>
-            <p className={styles.cardMeta}>
-              比較マトリクスから preview と CSS / TSX サンプルへ進む
-            </p>
-          </article>
-        </Link>
-      </section>
-
-      <section className={styles.section}>
-        <Heading as="h2">個別のパターンへ進む</Heading>
-        <div className={styles.grid}>
-          {checkboxPatternEntries.map((entry) => (
-            <Link className={styles.cardLink} key={entry.id} to={`/checkbox/${entry.id}`}>
-              <article className={styles.card}>
-                <span className={styles.cardEyebrow}>詳細ページ</span>
-                <Heading as="h3" className={styles.cardTitle}>
-                  {entry.title}
-                </Heading>
-                <p className={styles.cardDescription}>{entry.summary}</p>
-              </article>
-            </Link>
-          ))}
-        </div>
+        <Heading as="h2">先に選択モデルの違いを整理する</Heading>
+        <p className={styles.sectionLead}>
+          checkbox / radio / switch / select の matrix は{' '}
+          <Link to="/patterns/checkbox-designs">チェックボックスデザインパターン</Link>{' '}
+          で確認しつつ、ここでは収録している {patternCount} 件の要点だけを短く見比べます。
+        </p>
+        <PatternCompareCardGrid items={compareItems} />
       </section>
     </div>
   );

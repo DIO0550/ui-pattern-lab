@@ -9,6 +9,10 @@
   margin: 0;
 }
 
+.listRoot {
+  gap: 0.65rem;
+}
+
 .detailRoot {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -26,6 +30,14 @@
   display: grid;
   gap: 0.45rem;
   padding: 0.95rem 1rem;
+}
+
+.listItem {
+  padding: 0.75rem 0.85rem;
+}
+
+.listItem .label {
+  font-size: 0.74rem;
 }
 
 .problem {
@@ -68,6 +80,13 @@
 .value {
   line-height: 1.6;
   margin: 0;
+}
+
+.listValue {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 [data-theme='dark'] .item {
