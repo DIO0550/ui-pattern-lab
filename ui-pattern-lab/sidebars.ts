@@ -140,6 +140,24 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: 'category',
+      label: 'プログレス',
+      link: {
+        type: 'doc',
+        id: 'progress',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        'progress/progress-bar-determinate',
+        'progress/circular-progress-determinate',
+        'progress/progress-bar-indeterminate',
+        'progress/loading-spinner',
+        'progress/skeleton-placeholder',
+        'progress/stepper-status-tracker',
+      ],
+    },
   ],
 };
 

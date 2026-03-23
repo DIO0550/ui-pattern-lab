@@ -1,0 +1,561 @@
+.root {
+  --progress-gallery-surface: var(
+    --ifm-card-background-color,
+    var(--ifm-background-surface-color)
+  );
+  --progress-gallery-border: var(--ifm-color-emphasis-200);
+  --progress-gallery-muted: var(--ifm-color-emphasis-700);
+  --progress-gallery-emphasis: var(--ifm-color-primary);
+  --progress-gallery-track: color-mix(
+    in srgb,
+    var(--ifm-color-emphasis-300) 72%,
+    var(--progress-gallery-surface)
+  );
+  display: block;
+}
+
+[data-theme='dark'] .root {
+  --progress-gallery-border: var(--ifm-color-emphasis-300);
+  --progress-gallery-muted: var(--ifm-color-emphasis-600);
+  --progress-gallery-track: color-mix(
+    in srgb,
+    var(--ifm-color-emphasis-400) 54%,
+    var(--progress-gallery-surface)
+  );
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(16.5rem, 1fr));
+}
+
+.detailGrid {
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+.detailContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--progress-gallery-surface);
+  border: 1px solid var(--progress-gallery-border);
+  border-radius: 1rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+  padding: 1rem;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cardTitle {
+  display: -webkit-box;
+  margin-bottom: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.cardSummary {
+  color: var(--progress-gallery-muted);
+  display: -webkit-box;
+  line-height: 1.55;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.detailContent .cardTitle,
+.detailContent .cardSummary {
+  display: block;
+  -webkit-line-clamp: unset;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  background: color-mix(in srgb, var(--progress-gallery-emphasis) 12%, transparent);
+  border-radius: 999px;
+  color: var(--ifm-font-color-base);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+}
+
+.card .tagList {
+  gap: 0.35rem;
+}
+
+.card .tag {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.55rem;
+}
+
+.demoPanel {
+  background: color-mix(
+    in srgb,
+    var(--progress-gallery-emphasis) 3%,
+    var(--progress-gallery-surface)
+  );
+  border: 1px solid var(--progress-gallery-border);
+  border-radius: 0.9rem;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.card .demoPanel {
+  padding: 0.75rem;
+}
+
+.demoFrame {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card .demoFrame {
+  gap: 0.6rem;
+}
+
+.previewGrid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
+}
+
+.card .previewGrid {
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+.previewCard {
+  background: var(--progress-gallery-surface);
+  border: 1px solid var(--progress-gallery-border);
+  border-radius: 0.85rem;
+  display: grid;
+  gap: 0.85rem;
+  min-width: 0;
+  padding: 0.9rem;
+}
+
+.card .previewCard {
+  gap: 0.65rem;
+  padding: 0.75rem;
+}
+
+.previewHeader {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.previewLabel {
+  color: var(--progress-gallery-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.card .previewLabel {
+  font-size: 0.72rem;
+}
+
+.previewDescription,
+.demoNote,
+.progressState,
+.busyText,
+.stepDescription {
+  color: var(--progress-gallery-muted);
+  margin: 0;
+}
+
+.previewDescription {
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.previewContent {
+  align-items: flex-start;
+  display: flex;
+  min-width: 0;
+  width: 100%;
+}
+
+.metricStack,
+.busyStack,
+.statusColumn,
+.skeletonSurface,
+.stepper,
+.circularMeter,
+.circularMeta {
+  width: 100%;
+}
+
+.metricStack,
+.busyStack,
+.statusColumn,
+.skeletonSurface,
+.circularMeter,
+.circularMeta {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.progressRail,
+.indeterminateRail {
+  background: var(--progress-gallery-track);
+  block-size: 0.75rem;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill,
+.indeterminateBar {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--ifm-color-primary) 82%, white),
+    var(--ifm-color-primary)
+  );
+  block-size: 100%;
+  border-radius: inherit;
+  display: block;
+}
+
+.indeterminateRail {
+  position: relative;
+}
+
+.indeterminateBar {
+  animation: progress-slide 1.1s ease-in-out infinite;
+  inline-size: 35%;
+}
+
+.reducedMotionPreview .indeterminateBar {
+  animation: none;
+  transform: none;
+}
+
+.progressMeta,
+.busyHeader,
+.skeletonHeader,
+.circularMeta {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.progressValue,
+.busyTitle,
+.stepTitle,
+.circularValue {
+  font-weight: 700;
+}
+
+.circularMeter {
+  justify-items: center;
+  text-align: center;
+}
+
+.circularMeterDefault {
+  --circular-meter-size: 6.5rem;
+}
+
+.circularMeterLarge {
+  --circular-meter-size: 8.5rem;
+}
+
+.circularMeterHero {
+  --circular-meter-size: 11rem;
+}
+
+.circularMeterVisual {
+  block-size: var(--circular-meter-size);
+  display: grid;
+  inline-size: var(--circular-meter-size);
+  place-items: center;
+  position: relative;
+}
+
+.circularMeterSvg {
+  block-size: 100%;
+  inline-size: 100%;
+  transform: rotate(-90deg);
+}
+
+.circularTrack {
+  fill: none;
+  stroke: var(--progress-gallery-track);
+  stroke-width: 10;
+}
+
+.circularFill {
+  fill: none;
+  stroke: var(--ifm-color-primary);
+  stroke-linecap: round;
+  stroke-width: 10;
+  transition: stroke-dashoffset 0.2s ease;
+}
+
+.circularMeterCenter {
+  display: grid;
+  gap: 0.2rem;
+  place-items: center;
+  position: absolute;
+}
+
+.circularValue {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.circularLabel {
+  color: var(--progress-gallery-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.circularMeterLarge .circularValue {
+  font-size: 1.7rem;
+}
+
+.circularMeterHero .circularValue {
+  font-size: 2.2rem;
+}
+
+.spinnerRow {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.spinnerGlyph {
+  animation: spin 0.8s linear infinite;
+  block-size: 0.9rem;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 999px;
+  inline-size: 0.9rem;
+}
+
+.spinnerGlyphStatic {
+  animation: none;
+  border-inline-end-color: currentColor;
+  opacity: 0.72;
+}
+
+.skeletonCard {
+  border: 1px solid var(--progress-gallery-border);
+  border-radius: 0.85rem;
+  display: grid;
+  gap: 0.75rem;
+  min-block-size: 12rem;
+  padding: 1rem;
+  width: min(100%, 22rem);
+}
+
+.variantLabel {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.skeletonBlock {
+  background: color-mix(in srgb, var(--ifm-color-emphasis-300) 60%, white);
+  border-radius: 0.6rem;
+  block-size: 0.85rem;
+}
+
+[data-theme='dark'] .skeletonBlock {
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-emphasis-500) 60%,
+    var(--progress-gallery-surface)
+  );
+}
+
+.skeletonShimmer .skeletonBlock {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--ifm-color-emphasis-300) 55%, var(--progress-gallery-surface)),
+    color-mix(in srgb, var(--progress-gallery-surface) 92%, transparent),
+    color-mix(in srgb, var(--ifm-color-emphasis-300) 55%, var(--progress-gallery-surface))
+  );
+  background-size: 240% 100%;
+}
+
+.skeletonHero {
+  block-size: 5rem;
+}
+
+.skeletonTitle {
+  block-size: 1rem;
+  inline-size: 58%;
+}
+
+.skeletonLineShort {
+  inline-size: 72%;
+}
+
+.stepper {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stepItem {
+  align-items: start;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto 1fr;
+}
+
+.stepMarker {
+  align-items: center;
+  background: var(--progress-gallery-track);
+  block-size: 2rem;
+  border: 1px solid var(--progress-gallery-border);
+  border-radius: 999px;
+  display: inline-flex;
+  font-weight: 700;
+  inline-size: 2rem;
+  justify-content: center;
+}
+
+.stepBody {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.stepItem[data-state='complete'] .stepMarker {
+  background: color-mix(in srgb, var(--ifm-color-success) 18%, white);
+  border-color: color-mix(in srgb, var(--ifm-color-success) 42%, white);
+  color: var(--ifm-color-success-darkest);
+}
+
+.stepItem[data-state='current'] .stepMarker {
+  background: color-mix(in srgb, var(--ifm-color-primary) 18%, white);
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 42%, white);
+  color: var(--ifm-color-primary-darkest);
+}
+
+.stepItem[data-state='error'] .stepMarker {
+  background: color-mix(in srgb, var(--ifm-color-danger) 18%, white);
+  border-color: color-mix(in srgb, var(--ifm-color-danger) 42%, white);
+  color: var(--ifm-color-danger-darkest);
+}
+
+.demoNote {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.card .previewDescription,
+.card .demoNote,
+.card .progressState,
+.card .busyText,
+.card .stepDescription {
+  font-size: 0.84rem;
+}
+
+.emptyState {
+  background: var(--progress-gallery-surface);
+  border: 1px dashed var(--progress-gallery-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+@keyframes progress-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skeletonPulse .skeletonBlock {
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  .skeletonShimmer .skeletonBlock {
+    animation: shimmer 1.4s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indeterminateBar,
+  .spinnerGlyph {
+    animation: none;
+    transform: none;
+  }
+
+  .spinnerGlyph {
+    border-inline-end-color: currentColor;
+    opacity: 0.72;
+  }
+
+  .skeletonShimmer .skeletonBlock {
+    background-image: none;
+  }
+}
+
+@media screen and (max-width: 996px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
+}

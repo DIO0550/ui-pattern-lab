@@ -1,0 +1,40 @@
+.root {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.backLinks {
+  align-items: center;
+  color: var(--ifm-color-emphasis-700);
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.lead,
+.contextNote {
+  line-height: 1.7;
+  margin: 0;
+  max-width: 60rem;
+}
+
+.contextNote {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.relatedSection {
+  display: grid;
+  gap: 1rem;
+}
+
+.relatedGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+@media screen and (max-width: 640px) {
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+}
