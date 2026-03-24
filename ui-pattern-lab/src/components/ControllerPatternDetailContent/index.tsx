@@ -88,8 +88,8 @@ function buildContextNote(entryId: ControllerPatternEntryId): ReactNode | null {
   if (entryId === 'range-slider-filter') {
     return (
       <>
-        厳密な数値入力やフォーム送信が主なら number input 側へ寄せます。controller では「drag
-        の直後に結果が変わる」連続調整として扱い、dual-thumb のような複雑 variant は初回スコープ外です。
+        厳密な数値入力やフォーム送信が主なら number input 側へ寄せます。controller では single slider
+        を優先し、drag の直後に結果が変わる連続調整として扱います。dual-thumb は将来拡張として切り出します。
       </>
     );
   }
@@ -125,7 +125,7 @@ export default function ControllerPatternDetailContent({
         <Link to="/patterns/controller-designs">表示制御デザインパターン</Link>
       </div>
       <p className={styles.lead}>
-        このページでは「{entry.title}」の lightweight demo に加えて、対応する CSS / TSX
+        このページでは「{entry.title}」の preview demo に加えて、対応する CSS / TSX
         サンプルと設計メモをまとめて確認できます。比較一覧へ戻る場合は{' '}
         <Link to="/patterns/controller-designs">表示制御デザインパターン</Link>、カテゴリ全体へ戻る場合は{' '}
         <Link to="/controller">表示制御</Link> を参照してください。

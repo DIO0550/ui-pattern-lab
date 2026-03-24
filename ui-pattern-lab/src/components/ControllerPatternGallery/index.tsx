@@ -1,4 +1,4 @@
-import type {ReactNode} from 'react';
+import {useState, type ReactNode} from 'react';
 import clsx from 'clsx';
 import CodeBlock from '@theme/CodeBlock';
 import Heading from '@theme/Heading';
@@ -35,6 +35,7 @@ const metadataToneClassName: Record<
   comparison: styles.toneComparison,
   interaction: styles.toneInteraction,
   accessibility: styles.toneAccessibility,
+  future: styles.toneFuture,
 };
 
 function SectionCard({
@@ -62,7 +63,7 @@ function EmptyState({message}: {message: string}): ReactNode {
 }
 
 function buildMetadataItems(entry: ControllerPatternEntry): ControllerPatternMetadataItem[] {
-  return [
+  const items: ControllerPatternMetadataItem[] = [
     {label: '課題', tone: 'problem', value: entry.problem},
     {label: '解決方針', tone: 'solution', value: entry.solution},
     {label: '向いている場面', tone: 'usage', value: entry.whenToUse},
@@ -70,6 +71,16 @@ function buildMetadataItems(entry: ControllerPatternEntry): ControllerPatternMet
     {label: '操作設計メモ', tone: 'interaction', value: entry.interactionNotes},
     {label: 'アクセシビリティ', tone: 'accessibility', value: entry.accessibilityNotes},
   ];
+
+  if (entry.futureExtensions) {
+    items.push({
+      label: '将来拡張',
+      tone: 'future',
+      value: entry.futureExtensions,
+    });
+  }
+
+  return items;
 }
 
 function MetadataPanel({
@@ -97,7 +108,7 @@ function MetadataPanel({
   if (density === 'detail') {
     return (
       <SectionCard
-        description="課題、解決方針、既存カテゴリとの境界、interaction / accessibility の注意点をまとめています。"
+        description="課題、解決方針、既存カテゴリとの境界、interaction / accessibility、将来拡張の注意点をまとめています。"
         eyebrow="Design notes"
         title="設計メモ">
         {content}
@@ -196,9 +207,9 @@ function PreviewPanel({
   if (density === 'detail') {
     return (
       <SectionCard
-        description="本番コードそのものではなく、pattern の要点だけを把握するための lightweight demo です。"
+        description="本番コードそのものではなく、pattern の要点と操作感を把握するための preview demo です。"
         eyebrow="Preview"
-        title="lightweight demo">
+        title="preview demo">
         {content}
       </SectionCard>
     );
@@ -296,20 +307,64 @@ function PaginationAndPageSizeControllerDemo(): ReactNode {
   );
 }
 
+const RANGE_SLIDER_MIN = 0;
+const RANGE_SLIDER_MAX = 10_000;
+const RANGE_SLIDER_STEP = 500;
+const RANGE_SLIDER_INITIAL_VALUE = 6_000;
+
+const rangeSliderCurrencyFormatter = new Intl.NumberFormat('ja-JP');
+
+/**
+ * Formats range slider values for the demo labels and output.
+ */
+function formatRangeSliderCurrency(value: number): string {
+  return `${rangeSliderCurrencyFormatter.format(value)}円`;
+}
+
 function RangeSliderFilterDemo(): ReactNode {
+  const [value, setValue] = useState(RANGE_SLIDER_INITIAL_VALUE);
+  const sliderProgress =
+    ((value - RANGE_SLIDER_MIN) / (RANGE_SLIDER_MAX - RANGE_SLIDER_MIN)) * 100;
+
   return (
-    <div className={styles.demoPanel}>
+    <div className={clsx(styles.demoPanel, styles.sliderField)}>
+      <span className={styles.sliderLabel}>価格帯の上限</span>
       <div className={styles.mockToolbarRow}>
-        <span>0円</span>
-        <strong>〜 6,000円</strong>
-        <span>10,000円</span>
+        <span>{formatRangeSliderCurrency(RANGE_SLIDER_MIN)}</span>
+        <strong>{`〜 ${formatRangeSliderCurrency(value)}`}</strong>
+        <span>{formatRangeSliderCurrency(RANGE_SLIDER_MAX)}</span>
       </div>
-      <div className={styles.mockRange}>
-        <span className={styles.mockRangeTrack} />
-        <span className={styles.mockRangeActive} style={{width: '60%'}} />
-        <span className={styles.mockRangeThumb} style={{left: '60%'}} />
+      <div className={styles.sliderTrackShell}>
+        <span aria-hidden="true" className={styles.sliderTrack} />
+        <span
+          aria-hidden="true"
+          className={styles.sliderTrackActive}
+          style={{width: `${sliderProgress}%`}}
+        />
+        <input
+          aria-label="価格帯の上限"
+          aria-valuemax={RANGE_SLIDER_MAX}
+          aria-valuemin={RANGE_SLIDER_MIN}
+          aria-valuenow={value}
+          className={styles.sliderRange}
+          max={RANGE_SLIDER_MAX}
+          min={RANGE_SLIDER_MIN}
+          onChange={(event) => setValue(Number(event.target.value))}
+          step={RANGE_SLIDER_STEP}
+          type="range"
+          value={value}
+        />
       </div>
-      <p className={styles.demoNote}>drag の直後に一覧や preview へ反映する continuous control を想定しています。</p>
+      <p className={styles.sliderHint}>
+        ドラッグ中の値変化を一覧や preview に即時反映する想定です。
+      </p>
+      <output aria-live="polite" className={styles.sliderCurrentValue}>
+        {`現在値: ${formatRangeSliderCurrency(value)}`}
+      </output>
+      <p className={styles.demoNote}>
+        ドラッグや左右キーで step 単位に調整し、現在値と一覧への反映条件を同時に確認できる single slider の demo
+        です。
+      </p>
     </div>
   );
 }
