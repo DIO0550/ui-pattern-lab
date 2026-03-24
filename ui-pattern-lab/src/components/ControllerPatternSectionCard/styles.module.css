@@ -1,0 +1,39 @@
+.root {
+  background: color-mix(
+    in srgb,
+    var(--controller-gallery-emphasis) 4%,
+    var(--controller-gallery-surface)
+  );
+  border: 1px solid var(--controller-gallery-border);
+  border-radius: 0.95rem;
+  display: grid;
+  gap: 0.9rem;
+  min-width: 0;
+  padding: 1rem;
+}
+
+.header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.label {
+  color: var(--controller-gallery-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.description {
+  color: var(--controller-gallery-muted);
+  margin: 0;
+}
+
+.content {
+  min-width: 0;
+}
