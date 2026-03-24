@@ -108,20 +108,22 @@ const baseControllerPatternEntries = [
     id: 'range-slider-filter',
     title: 'range slider filter',
     summary:
-      '価格帯や閾値のような連続値をドラッグで即時調整し、一覧や preview へ反映する controller パターンです。',
+      '価格帯、音量、しきい値、密度のような連続値をドラッグで即時調整し、一覧や preview へ反映する controller パターンです。',
     problem:
-      '連続値の調整を select や number input だけに寄せると、どこまで動かせるかや現在の範囲感覚が伝わりにくくなります。',
+      '価格帯や音量の上限を selector や text / number input だけに寄せると、どこまで動かせるか、いまどの範囲を指しているか、結果へどう効くかが伝わりにくくなります。',
     solution:
-      'slider と現在値表示を組み合わせ、drag の直後に結果が変わる構成で連続調整の感覚を保ちます。',
+      'single slider と現在値表示、反映先の preview を近接させ、drag やキーボード操作の直後に結果が変わる構成で連続調整の感覚を保ちます。',
     whenToUse:
-      '価格帯、音量、しきい値、密度、プレビュー比率など、厳密な数値入力よりも相対的な調整が主な場面に向いています。',
+      'price range、volume、threshold、density、preview 比率のように、厳密な数値入力よりも相対的な調整と視覚的なフィードバックが主な場面に向いています。',
     comparisonTip:
-      '厳密値の入力やフォーム送信が主なら number input を使い、drag で即時反映する continuous control だけを controller で扱います。',
+      '厳密な数値入力が必要なら text / number input、離散的な候補選択なら selector、狭い範囲の段階的増減なら quantity stepper を優先します。range slider filter は直感的な調整と即時反映を優先するときに選びます。',
     interactionNotes:
-      '初回は single slider を baseline とし、dual-thumb やログスケールのような複雑な variant は backlog に回します。現在値と効果範囲を近接表示します。',
+      '初回は single slider を baseline とし、drag 中は一覧や preview を即時更新します。step を設ける場合は表示値と内部値を同じ刻み幅に揃え、min / max 到達時はそれ以上動かないことを視覚的にも示します。',
     accessibilityNotes:
-      'slider には明示ラベルと現在値の説明を付け、キーボードでも増減できること、drag しなくても値が把握できることを優先します。',
-    tags: ['continuous adjustment', 'slider', 'live preview'],
+      'slider には label または `aria-label` を付け、`aria-valuemin` / `aria-valuemax` / `aria-valuenow` を整えます。左右キーで step 単位に増減し、Home / End で min / max へ移動できること、現在値を drag しなくても把握できることを優先します。',
+    futureExtensions:
+      'dual-thumb による範囲指定、log scale、exact numeric input へのフォールバックは将来拡張として切り出します。',
+    tags: ['continuous adjustment', 'price range', 'volume', 'threshold / density'],
     controllerFamily: 'continuous-adjustment',
     demoKind: 'range-slider-filter',
   },

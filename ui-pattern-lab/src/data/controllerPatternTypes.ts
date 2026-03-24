@@ -19,7 +19,8 @@ export type ControllerPatternMetadataTone =
   | 'usage'
   | 'comparison'
   | 'interaction'
-  | 'accessibility';
+  | 'accessibility'
+  | 'future';
 
 export type ControllerPatternMetadataItem = {
   label: string;
@@ -50,6 +51,7 @@ export type ControllerPatternEntry = {
   comparisonTip: string;
   interactionNotes: string;
   accessibilityNotes: string;
+  futureExtensions?: string;
   tags: string[];
   controllerFamily: ControllerPatternFamily;
   demoKind: ControllerDemoKind;

@@ -10,9 +10,9 @@ import styles from './styles.module.css';
 
 const axisItems = [
   {
-    title: '何を切り替えるか',
+    title: '連続値か離散値か',
     description:
-      'view mode、inline panel、dataset scope、連続値のどれを変えたいかで候補が大きく変わります。',
+      'view mode や section 切り替えではなく、price range や volume のような連続値を動かしたいなら range slider の候補が強くなります。',
   },
   {
     title: '候補数と粒度',
@@ -20,9 +20,14 @@ const axisItems = [
       '候補が 2〜4 個なら segmented switch、section 単位なら tabs、複数 control を束ねるなら toolbar が向きます。',
   },
   {
-    title: '即時反映の強さ',
+    title: '即時反映と視覚フィードバック',
     description:
-      '押した直後に画面が切り替わるか、一覧全体へ効くか、drag で連続更新するかを先に決めます。',
+      '押した直後に画面が切り替わるだけでなく、drag 中に一覧や preview が連続更新されるかを先に決めます。',
+  },
+  {
+    title: 'ドラッグ操作の必要性',
+    description:
+      'pointer でつまんで動かす体験が重要か、ボタンや select の方が理解しやすいかで、continuous adjustment の選択が変わります。',
   },
   {
     title: '既存カテゴリとの境界',
@@ -41,7 +46,7 @@ const decisionFlowItems = [
   '同じページ枠の panel / context を切り替えるなら `tabs-inline-panel-switcher`。',
   '一覧全体の並び替え・絞り込み・active filter をまとめて扱うなら `sort-filter-toolbar`。',
   '結果セットの位置と表示件数を継続的に制御するなら `pagination-and-page-size-controller`。',
-  '連続値やしきい値を drag で調整したいなら `range-slider-filter`。',
+  '厳密な数値入力が不要で、視覚的なフィードバックを見ながら連続値やしきい値を drag で調整したいなら `range-slider-filter`。',
   '狭い範囲の数値を安全に増減したいなら `quantity-stepper-control`。',
   '迷ったら「view switch → dataset scope → continuous adjustment → 既存カテゴリとの境界」の順で切り分けます。',
 ] as const;
@@ -65,7 +70,7 @@ export default function ControllerPatternPageContent(): ReactNode {
           <p>
             controller 系 UI は「押せるかどうか」ではなく、何を切り替える control なのかで選びます。
             mode switch、inline panel、dataset scope、continuous adjustment
-            のどれに当たるかを先に決めると、button や selector との境界も整理しやすくなります。
+            のどれに当たるかを先に決め、連続値なら「正確な入力」より「drag 中の即時反映」を優先するかまで切り分けると、button や selector との境界も整理しやすくなります。
           </p>
           <ol className={styles.flowList}>
             {decisionFlowItems.map((item) => (
@@ -73,7 +78,7 @@ export default function ControllerPatternPageContent(): ReactNode {
             ))}
           </ol>
           <p className={styles.summaryNote}>
-            一覧では判断材料を短く比較し、detail page で lightweight demo、CSS / TSX
+            一覧では判断材料を短く比較し、detail page で preview demo、CSS / TSX
             サンプル、interaction / accessibility 注記をまとめて確認できます。
           </p>
         </>
@@ -110,8 +115,8 @@ export default function ControllerPatternPageContent(): ReactNode {
         <section className={`container margin-bottom--xl ${styles.axisSection}`}>
           <Heading as="h2">表示制御の比較軸</Heading>
           <p className={styles.axisLead}>
-            切り替える対象、候補数、即時反映の粒度、既存カテゴリとの境界、主要セマンティクスの 5
-            軸で比べると、controller 系 UI の責務がぶれにくくなります。
+            連続値かどうか、候補数、即時反映と視覚フィードバック、ドラッグ操作の必要性、既存カテゴリとの境界、主要セマンティクスの
+            6 軸で比べると、controller 系 UI の責務がぶれにくくなります。
           </p>
           <PatternComparisonAxisGrid items={axisItems} layout="cards" />
           <p className={styles.axisNote}>

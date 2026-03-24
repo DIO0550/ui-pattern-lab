@@ -316,7 +316,7 @@ const totalCount = 240;
   },
   'range-slider-filter': {
     snippetSummary:
-      '連続値や狭い離散値をドラッグで即時調整し、現在値と反映対象を近接表示する slider filter の骨格です。',
+      'React state で値と active track を同期し、ドラッグとキーボード操作の両方で即時反映する single slider 実装例です。',
     items: [
       {
         id: 'range-slider-filter-css',
@@ -324,7 +324,11 @@ const totalCount = 240;
         language: 'css',
         code: `.sliderField {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.75rem;
+}
+
+.sliderLabel {
+  font-weight: 600;
 }
 
 .sliderLabels {
@@ -334,41 +338,161 @@ const totalCount = 240;
   font-size: 0.9rem;
 }
 
+.sliderTrackShell {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-block-size: 2rem;
+}
+
+.sliderTrack,
+.sliderTrackActive {
+  position: absolute;
+  inset-inline-start: 0;
+  block-size: 0.4rem;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.sliderTrack {
+  inline-size: 100%;
+  background: var(--ifm-color-emphasis-200);
+}
+
+.sliderTrackActive {
+  inline-size: 0;
+  background: var(--ifm-color-primary);
+}
+
+.sliderRange {
+  -webkit-appearance: none;
+  appearance: none;
+  inline-size: 100%;
+  block-size: 2rem;
+  margin: 0;
+  background: transparent;
+}
+
+.sliderRange::-webkit-slider-runnable-track {
+  block-size: 0.4rem;
+  background: transparent;
+}
+
+.sliderRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  inline-size: 1.2rem;
+  block-size: 1.2rem;
+  margin-top: -0.4rem;
+  border: 2px solid var(--ifm-color-primary);
+  border-radius: 999px;
+  background: white;
+}
+
+.sliderRange::-moz-range-track {
+  block-size: 0.4rem;
+  background: transparent;
+}
+
+.sliderRange::-moz-range-thumb {
+  inline-size: 1.2rem;
+  block-size: 1.2rem;
+  border: 2px solid var(--ifm-color-primary);
+  border-radius: 999px;
+  background: white;
+}
+
+/* focus-visible でアウトラインを残し、キーボード操作でも位置を見失わないようにする */
+.sliderRange:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 0.2rem;
+}
+
+.sliderRange:hover::-webkit-slider-thumb,
+.sliderRange:hover::-moz-range-thumb {
+  transform: scale(1.04);
+}
+
+.sliderRange:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .sliderHint {
   color: var(--ifm-color-emphasis-700);
   font-size: 0.9rem;
+}
+
+.sliderCurrentValue {
+  font-weight: 700;
 }`,
         note:
-          'exact value 入力は別フィールドへ任せ、slider では「いまどの範囲に絞ったか」が即時反映されることを重視します。',
+          'track / thumb / active range を分けておくと、現在の位置と有効範囲が伝わりやすくなります。exact value 入力は別フィールドへ任せ、slider では即時反映と操作感を優先します。',
       },
       {
         id: 'range-slider-filter-tsx',
         label: 'TSX',
         language: 'tsx',
-        code: `const [price, setPrice] = useState(6000);
+        code: `import {useState, type ReactNode} from 'react';
 
-<section aria-labelledby="price-filter-title" className={styles.sliderField}>
-  <h2 id="price-filter-title">価格帯で絞り込む</h2>
-  <div className={styles.sliderLabels}>
-    <span>0円</span>
-    <strong>{\`〜 \${price.toLocaleString()}円\`}</strong>
-    <span>10,000円</span>
-  </div>
-  <input
-    aria-describedby="price-filter-hint"
-    max={10000}
-    min={0}
-    onChange={(event) => setPrice(Number(event.target.value))}
-    step={500}
-    type="range"
-    value={price}
-  />
-  <p id="price-filter-hint" className={styles.sliderHint}>
-    スライダーを動かすと結果一覧を即時に更新します。
-  </p>
-</section>`,
+const MIN_PRICE = 0;
+const MAX_PRICE = 10_000;
+const PRICE_STEP = 500;
+
+export function PriceRangeFilter(): ReactNode {
+  const [price, setPrice] = useState(6_000);
+  const sliderProgress = ((price - MIN_PRICE) / (MAX_PRICE - MIN_PRICE)) * 100;
+
+  return (
+    <section aria-labelledby="price-filter-title" className={styles.sliderField}>
+      <h2 id="price-filter-title">価格帯で絞り込む</h2>
+      <label className={styles.sliderLabel} htmlFor="price-range">
+        上限価格
+      </label>
+
+      <div className={styles.sliderLabels}>
+        <span>{MIN_PRICE.toLocaleString()}円</span>
+        <strong>{\`〜 \${price.toLocaleString()}円\`}</strong>
+        <span>{MAX_PRICE.toLocaleString()}円</span>
+      </div>
+
+      <div className={styles.sliderTrackShell}>
+        <span aria-hidden="true" className={styles.sliderTrack} />
+        <span
+          aria-hidden="true"
+          className={styles.sliderTrackActive}
+          style={{width: \`\${sliderProgress}%\`}}
+        />
+        {/* 左右矢印キーで step 単位に増減し、Home / End キーで min / max に移動できます。 */}
+        {/* aria-valuemin / aria-valuemax / aria-valuenow を揃え、aria-label または label で目的を明示します。 */}
+        <input
+          aria-describedby="price-filter-hint"
+          aria-label="表示する価格帯の上限"
+          aria-valuemax={MAX_PRICE}
+          aria-valuemin={MIN_PRICE}
+          aria-valuenow={price}
+          className={styles.sliderRange}
+          id="price-range"
+          max={MAX_PRICE}
+          min={MIN_PRICE}
+          onChange={(event) => setPrice(Number(event.target.value))}
+          step={PRICE_STEP}
+          type="range"
+          value={price}
+        />
+      </div>
+
+      <p id="price-filter-hint" className={styles.sliderHint}>
+        ドラッグやキーボード操作の直後に結果一覧を即時更新します。
+      </p>
+      <output aria-live="polite" className={styles.sliderCurrentValue}>
+        {\`現在値: \${price.toLocaleString()}円\`}
+      </output>
+    </section>
+  );
+}`,
         note:
-          'dual-thumb の複雑な実装は初回スコープ外とし、まず single slider と現在値の関係を分かりやすく見せる方針に寄せます。',
+          'dual-thumb の複雑な実装は初回スコープ外とし、まず single slider / onChange / aria 属性 / 現在値表示の関係を分かりやすく揃える方針に寄せます。',
       },
     ],
   },
