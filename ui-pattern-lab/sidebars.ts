@@ -158,6 +158,24 @@ const sidebars: SidebarsConfig = {
         'progress/stepper-status-tracker',
       ],
     },
+    {
+      type: 'category',
+      label: '表示制御',
+      link: {
+        type: 'doc',
+        id: 'controller',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        'controller/segmented-view-switcher',
+        'controller/tabs-inline-panel-switcher',
+        'controller/sort-filter-toolbar',
+        'controller/pagination-and-page-size-controller',
+        'controller/range-slider-filter',
+        'controller/quantity-stepper-control',
+      ],
+    },
   ],
 };
 

@@ -102,6 +102,10 @@ const config: Config = {
               label: 'プログレス',
               to: '/progress',
             },
+            {
+              label: '表示制御',
+              to: '/controller',
+            },
           ],
         },
         {

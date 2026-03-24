@@ -5,6 +5,7 @@ import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
+import {controllerPatternEntries} from '@site/src/data/controllerPatternEntries';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
 import {progressPatternEntries} from '@site/src/data/progressPatternEntries';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
@@ -36,6 +37,13 @@ const checkboxDetailLinks = checkboxPatternEntries.map((entry) => ({
 const progressDetailLinks = progressPatternEntries.map((entry) => ({
   title: entry.title,
   to: `/progress/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const controllerDetailLinks = controllerPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/controller/${entry.id}`,
   description: entry.summary,
   meta: '詳細ページ',
 }));
@@ -112,6 +120,24 @@ const progressLinks = [
   ...progressDetailLinks,
 ];
 
+const controllerLinks = [
+  {
+    title: '表示制御カテゴリ',
+    to: '/controller',
+    description:
+      'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: '表示制御パターン比較',
+    to: '/patterns/controller-designs',
+    description:
+      'view switch、scope control、continuous adjustment の観点から、6 つの controller pattern を比較できます。',
+    meta: '比較一覧',
+  },
+  ...controllerDetailLinks,
+];
+
 type LinkCard = {
   title: string;
   to: string;
@@ -130,7 +156,8 @@ type CategoryId =
   | 'button'
   | 'checkbox'
   | 'selector'
-  | 'progress';
+  | 'progress'
+  | 'controller';
 
 type CategoryCard = {
   id: CategoryId;
@@ -245,6 +272,15 @@ const categoryCards: CategoryCard[] = [
     links: progressLinks,
     expandedMeta: 'クリックしてプログレス関連の導線を閉じる',
     collapsedMeta: 'クリックしてプログレス関連の導線を表示',
+  },
+  {
+    id: 'controller',
+    title: '表示制御',
+    description:
+      '画面上の内容や view state をその場で切り替える UI を比較し、button / selector / table / progress との責務境界を確認できるカテゴリです。',
+    links: controllerLinks,
+    expandedMeta: 'クリックして表示制御関連の導線を閉じる',
+    collapsedMeta: 'クリックして表示制御関連の導線を表示',
   },
 ];
 
