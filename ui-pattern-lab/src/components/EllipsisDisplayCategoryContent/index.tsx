@@ -19,17 +19,16 @@ export default function EllipsisDisplayCategoryContent(): ReactNode {
   return (
     <div className={`container margin-vert--lg ${styles.root}`}>
       <p className={styles.lead}>
-        省略表示カテゴリでは、まず比較一覧で全文到達性と密度のバランスを確認し、
-        そのあと必要な個別パターンへ進めます。テーブル専用の `cell-truncation`
-        は別ページに残し、ここでは generic な判断軸を扱います。
+        省略表示カテゴリでは、まず比較ページで「どこまで省略し、どう全文へ到達させるか」を整理し、
+        そのあと各詳細ページで preview / CSS / TSX 例を確認します。
       </p>
 
       <section className={styles.section}>
         <Heading as="h2">先に省略ルールを整理する</Heading>
         <p className={styles.sectionLead}>
-          generic な判断軸は{' '}
-          <Link to="/patterns/ellipsis-display-designs">省略表示パターン</Link> で確認しつつ、
-          ここでは収録している {ellipsisDisplayPatternEntries.length} 件の要点だけを短く見比べます。
+          まずは <Link to="/patterns/ellipsis-display-designs">省略表示パターン</Link>{' '}
+          で判断軸を確認しながら、収録している {ellipsisDisplayPatternEntries.length}
+          件のパターンを見比べます。preview / CSS / TSX 例は各詳細ページで確認できます。
         </p>
         <PatternCompareCardGrid items={compareItems} />
       </section>
@@ -38,9 +37,9 @@ export default function EllipsisDisplayCategoryContent(): ReactNode {
         <Heading as="h2">テーブル専用の具体例</Heading>
         <PatternCatalogCard
           className={styles.supportCard}
-          description="テーブルの行高と列密度を崩さない具体例は table カテゴリ側に残しています。"
+          description="テーブルの行高と列密度を崩さない省略表示は、このカテゴリではなく table カテゴリで扱っています。"
           eyebrow="補助リンク"
-          meta="表の文脈で省略表示を使う場合はこちらを参照"
+          meta="ここで扱う generic な省略パターンとは別に、表セル専用の省略例を確認できます"
           title="cell-truncation"
           to="/table/cell-truncation"
           tone="muted"
