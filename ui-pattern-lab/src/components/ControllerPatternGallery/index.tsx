@@ -1,9 +1,9 @@
 import {useState, type ReactNode} from 'react';
 import clsx from 'clsx';
-import CodeBlock from '@theme/CodeBlock';
 import Heading from '@theme/Heading';
-import TabItem from '@theme/TabItem';
-import Tabs from '@theme/Tabs';
+import ControllerPatternMetadataPanel from '@site/src/components/ControllerPatternMetadataPanel';
+import ControllerPatternSectionCard from '@site/src/components/ControllerPatternSectionCard';
+import ControllerPatternSnippetPanel from '@site/src/components/ControllerPatternSnippetPanel';
 import type {
   ControllerPatternEntry,
   ControllerPatternMetadataItem,
@@ -16,47 +16,7 @@ type ControllerPatternGalleryProps = {
   density: 'list' | 'detail';
 };
 
-type SectionCardProps = {
-  eyebrow: string;
-  title: string;
-  description: string;
-  children: ReactNode;
-};
-
 type DemoRenderer = () => ReactNode;
-
-const metadataToneClassName: Record<
-  ControllerPatternMetadataItem['tone'],
-  string
-> = {
-  problem: styles.toneProblem,
-  solution: styles.toneSolution,
-  usage: styles.toneUsage,
-  comparison: styles.toneComparison,
-  interaction: styles.toneInteraction,
-  accessibility: styles.toneAccessibility,
-  future: styles.toneFuture,
-};
-
-function SectionCard({
-  eyebrow,
-  title,
-  description,
-  children,
-}: SectionCardProps): ReactNode {
-  return (
-    <section className={styles.sectionCard}>
-      <header className={styles.sectionHeader}>
-        <span className={styles.sectionEyebrow}>{eyebrow}</span>
-        <Heading as="h4" className={styles.sectionTitle}>
-          {title}
-        </Heading>
-        <p className={styles.sectionDescription}>{description}</p>
-      </header>
-      <div className={styles.sectionBody}>{children}</div>
-    </section>
-  );
-}
 
 function EmptyState({message}: {message: string}): ReactNode {
   return <p className={styles.emptyState}>{message}</p>;
@@ -65,7 +25,7 @@ function EmptyState({message}: {message: string}): ReactNode {
 function buildMetadataItems(entry: ControllerPatternEntry): ControllerPatternMetadataItem[] {
   const items: ControllerPatternMetadataItem[] = [
     {label: '課題', tone: 'problem', value: entry.problem},
-    {label: '解決方針', tone: 'solution', value: entry.solution},
+    {label: '解決方法', tone: 'solution', value: entry.solution},
     {label: '向いている場面', tone: 'usage', value: entry.whenToUse},
     {label: '比較メモ', tone: 'comparison', value: entry.comparisonTip},
     {label: '操作設計メモ', tone: 'interaction', value: entry.interactionNotes},
@@ -83,117 +43,6 @@ function buildMetadataItems(entry: ControllerPatternEntry): ControllerPatternMet
   return items;
 }
 
-function MetadataPanel({
-  entry,
-  density,
-}: {
-  entry: ControllerPatternEntry;
-  density: 'list' | 'detail';
-}): ReactNode {
-  const metadataItems = buildMetadataItems(entry);
-
-  const content = (
-    <dl className={styles.metadataList}>
-      {metadataItems.map((item) => (
-        <div
-          className={clsx(styles.metadataItem, metadataToneClassName[item.tone])}
-          key={`${entry.id}-${item.label}`}>
-          <dt className={styles.metadataLabel}>{item.label}</dt>
-          <dd className={styles.metadataValue}>{item.value}</dd>
-        </div>
-      ))}
-    </dl>
-  );
-
-  if (density === 'detail') {
-    return (
-      <SectionCard
-        description="課題、解決方針、既存カテゴリとの境界、interaction / accessibility、将来拡張の注意点をまとめています。"
-        eyebrow="Design notes"
-        title="設計メモ">
-        {content}
-      </SectionCard>
-    );
-  }
-
-  return content;
-}
-
-function SnippetPanel({
-  entry,
-  density,
-}: {
-  entry: ControllerPatternEntry;
-  density: 'list' | 'detail';
-}): ReactNode {
-  const snippets = entry.snippets;
-
-  if (!snippets) {
-    const empty = (
-      <EmptyState message="このパターンのコードサンプルはまだ追加されていません。" />
-    );
-
-    if (density === 'detail') {
-      return (
-        <SectionCard
-          description="CSS / TSX の最小サンプルを載せる領域です。"
-          eyebrow="Code"
-          title="コードサンプル">
-          {empty}
-        </SectionCard>
-      );
-    }
-
-    return empty;
-  }
-
-  const content =
-    density === 'detail' ? (
-      <div className={styles.codeSurface}>
-        <p className={styles.codeSummary}>{snippets.snippetSummary}</p>
-        <Tabs defaultValue={snippets.items[0]?.id}>
-          {snippets.items.map((item) => (
-            <TabItem key={item.id} label={item.label} value={item.id}>
-              <CodeBlock language={item.language}>{item.code}</CodeBlock>
-              {item.note ? <p className={styles.codeNote}>{item.note}</p> : null}
-            </TabItem>
-          ))}
-        </Tabs>
-      </div>
-    ) : (
-      <details className={styles.details}>
-        <summary className={styles.detailsSummary}>
-          <span className={styles.detailsLabel}>CSS / TSX サンプル</span>
-          <span className={styles.detailsText}>{snippets.snippetSummary}</span>
-        </summary>
-        <div className={styles.detailsBody}>
-          {snippets.items.map((item) => (
-            <section className={styles.codeItem} key={item.id}>
-              <Heading as="h4" className={styles.codeItemTitle}>
-                {item.label}
-              </Heading>
-              <CodeBlock language={item.language}>{item.code}</CodeBlock>
-              {item.note ? <p className={styles.codeNote}>{item.note}</p> : null}
-            </section>
-          ))}
-        </div>
-      </details>
-    );
-
-  if (density === 'detail') {
-    return (
-      <SectionCard
-        description="初期実装の最小構成を CSS / TSX で確認できます。"
-        eyebrow="Code"
-        title="コードサンプル">
-        {content}
-      </SectionCard>
-    );
-  }
-
-  return content;
-}
-
 function PreviewPanel({
   entry,
   density,
@@ -206,12 +55,13 @@ function PreviewPanel({
 
   if (density === 'detail') {
     return (
-      <SectionCard
+      <ControllerPatternSectionCard
+        ariaLabel={`${entry.title}のプレビュー`}
         description="本番コードそのものではなく、pattern の要点と操作感を把握するための preview demo です。"
-        eyebrow="Preview"
-        title="preview demo">
+        label="見た目"
+        title="プレビュー">
         {content}
-      </SectionCard>
+      </ControllerPatternSectionCard>
     );
   }
 
@@ -402,31 +252,75 @@ export default function ControllerPatternGallery({
   return (
     <div className={clsx(styles.root, density === 'detail' && styles.detailRoot)}>
       <div className={clsx(styles.grid, density === 'detail' && styles.detailGrid)}>
-        {entries.map((entry) => (
-          <article className={styles.card} key={entry.id}>
-            <header className={styles.cardHeader}>
-              <div>
-                <Heading as="h3" className={styles.cardTitle}>
-                  {entry.title}
-                </Heading>
-                <p className={styles.cardSummary}>{entry.summary}</p>
-              </div>
-              <ul className={styles.tagList}>
-                {entry.tags.map((tag) => (
-                  <li className={styles.tag} key={`${entry.id}-${tag}`}>
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            </header>
+        {entries.map((entry) => {
+          if (density === 'detail') {
+            return (
+              <div className={styles.detailContent} id={entry.id} key={entry.id}>
+                <header className={styles.cardHeader}>
+                  <div>
+                    <Heading as="h3" className={styles.cardTitle}>
+                      {entry.title}
+                    </Heading>
+                    <p className={styles.cardSummary}>{entry.summary}</p>
+                  </div>
+                  <ul className={styles.tagList}>
+                    {entry.tags.map((tag) => (
+                      <li className={styles.tag} key={`${entry.id}-${tag}`}>
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                </header>
 
-            <div className={clsx(styles.cardBody, density === 'detail' && styles.cardBodyDetail)}>
-              <PreviewPanel density={density} entry={entry} />
-              <SnippetPanel density={density} entry={entry} />
-              <MetadataPanel density={density} entry={entry} />
-            </div>
-          </article>
-        ))}
+                <PreviewPanel density={density} entry={entry} />
+                <ControllerPatternSnippetPanel
+                  density={density}
+                  entryTitle={entry.title}
+                  snippets={entry.snippets}
+                />
+                <ControllerPatternMetadataPanel
+                  density={density}
+                  entryTitle={entry.title}
+                  items={buildMetadataItems(entry)}
+                />
+              </div>
+            );
+          }
+
+          return (
+            <article className={styles.card} key={entry.id}>
+              <header className={styles.cardHeader}>
+                <div>
+                  <Heading as="h3" className={styles.cardTitle}>
+                    {entry.title}
+                  </Heading>
+                  <p className={styles.cardSummary}>{entry.summary}</p>
+                </div>
+                <ul className={styles.tagList}>
+                  {entry.tags.map((tag) => (
+                    <li className={styles.tag} key={`${entry.id}-${tag}`}>
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </header>
+
+              <div className={styles.cardBody}>
+                <PreviewPanel density={density} entry={entry} />
+                <ControllerPatternSnippetPanel
+                  density={density}
+                  entryTitle={entry.title}
+                  snippets={entry.snippets}
+                />
+                <ControllerPatternMetadataPanel
+                  density={density}
+                  entryTitle={entry.title}
+                  items={buildMetadataItems(entry)}
+                />
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   );

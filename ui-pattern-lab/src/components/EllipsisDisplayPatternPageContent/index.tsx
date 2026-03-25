@@ -38,6 +38,10 @@ export default function EllipsisDisplayPatternPageContent(): ReactNode {
 
   return (
     <PatternComparisonPageShell
+      backLink={{
+        to: '/ellipsis-display',
+        label: '省略表示カテゴリへ戻る',
+      }}
       summary={
         <>
           <Heading as="h2">先に省略ルールを比べる</Heading>
