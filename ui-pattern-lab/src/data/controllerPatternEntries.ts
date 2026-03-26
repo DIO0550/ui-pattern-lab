@@ -36,7 +36,7 @@ const baseControllerPatternEntries = [
     interactionNotes:
       '候補は 2〜4 個程度に絞り、現在選択中の状態を押下後の panel や list layout と近接表示します。候補が多い場合は tabs や navigation に分割します。',
     accessibilityNotes:
-      'toggle button なら `aria-pressed`、tab に近い文脈なら `role=\"tablist\"` を検討し、現在モードを視覚差だけでなく属性とラベルでも示します。',
+      'button group として実装する場合は各ボタンに Tab で到達でき、Enter / Space で選択を切り替えられる状態を baseline にします。toggle button なら `aria-pressed` で現在モードを示し、arrow key 操作は `role=\"tablist\"` を採る tabs 系に寄せて segmented-view-switcher の既定要件にはしません。',
     tags: ['view switch', '2-4 options', 'mode switch'],
     controllerFamily: 'view-switch',
     demoKind: 'segmented-view-switcher',
