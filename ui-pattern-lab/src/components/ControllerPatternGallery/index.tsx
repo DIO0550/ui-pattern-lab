@@ -1,4 +1,4 @@
-import {useState, type ReactNode} from 'react';
+import {useId, useState, type ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import ControllerPatternMetadataPanel from '@site/src/components/ControllerPatternMetadataPanel';
@@ -17,6 +17,44 @@ type ControllerPatternGalleryProps = {
 };
 
 type DemoRenderer = () => ReactNode;
+
+const segmentedViewModeOrder = ['list', 'grid', 'board'] as const;
+
+type SegmentedViewMode = (typeof segmentedViewModeOrder)[number];
+
+type SegmentedViewModeDefinition = {
+  label: string;
+  title: string;
+  description: string;
+  bodyLabel: string;
+};
+
+const DEFAULT_SEGMENTED_VIEW_MODE: SegmentedViewMode = 'grid';
+
+const segmentedViewModeDefinitions: Readonly<
+  Record<SegmentedViewMode, SegmentedViewModeDefinition>
+> = {
+  list: {
+    label: 'List',
+    title: 'List view',
+    description: '1 行ずつ密度高く確認し、同じ view のまま比較対象を流し読みする構成です。',
+    bodyLabel: '縦方向に一覧を確認する',
+  },
+  grid: {
+    label: 'Grid',
+    title: 'Grid view',
+    description: 'カードを近接配置し、同じ view の local state を即時に切り替えて見比べます。',
+    bodyLabel: 'カードを並べて比較する',
+  },
+  board: {
+    label: 'Board',
+    title: 'Board view',
+    description: '状態や列ごとのまとまりを保ちながら、同じデータを board 形式で眺めます。',
+    bodyLabel: '列ごとにまとまりを確認する',
+  },
+};
+
+const segmentedViewPreviewItems = ['Orders', 'Returns', 'Scheduled', 'Drafts'] as const;
 
 function EmptyState({message}: {message: string}): ReactNode {
   return <p className={styles.emptyState}>{message}</p>;
@@ -69,26 +107,75 @@ function PreviewPanel({
 }
 
 function SegmentedViewSwitcherDemo(): ReactNode {
+  const groupLabelId = useId();
+  const [activeMode, setActiveMode] =
+    useState<SegmentedViewMode>(DEFAULT_SEGMENTED_VIEW_MODE);
+  const activeView = segmentedViewModeDefinitions[activeMode];
+
   return (
     <div className={styles.demoPanel}>
-      <div className={styles.mockRow}>
-        <span className={styles.mockButton}>List</span>
-        <span className={clsx(styles.mockButton, styles.mockButtonActive)}>Grid</span>
-        <span className={styles.mockButton}>Board</span>
-      </div>
-      <div className={styles.mockSurface}>
-        <div className={styles.mockHeader}>
-          <span className={styles.mockEyebrow}>Active view</span>
-          <strong>Grid preview</strong>
+      <div className={styles.segmentedDemoHeader}>
+        <div className={styles.segmentedDemoHeading}>
+          <span className={styles.mockEyebrow} id={groupLabelId}>
+            表示モード
+          </span>
+          <strong>{activeView.title}</strong>
         </div>
-        <div className={styles.mockTileGrid}>
-          <span className={styles.mockTile}>Card 1</span>
-          <span className={styles.mockTile}>Card 2</span>
-          <span className={styles.mockTile}>Card 3</span>
-          <span className={styles.mockTile}>Card 4</span>
+        <span className={styles.segmentedDemoState}>Local UI state</span>
+      </div>
+      <div
+        aria-labelledby={groupLabelId}
+        className={styles.segmentedGroup}
+        role="group">
+        {segmentedViewModeOrder.map((modeId) => {
+          const mode = segmentedViewModeDefinitions[modeId];
+          const isActive = activeMode === modeId;
+
+          return (
+            <button
+              aria-pressed={isActive}
+              className={clsx(
+                styles.segmentedButton,
+                isActive && styles.segmentedButtonActive,
+              )}
+              key={modeId}
+              onClick={() => {
+                setActiveMode((currentMode) => {
+                  if (currentMode === modeId) {
+                    return currentMode;
+                  }
+
+                  return modeId;
+                });
+              }}
+              type="button">
+              {mode.label}
+            </button>
+          );
+        })}
+      </div>
+      <div className={styles.segmentedResultPanel}>
+        <div className={styles.segmentedResultHeader}>
+          <span className={styles.mockEyebrow}>現在の結果</span>
+          <strong>{activeView.bodyLabel}</strong>
+        </div>
+        <p aria-live="polite" className={styles.segmentedResultDescription}>
+          {activeView.description}
+        </p>
+        <div className={styles.segmentedResultItems} data-view-mode={activeMode}>
+          {segmentedViewPreviewItems.map((item) => (
+            <span
+              className={styles.segmentedResultCard}
+              data-view-mode={activeMode}
+              key={item}>
+              {item}
+            </span>
+          ))}
         </div>
       </div>
-      <p className={styles.demoNote}>現在モードと結果を近接表示し、mode switch だと伝える構成です。</p>
+      <p className={styles.demoNote}>
+        少数の mode をその場で切り替え、active state・結果・accessible name を近接表示する軽量 demo です。
+      </p>
     </div>
   );
 }
