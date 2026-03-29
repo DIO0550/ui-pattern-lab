@@ -150,6 +150,10 @@ type LinkSection = {
   links: LinkCard[];
 };
 
+type QuickStartCard = LinkCard & {
+  eyebrow: string;
+};
+
 type CategoryId =
   | 'table'
   | 'ellipsis-display'
@@ -284,6 +288,32 @@ const categoryCards: CategoryCard[] = [
   },
 ];
 
+const quickStartCards: readonly QuickStartCard[] = [
+  {
+    eyebrow: '比較の入口',
+    title: 'ボタンの判断軸から入る',
+    to: '/patterns/button-designs',
+    description: '強調度、状態、危険操作、余白設計をまとめて見比べる代表的な比較ページです。',
+    meta: '主要カテゴリ',
+  },
+  {
+    eyebrow: 'フォーム選択',
+    title: 'セレクタの選び方を整理する',
+    to: '/patterns/selector-designs',
+    description:
+      'radio / native select / custom select / combobox を比較軸から選び分けられます。',
+    meta: '比較ハブ',
+  },
+  {
+    eyebrow: 'view state',
+    title: '表示制御パターンを見る',
+    to: '/patterns/controller-designs',
+    description:
+      'segmented control、tabs、pagination、range slider の責務境界を整理できます。',
+    meta: '導線を把握',
+  },
+] as const;
+
 type NavigationListItemProps = LinkCard;
 
 /**
@@ -367,7 +397,7 @@ function CategoryAccordionItem({
   const panelId = `${category.id}-category-panel`;
 
   return (
-    <section className={styles.accordionItem}>
+    <section className={clsx(styles.accordionItem, isOpen && styles.accordionItemOpen)}>
       <Heading as="h3" className={styles.accordionHeading}>
         <button
           aria-controls={panelId}
@@ -379,7 +409,7 @@ function CategoryAccordionItem({
           <span className={styles.accordionLabel}>カテゴリ</span>
           <span className={styles.accordionHeaderRow}>
             <span className={styles.accordionTitle}>{category.title}</span>
-            <span className={styles.accordionStatus}>
+            <span className={clsx(styles.accordionStatus, isOpen && styles.accordionStatusOpen)}>
               {isOpen ? '開いています' : '閉じています'}
             </span>
           </span>
@@ -421,6 +451,29 @@ function CategoryAccordionItem({
  */
 export default function DocsHomeContent(): ReactNode {
   const [activeCategoryId, setActiveCategoryId] = useState<CategoryId | null>(null);
+  const totalRouteCount = categoryCards.reduce((count, category) => {
+    const sectionRouteCount =
+      category.sections?.reduce((sectionCount, section) => sectionCount + section.links.length, 0) ?? 0;
+
+    return count + category.links.length + sectionRouteCount;
+  }, 0);
+  const introHighlights = [
+    {
+      label: '収録カテゴリ',
+      value: `${categoryCards.length} categories`,
+      description: '入力、表示制御、table、ellipsis まで横断して確認できます。',
+    },
+    {
+      label: '導線の深さ',
+      value: `${totalRouteCount} routes`,
+      description: '比較ページと詳細ページを行き来しながら、必要な深さまで掘り下げられます。',
+    },
+    {
+      label: '確認観点',
+      value: 'Light / Dark / Responsive',
+      description: 'コード例、長い日本語、カード一覧を含む docs として読みやすさを保ちます。',
+    },
+  ] as const;
 
   function toggleCategory(categoryId: CategoryId): void {
     setActiveCategoryId((currentCategoryId) => {
@@ -435,16 +488,55 @@ export default function DocsHomeContent(): ReactNode {
   return (
     <div className={styles.root}>
       <div className={styles.intro}>
-        <p className={styles.lead}>
-          UIパターンラボは、実装時に迷いやすい UI の見せ方を整理して比較するためのドキュメントです。
-        </p>
-        <p className={styles.muted}>
-          まずは気になるカテゴリを開いて、見たいサブカテゴリや比較一覧へそのまま進んでください。
-        </p>
+        <div className={styles.introBody}>
+          <span className={styles.introEyebrow}>比較から入る UI リファレンス</span>
+          <Heading as="h1" className={styles.introTitle}>
+            UI パターンを比較して、必要な実装例まで迷わずたどる
+          </Heading>
+          <p className={styles.lead}>
+            UIパターンラボは、実装時に迷いやすい UI の見せ方を比較しながら選ぶためのドキュメントです。
+            まずは比較ページで判断軸を整理し、必要になったところだけ詳細ページで preview とコードを確認できます。
+          </p>
+          <p className={styles.muted}>
+            気になるカテゴリを開くか、よく使う入口から見始めてください。比較、詳細、関連カテゴリを往復しながら、
+            light / dark や長い日本語テキストまで含めて確認しやすい構成にしています。
+          </p>
+        </div>
+
+        <div className={styles.introMetaGrid}>
+          {introHighlights.map((highlight) => (
+            <article className={styles.introMetaCard} key={highlight.label}>
+              <span className={styles.introMetaLabel}>{highlight.label}</span>
+              <strong className={styles.introMetaValue}>{highlight.value}</strong>
+              <p className={styles.introMetaDescription}>{highlight.description}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className={styles.introCardGrid}>
+          {quickStartCards.map((card) => (
+            <Link className={styles.cardLink} key={card.to} to={card.to}>
+              <article className={styles.card}>
+                <span className={styles.cardEyebrow}>{card.eyebrow}</span>
+                <Heading as="h2" className={styles.cardTitle}>
+                  {card.title}
+                </Heading>
+                <p className={styles.cardDescription}>{card.description}</p>
+                {card.meta ? <p className={styles.cardMeta}>{card.meta}</p> : null}
+              </article>
+            </Link>
+          ))}
+        </div>
       </div>
 
       <section className={styles.section}>
-        <Heading as="h2">カテゴリ</Heading>
+        <div className={styles.sectionHeader}>
+          <Heading as="h2">カテゴリから探す</Heading>
+          <p className={styles.sectionLead}>
+            カテゴリごとの入口、比較ページ、詳細ページを single-open accordion でまとめています。
+            閉じた状態でも内容の輪郭が分かるようにしつつ、開いたらそのまま次の導線へ進めます。
+          </p>
+        </div>
         <div className={styles.categoryGrid}>
           {categoryCards.map((category) => (
             <CategoryAccordionItem

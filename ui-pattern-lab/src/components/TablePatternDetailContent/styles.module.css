@@ -1,0 +1,10 @@
+.root {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.lead {
+  line-height: 1.7;
+  margin: 0;
+  max-width: 76ch;
+}

@@ -66,13 +66,30 @@ const config: Config = {
         alt: 'UIパターンラボのロゴ',
         src: 'img/logo.svg',
       },
-      items: [],
+      items: [
+        {
+          to: '/',
+          label: 'はじめに',
+          position: 'left',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'patternsSidebar',
+          label: 'カテゴリ',
+          position: 'left',
+        },
+        {
+          href: 'https://github.com/DIO0550/ui-pattern-lab',
+          label: 'GitHub',
+          position: 'right',
+        },
+      ],
     },
     footer: {
       style: 'dark',
       links: [
         {
-          title: 'ドキュメント',
+          title: 'カテゴリ',
           items: [
             {
               label: '目次',
@@ -109,7 +126,7 @@ const config: Config = {
           ],
         },
         {
-          title: 'その他',
+          title: 'プロジェクト',
           items: [
             {
               label: 'GitHub',

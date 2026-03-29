@@ -1,20 +1,14 @@
 .root {
-  background: color-mix(
-    in srgb,
-    var(--progress-gallery-emphasis) 4%,
-    var(--progress-gallery-surface)
-  );
-  border: 1px solid var(--progress-gallery-border);
-  border-radius: 0.95rem;
   display: grid;
   gap: 0.9rem;
   min-width: 0;
-  padding: 1rem;
 }
 
 .header {
+  border-bottom: 1px solid var(--progress-gallery-border);
   display: grid;
   gap: 0.35rem;
+  padding-bottom: 0.65rem;
 }
 
 .label {

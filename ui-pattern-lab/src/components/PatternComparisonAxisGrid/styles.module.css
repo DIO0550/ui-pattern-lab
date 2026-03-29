@@ -6,19 +6,34 @@
 
 .card,
 .bulletSurface {
-  background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 1rem;
-  box-shadow: var(--ifm-global-shadow-lw);
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--upl-border-subtle);
+  border-radius: 1.25rem;
+  box-shadow: var(--upl-shadow-sm);
 }
 
 .card {
   display: grid;
-  gap: 0.85rem;
+  gap: 0.9rem;
   padding: 1.25rem;
 }
 
-.card h3 {
+.cardHeader {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.cardEyebrow {
+  color: var(--ifm-color-primary-dark);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  letter-spacing: -0.03em;
+  line-height: 1.35;
   margin-bottom: 0;
 }
 
@@ -30,28 +45,46 @@
 }
 
 .bulletSurface {
+  background: color-mix(
+    in srgb,
+    var(--ifm-background-surface-color) 94%,
+    var(--ifm-color-primary) 6%
+  );
   padding: 1.25rem;
 }
 
 .bulletList {
   display: grid;
-  gap: 0.85rem;
+  gap: 0.9rem;
+  list-style: none;
   margin: 0;
-  padding-left: 1.2rem;
+  padding: 0;
 }
 
 .bulletItem {
+  background: color-mix(
+    in srgb,
+    var(--ifm-background-surface-color) 92%,
+    var(--ifm-color-primary) 8%
+  );
+  border: 1px solid var(--upl-border-subtle);
+  border-radius: 1rem;
   display: grid;
-  gap: 0.15rem;
+  gap: 0.3rem;
+  padding: 0.95rem 1rem;
 }
 
 .bulletTitle {
+  color: var(--ifm-heading-color);
   font-weight: 700;
 }
 
-[data-theme='dark'] .card,
-[data-theme='dark'] .bulletSurface {
-  border-color: var(--ifm-color-emphasis-300);
+[data-theme='dark'] .bulletItem {
+  background: color-mix(
+    in srgb,
+    var(--ifm-background-surface-color) 92%,
+    rgba(143, 162, 255, 0.14)
+  );
 }
 
 @media screen and (max-width: 640px) {

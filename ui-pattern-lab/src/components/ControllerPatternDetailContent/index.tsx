@@ -120,7 +120,7 @@ export default function ControllerPatternDetailContent({
   const contextNote = buildContextNote(entry.id);
 
   return (
-    <div className={`container margin-vert--lg ${styles.root}`}>
+    <div className={`margin-vert--lg ${styles.root}`}>
       <div className={styles.backLinks}>
         <Link to="/controller">表示制御</Link>
         <span aria-hidden="true">/</span>

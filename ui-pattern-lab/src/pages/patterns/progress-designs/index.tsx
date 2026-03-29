@@ -8,8 +8,8 @@ export default function ProgressDesignPatternsPage(): ReactNode {
     <Layout
       title="プログレスデザインパターン"
       description="linear / circular determinate、indeterminate、spinner、skeleton、stepper を、比較要点と preview を先に見ながら選び分けられるページです。">
-      <header className="hero hero--primary">
-        <div className="container">
+      <header className="hero hero--primary pattern-page-hero">
+        <div className="container pattern-page-hero__inner">
           <Heading as="h1" className="hero__title">
             プログレスデザインパターン
           </Heading>
@@ -21,7 +21,7 @@ export default function ProgressDesignPatternsPage(): ReactNode {
         </div>
       </header>
 
-      <main>
+      <main className="pattern-page-main">
         <ProgressPatternPageContent />
       </main>
     </Layout>

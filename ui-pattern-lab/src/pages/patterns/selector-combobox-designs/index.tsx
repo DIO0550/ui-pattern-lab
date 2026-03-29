@@ -8,8 +8,8 @@ export default function SelectorComboboxDesignsPage(): ReactNode {
     <Layout
       title="Combobox デザインパターン"
       description="single-select combobox の baseline / grouped results / empty and loading states を、比較要点と compact preview で見比べるページです。">
-      <header className="hero hero--primary">
-        <div className="container">
+      <header className="hero hero--primary pattern-page-hero">
+        <div className="container pattern-page-hero__inner">
           <Heading as="h1" className="hero__title">
             Combobox デザインパターン
           </Heading>
@@ -21,7 +21,7 @@ export default function SelectorComboboxDesignsPage(): ReactNode {
         </div>
       </header>
 
-      <main>
+      <main className="pattern-page-main">
         <SelectorPatternCollectionPageContent
           backLinkLabel="セレクタデザインパターンへ戻る"
           backLinkPath="/patterns/selector-designs"

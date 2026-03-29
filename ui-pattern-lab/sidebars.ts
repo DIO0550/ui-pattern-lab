@@ -55,7 +55,7 @@ const sidebars: SidebarsConfig = {
         id: 'button',
       },
       collapsible: true,
-      collapsed: true,
+      collapsed: false,
       items: [
         'button/hierarchy-and-emphasis',
         'button/interactive-states',
@@ -73,7 +73,7 @@ const sidebars: SidebarsConfig = {
         id: 'checkbox',
       },
       collapsible: true,
-      collapsed: true,
+      collapsed: false,
       items: [
         'checkbox/multiple-independent-selection',
         'checkbox/selectable-cards',
@@ -90,13 +90,13 @@ const sidebars: SidebarsConfig = {
         id: 'selector',
       },
       collapsible: true,
-      collapsed: true,
+      collapsed: false,
       items: [
         {
           type: 'category',
           label: 'Radio',
           collapsible: true,
-          collapsed: false,
+          collapsed: true,
           items: [
             'selector/radio-group-single-selection',
             'selector/selectable-radio-cards',
@@ -106,14 +106,14 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Native select',
           collapsible: true,
-          collapsed: false,
+          collapsed: true,
           items: ['selector/native-select-compact-options'],
         },
         {
           type: 'category',
           label: 'Custom select',
           collapsible: true,
-          collapsed: false,
+          collapsed: true,
           items: [
             'selector/custom-select-outline-listbox',
             'selector/custom-select-soft-options',
@@ -124,7 +124,7 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Combobox',
           collapsible: true,
-          collapsed: false,
+          collapsed: true,
           items: [
             'selector/combobox-search-and-filter',
             'selector/combobox-grouped-results',
@@ -135,7 +135,7 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'States / validation',
           collapsible: true,
-          collapsed: false,
+          collapsed: true,
           items: ['selector/states-and-validation'],
         },
       ],
@@ -148,7 +148,7 @@ const sidebars: SidebarsConfig = {
         id: 'progress',
       },
       collapsible: true,
-      collapsed: true,
+      collapsed: false,
       items: [
         'progress/progress-bar-determinate',
         'progress/circular-progress-determinate',
@@ -166,7 +166,7 @@ const sidebars: SidebarsConfig = {
         id: 'controller',
       },
       collapsible: true,
-      collapsed: true,
+      collapsed: false,
       items: [
         'controller/segmented-view-switcher',
         'controller/tabs-inline-panel-switcher',

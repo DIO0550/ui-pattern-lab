@@ -25,7 +25,7 @@ export default function PatternComparisonAxisGrid({items, layout}: Props): React
           {items.map((item) => (
             <li className={styles.bulletItem} key={item.title}>
               <span className={styles.bulletTitle}>{item.title}</span>
-              <span className={styles.bulletDescription}>{item.description}</span>
+              <p className={styles.bulletDescription}>{item.description}</p>
             </li>
           ))}
         </ul>
@@ -37,7 +37,12 @@ export default function PatternComparisonAxisGrid({items, layout}: Props): React
     <div className={styles.cardGrid}>
       {items.map((item) => (
         <article className={styles.card} key={item.title}>
-          <Heading as="h3">{item.title}</Heading>
+          <div className={styles.cardHeader}>
+            <span className={styles.cardEyebrow}>比較軸</span>
+            <Heading as="h3" className={styles.cardTitle}>
+              {item.title}
+            </Heading>
+          </div>
           <p className={styles.cardDescription}>{item.description}</p>
         </article>
       ))}
