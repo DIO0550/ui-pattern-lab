@@ -24,20 +24,20 @@ const baseControllerPatternEntries = [
     id: 'segmented-view-switcher',
     title: 'segmented view switcher',
     summary:
-      'list / grid / board のような少数の view mode を、その場で即時に切り替える controller パターンです。',
+      'list / grid / board のような 2〜4 個の固定 view mode を、同じ画面の local UI state として即時に切り替える controller パターンです。',
     problem:
       'view mode の切り替えがメニューの奥に入ると、現在どの見え方で、何を変えられる control なのかが伝わりにくくなります。',
     solution:
       '少数の mode を常時表示し、現在選択中の見え方と切り替え結果を近接させて「view state を変えている control」だと分かるようにします。',
     whenToUse:
-      'list / grid、calendar の day / week / month、preview / code のように、少数の表示モードを即時に切り替えたい場面に向いています。',
+      'list / grid、calendar の day / week / month、preview / code のように、同じ view の見え方を 2〜4 候補からその場で切り替えたい場面に向いています。',
     comparisonTip:
-      'フォーム送信前提の単一選択なら radio group、単発 action なら button を優先し、常時見える mode switch だけを controller に寄せます。',
+      'フォーム送信前提の単一選択なら radio group、単発 action なら button、panel semantics や arrow key が必要なら tabs を優先し、URL 同期や永続化を前提にしない mode switch だけを controller に寄せます。',
     interactionNotes:
-      '候補は 2〜4 個程度に絞り、現在選択中の状態を押下後の panel や list layout と近接表示します。候補が多い場合は tabs や navigation に分割します。',
+      '候補は 2〜4 個程度に絞り、現在選択中の状態を押下後の panel や list layout と近接表示します。同じ mode の再押下は no-op に保ち、候補が多い場合は tabs や navigation に分割します。',
     accessibilityNotes:
-      'button group として実装する場合は各ボタンに Tab で到達でき、Enter / Space で選択を切り替えられる状態を baseline にします。toggle button なら `aria-pressed` で現在モードを示し、arrow key 操作は `role=\"tablist\"` を採る tabs 系に寄せて segmented-view-switcher の既定要件にはしません。',
-    tags: ['view switch', '2-4 options', 'mode switch'],
+      'button group として実装する場合は group label（`aria-label` または `aria-labelledby`）を持たせ、各ボタンに Tab で到達でき、Enter / Space で選択を切り替えられる状態を baseline にします。toggle button なら `aria-pressed` と focus-visible で現在モードを示し、arrow key と `role=\"tablist\"` / `role=\"tabpanel\"` を前提にする場合は tabs 系へ寄せます。',
+    tags: ['view switch', 'local state', '2-4 options'],
     controllerFamily: 'view-switch',
     demoKind: 'segmented-view-switcher',
   },

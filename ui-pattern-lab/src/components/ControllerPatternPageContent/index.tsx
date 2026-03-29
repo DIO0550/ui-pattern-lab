@@ -17,12 +17,12 @@ const axisItems = [
   {
     title: '候補数と粒度',
     description:
-      '候補が 2〜4 個なら segmented switch、section 単位なら tabs、複数 control を束ねるなら toolbar が向きます。',
+      '候補が 2〜4 個で同じ view の見え方だけを切り替えるなら segmented switch、section 単位で panel semantics が必要なら tabs、複数 control を束ねるなら toolbar が向きます。',
   },
   {
     title: '即時反映と視覚フィードバック',
     description:
-      '押した直後に画面が切り替わるだけでなく、drag 中に一覧や preview が連続更新されるかを先に決めます。',
+      '押した直後に local UI state と結果 surface が切り替わるのか、drag 中に一覧や preview が連続更新されるのかを先に決めます。',
   },
   {
     title: 'ドラッグ操作の必要性',
@@ -32,18 +32,18 @@ const axisItems = [
   {
     title: '既存カテゴリとの境界',
     description:
-      'button の単発 action、selector のフォーム入力、table のレイアウトとは責務を分けて扱います。',
+      'button の単発 action、selector のフォーム入力、tabs の panel switch、table のレイアウトとは責務を分けて扱います。',
   },
   {
     title: '主要セマンティクス',
     description:
-      '`aria-pressed`、`role=\"tablist\"`、`aria-current=\"page\"`、slider label など、control ごとの核となる属性が異なります。',
+      '`aria-pressed` と group label、`role=\"tablist\"`、`aria-current=\"page\"`、slider label など、control ごとの核となる属性が異なります。',
   },
 ] as const;
 
 const decisionFlowItems = [
-  '同一 view の mode を 2〜4 候補から切り替えるなら `segmented-view-switcher`。',
-  '同じページ枠の panel / context を切り替えるなら `tabs-inline-panel-switcher`。',
+  '同一 view の local UI state を 2〜4 候補から即時に切り替えるなら `segmented-view-switcher`。',
+  '同じページ枠の panel / context を切り替え、`tablist` / `tabpanel` や arrow key を前提にするなら `tabs-inline-panel-switcher`。',
   '一覧全体の並び替え・絞り込み・active filter をまとめて扱うなら `sort-filter-toolbar`。',
   '結果セットの位置と表示件数を継続的に制御するなら `pagination-and-page-size-controller`。',
   '厳密な数値入力が不要で、視覚的なフィードバックを見ながら連続値やしきい値を drag で調整したいなら `range-slider-filter`。',
@@ -70,7 +70,7 @@ export default function ControllerPatternPageContent(): ReactNode {
           <p>
             controller 系 UI は「押せるかどうか」ではなく、何を切り替える control なのかで選びます。
             mode switch、inline panel、dataset scope、continuous adjustment
-            のどれに当たるかを先に決め、連続値なら「正確な入力」より「drag 中の即時反映」を優先するかまで切り分けると、button や selector との境界も整理しやすくなります。
+            のどれに当たるかを先に決め、同じ view の local UI state をその場で切り替えるのか、panel semantics や永続化まで含めるのかを切り分けると、button や selector、tabs との境界も整理しやすくなります。
           </p>
           <ol className={styles.flowList}>
             {decisionFlowItems.map((item) => (
@@ -79,7 +79,7 @@ export default function ControllerPatternPageContent(): ReactNode {
           </ol>
           <p className={styles.summaryNote}>
             一覧では判断材料を短く比較し、detail page で preview demo、CSS / TSX
-            サンプル、interaction / accessibility 注記をまとめて確認できます。
+            サンプル、local UI state としての scope、interaction / accessibility 注記をまとめて確認できます。
           </p>
         </>
       }
@@ -124,7 +124,8 @@ export default function ControllerPatternPageContent(): ReactNode {
             <Link to="/selector">セレクタ</Link>、複数選択の input は{' '}
             <Link to="/checkbox">チェックボックス</Link>、一覧レイアウトそのものは{' '}
             <Link to="/table">テーブル</Link> を参照してください。表示制御カテゴリでは「view state
-            をその場でどう変えるか」を比較します。
+            をその場でどう変えるか」を比較し、panel switch が必要なら tabs、URL 同期や永続化が主体なら別の state
+            管理責務へ切り分けます。
           </p>
         </section>
       }
@@ -133,7 +134,7 @@ export default function ControllerPatternPageContent(): ReactNode {
           <Heading as="h2">{patternCount} パターンを比較する</Heading>
           <p>
             一覧では {patternCount} パターンの代表 preview と比較メモを見比べ、detail page で
-            state 表現、disabled、keyboard support、boundary note を深掘りします。
+            state 表現、keyboard support、boundary note、スコープ外の前提を深掘りします。
           </p>
           <PatternCompareCardGrid items={compareItems} />
         </>

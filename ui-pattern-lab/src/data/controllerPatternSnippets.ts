@@ -17,6 +17,7 @@ export const controllerPatternSnippets: Record<
         language: 'css',
         code: `.segmentGroup {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
   padding: 0.25rem;
   border-radius: 999px;
@@ -32,6 +33,11 @@ export const controllerPatternSnippets: Record<
   padding: 0.5rem 0.9rem;
 }
 
+.segmentButton:focus-visible {
+  outline: 3px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
 .segmentButtonActive {
   background: var(--ifm-color-primary);
   color: white;
@@ -43,46 +49,138 @@ export const controllerPatternSnippets: Record<
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 0.75rem;
   padding: 1rem;
+}
+
+.segmentSummary {
+  margin: 0 0 0.75rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.segmentResults {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.segmentResults[data-view-mode='list'] {
+  grid-template-columns: 1fr;
+}
+
+.segmentResults[data-view-mode='grid'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.segmentResults[data-view-mode='board'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.segmentResultCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 4rem;
+  padding: 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.segmentResultCard[data-view-mode='list'] {
+  justify-content: flex-start;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+.segmentResultCard[data-view-mode='grid'] {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.segmentResultCard[data-view-mode='board'] {
+  background: #ecfccb;
+  border-color: #bef264;
+  color: #3f6212;
 }`,
         note:
-          '候補数は 2〜4 個程度に絞り、現在モードと結果領域を近接させると「何を切り替えた control か」が伝わりやすくなります。',
+          '候補数は 2〜4 個程度に絞り、現在モードと結果領域を近接させます。focus-visible を含めて keyboard 操作時の active state が分かる見た目にすると、local UI state の切り替えだと伝わりやすくなります。',
       },
       {
         id: 'segmented-view-switcher-tsx',
         label: 'TSX',
         language: 'tsx',
-        code: `const viewModes = [
-  {id: 'list', label: 'List'},
-  {id: 'grid', label: 'Grid'},
-  {id: 'board', label: 'Board'},
-] as const;
+        code: `const viewModeOrder = ['list', 'grid', 'board'] as const;
+type ViewMode = (typeof viewModeOrder)[number];
 
-const [activeMode, setActiveMode] = useState<typeof viewModes[number]['id']>('grid');
+const viewModes = {
+  list: {
+    label: 'List',
+    summary: '1 行ずつ密度高く確認する',
+  },
+  grid: {
+    label: 'Grid',
+    summary: 'カードを並べて比較する',
+  },
+  board: {
+    label: 'Board',
+    summary: '列ごとにまとまりを確認する',
+  },
+} as const;
+
+const [activeMode, setActiveMode] = useState<ViewMode>('grid');
 
 <section aria-labelledby="inventory-view-title">
   <h2 id="inventory-view-title">表示モード</h2>
-  <div aria-label="表示モード" className={styles.segmentGroup} role="group">
-    {viewModes.map((mode) => (
+  <div
+    aria-labelledby="inventory-view-title"
+    className={styles.segmentGroup}
+    role="group">
+    {viewModeOrder.map((modeId) => (
       <button
-        aria-pressed={activeMode === mode.id}
+        aria-pressed={activeMode === modeId}
         className={clsx(
           styles.segmentButton,
-          activeMode === mode.id && styles.segmentButtonActive,
+          activeMode === modeId && styles.segmentButtonActive,
         )}
-        key={mode.id}
-        onClick={() => setActiveMode(mode.id)}
+        key={modeId}
+        onClick={() => {
+          setActiveMode((currentMode) => {
+            if (currentMode === modeId) {
+              return currentMode;
+            }
+
+            return modeId;
+          });
+        }}
         type="button">
-        {mode.label}
+        {viewModes[modeId].label}
       </button>
     ))}
   </div>
 
   <div className={styles.segmentPanel}>
-    {activeMode === 'grid' ? 'カード型の preview を表示' : '対応する view を表示'}
+    <p aria-live="polite" className={styles.segmentSummary}>
+      {viewModes[activeMode].summary}
+    </p>
+    <div className={styles.segmentResults} data-view-mode={activeMode}>
+      <span className={styles.segmentResultCard} data-view-mode={activeMode}>
+        Orders
+      </span>
+      <span className={styles.segmentResultCard} data-view-mode={activeMode}>
+        Returns
+      </span>
+      <span className={styles.segmentResultCard} data-view-mode={activeMode}>
+        Scheduled
+      </span>
+      <span className={styles.segmentResultCard} data-view-mode={activeMode}>
+        Drafts
+      </span>
+    </div>
   </div>
 </section>`,
         note:
-          'フォーム送信前提の単一選択なら radio group、同一画面の panel 切替なら tabs を優先し、常時見せる mode switch だけをこの pattern に寄せます。',
+          'フォーム送信前提の単一選択なら radio group、同一画面の panel 切替や arrow key を前提にするなら tabs を優先します。group label、`aria-pressed`、`aria-live` で状態を伝え、URL 同期・永続化・外部 API 連携は持ち込みません。',
       },
     ],
   },

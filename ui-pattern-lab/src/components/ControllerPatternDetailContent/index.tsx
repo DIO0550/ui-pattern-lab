@@ -49,9 +49,11 @@ function buildContextNote(entryId: ControllerPatternEntryId): ReactNode | null {
   if (entryId === 'segmented-view-switcher') {
     return (
       <>
-        少数の mode を常時押し分けるときだけ controller に寄せ、フォーム送信前提の単一選択なら{' '}
+        少数の mode を常時押し分ける local UI state だけを controller に寄せ、フォーム送信前提の単一選択なら{' '}
         <Link to="/selector">セレクタ</Link> 側で扱います。単発 action の toggle 群へ寄せすぎる場合は{' '}
-        <Link to="/button">ボタン</Link> を参照してください。
+        <Link to="/button">ボタン</Link>、panel semantics や arrow key を前提にする場合は{' '}
+        <Link to="/controller/tabs-inline-panel-switcher">tabs inline panel switcher</Link>{' '}
+        を参照してください。URL 同期や永続化はこの pattern のスコープ外です。
       </>
     );
   }
