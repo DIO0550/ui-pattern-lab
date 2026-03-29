@@ -8,8 +8,8 @@ export default function SelectorCustomSelectDesignsPage(): ReactNode {
     <Layout
       title="Custom select デザインパターン"
       description="native select では足りないときの custom select variation を、比較要点と compact preview を先に見ながら選び分けるページです。">
-      <header className="hero hero--primary">
-        <div className="container">
+      <header className="hero hero--primary pattern-page-hero">
+        <div className="container pattern-page-hero__inner">
           <Heading as="h1" className="hero__title">
             Custom select デザインパターン
           </Heading>
@@ -20,7 +20,7 @@ export default function SelectorCustomSelectDesignsPage(): ReactNode {
         </div>
       </header>
 
-      <main>
+      <main className="pattern-page-main">
         <SelectorPatternCollectionPageContent
           backLinkLabel="セレクタデザインパターンへ戻る"
           backLinkPath="/patterns/selector-designs"

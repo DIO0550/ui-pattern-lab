@@ -2,7 +2,7 @@ import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import ProgressPatternMetadataPanel from '@site/src/components/ProgressPatternMetadataPanel';
-import ProgressPatternSectionCard from '@site/src/components/ProgressPatternSectionCard';
+import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
 import ProgressPatternSnippetPanel from '@site/src/components/ProgressPatternSnippetPanel';
 import type {
   ProgressDemoKind,
@@ -660,39 +660,21 @@ export default function ProgressPatternGallery({
           if (density === 'detail') {
             return (
               <div className={styles.detailContent} id={entry.id} key={entry.id}>
-                <div className={styles.cardHeader}>
-                  <Heading as="h3" className={styles.cardTitle}>
-                    {entry.title}
-                  </Heading>
-                  <p className={styles.cardSummary}>{entry.summary}</p>
-                  <ul aria-label={`${entry.title}のタグ`} className={styles.tagList}>
-                    {entry.tags.map((tag) => (
-                      <li className={styles.tag} key={tag}>
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <ProgressPatternSectionCard
-                  ariaLabel={`${entry.title}のプレビュー`}
-                  label="見た目"
-                  title="プレビュー">
-                  <div className={styles.demoPanel}>
-                    <Demo density={density} />
-                  </div>
-                </ProgressPatternSectionCard>
-
-                <ProgressPatternSnippetPanel
-                  density={density}
-                  entryTitle={entry.title}
+                <PatternReferenceContent
+                  id={entry.id}
+                  notes={metadataItems.map((item) => ({
+                    id: `${entry.id}-${item.tone}`,
+                    label: item.label,
+                    value: item.value,
+                  }))}
+                  preview={
+                    <div className={clsx(styles.demoPanel, styles.detailPreviewPanel)}>
+                      <Demo density={density} />
+                    </div>
+                  }
                   snippets={entry.snippets}
-                />
-
-                <ProgressPatternMetadataPanel
-                  density={density}
-                  entryTitle={entry.title}
-                  items={metadataItems}
+                  summary={entry.summary}
+                  title={entry.title}
                 />
               </div>
             );

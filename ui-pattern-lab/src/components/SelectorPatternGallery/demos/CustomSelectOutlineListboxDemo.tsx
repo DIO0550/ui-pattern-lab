@@ -23,7 +23,8 @@ export default function CustomSelectOutlineListboxDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           description="custom select の入口では、見た目より先に interaction contract を安定させるのが重要です。"
-          label="設計メモ">
+          label="設計メモ"
+          className={styles.previewCardHiddenInDetail}>
           <div className={styles.selectionSummary}>
             <ul className={styles.summaryPillList}>
               <li className={styles.summaryPill}>button + listbox</li>

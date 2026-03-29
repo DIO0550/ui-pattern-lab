@@ -8,8 +8,8 @@ export default function EllipsisDisplayDesignPatternsPage(): ReactNode {
     <Layout
       title="省略表示パターン"
       description="各省略パターンの判断軸と要点を比較し、詳細ページで preview / CSS / TSX 例を確認できる比較ページです。">
-      <header className="hero hero--primary">
-        <div className="container">
+      <header className="hero hero--primary pattern-page-hero">
+        <div className="container pattern-page-hero__inner">
           <Heading as="h1" className="hero__title">
             省略表示パターン
           </Heading>
@@ -20,7 +20,7 @@ export default function EllipsisDisplayDesignPatternsPage(): ReactNode {
         </div>
       </header>
 
-      <main>
+      <main className="pattern-page-main">
         <EllipsisDisplayPatternPageContent />
       </main>
     </Layout>

@@ -8,8 +8,8 @@ export default function ControllerDesignPatternsPage(): ReactNode {
     <Layout
       title="表示制御デザインパターン"
       description="view switch、scope control、continuous adjustment の観点から、controller 系 UI を比較しながら選ぶためのページです。">
-      <header className="hero hero--primary">
-        <div className="container">
+      <header className="hero hero--primary pattern-page-hero">
+        <div className="container pattern-page-hero__inner">
           <Heading as="h1" className="hero__title">
             表示制御デザインパターン
           </Heading>
@@ -20,7 +20,7 @@ export default function ControllerDesignPatternsPage(): ReactNode {
         </div>
       </header>
 
-      <main>
+      <main className="pattern-page-main">
         <ControllerPatternPageContent />
       </main>
     </Layout>

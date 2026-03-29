@@ -8,8 +8,8 @@ export default function ButtonDesignPatternsPage(): ReactNode {
     <Layout
       title="ボタンデザインパターン"
       description="強調度、状態、危険操作、icon-only、トグル、余白設計を、比較要点とプレビューを先に見ながら選び分けられるページです。">
-      <header className="hero hero--primary">
-        <div className="container">
+      <header className="hero hero--primary pattern-page-hero">
+        <div className="container pattern-page-hero__inner">
           <Heading as="h1" className="hero__title">
             ボタンデザインパターン
           </Heading>
@@ -21,7 +21,7 @@ export default function ButtonDesignPatternsPage(): ReactNode {
         </div>
       </header>
 
-      <main>
+      <main className="pattern-page-main">
         <ButtonPatternPageContent />
       </main>
     </Layout>

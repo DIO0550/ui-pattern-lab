@@ -50,7 +50,8 @@ export default function RadioGroupSingleSelectionDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           description="1 つの field value を扱う前提が、見た目だけでなく validation と semantics でも伝わるようにします。"
-          label="判断軸">
+          label="判断軸"
+          className={styles.previewCardHiddenInDetail}>
           <div className={styles.selectionSummary}>
             <p className={styles.selectionNote}>現在の値: {selectedPlan.label}</p>
             <ul className={styles.summaryPillList}>

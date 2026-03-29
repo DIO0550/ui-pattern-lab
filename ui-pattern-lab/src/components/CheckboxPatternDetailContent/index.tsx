@@ -1,6 +1,7 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import CheckboxPatternGallery from '@site/src/components/CheckboxPatternGallery';
+import SelectableCardsReferenceContent from '@site/src/components/SelectableCardsReferenceContent';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import type {CheckboxPatternEntryId} from '@site/src/data/checkboxPatternTypes';
 
@@ -19,9 +20,15 @@ export default function CheckboxPatternDetailContent({entryId}: Props): ReactNod
 
   const showToggleReference = entry.id === 'single-checkbox-and-indeterminate';
   const showSelectorReference = entry.id === 'selectable-cards';
+  const detailContent =
+    entry.id === 'selectable-cards' ? (
+      <SelectableCardsReferenceContent entry={entry} />
+    ) : (
+      <CheckboxPatternGallery density="detail" entries={[entry]} />
+    );
 
   return (
-    <div className={`container margin-vert--lg ${styles.root}`}>
+    <div className={`margin-vert--lg ${styles.root}`}>
       <div className={styles.backLinks}>
         <Link to="/checkbox">チェックボックス</Link>
         <span aria-hidden="true">/</span>
@@ -36,9 +43,12 @@ export default function CheckboxPatternDetailContent({entryId}: Props): ReactNod
       </p>
       {showSelectorReference ? (
         <p className={styles.contextNote}>
-          card 見た目でも最終的に 1 つの field value を選ばせるなら{' '}
-          <Link to="/selector/selectable-radio-cards">セレクタ / カード型の radio selection</Link>{' '}
-          を参照してください。checkbox card では 0 件以上の複数選択と確認入力を優先します。
+          selectable card という見た目自体は共通ですが、分ける基準は見た目ではなく判断軸です。最終的に 1 つの
+          field value を選ばせるなら{' '}
+          <Link to="/selector/selectable-radio-cards">selector / カード型の radio selection</Link>
+          、0 件以上の複数選択や未選択許容が主題ならこの{' '}
+          <Link to="/checkbox/selectable-cards">checkbox / カード型の複数選択</Link>{' '}
+          を使います。
         </p>
       ) : null}
       {showToggleReference ? (
@@ -48,7 +58,7 @@ export default function CheckboxPatternDetailContent({entryId}: Props): ReactNod
           を参照してください。checkbox では送信前の確認や mixed state の表現を優先します。
         </p>
       ) : null}
-      <CheckboxPatternGallery density="detail" entries={[entry]} />
+      {detailContent}
     </div>
   );
 }

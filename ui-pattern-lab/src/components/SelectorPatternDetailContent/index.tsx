@@ -50,6 +50,18 @@ function buildContextNote(
   }
 
   if (contextNoteKey === 'checkbox') {
+    if (categoryId === 'radio') {
+      return (
+        <>
+          selectable card は見た目ではなく判断軸で分けます。1 つの form value を選ぶなら{' '}
+          <Link to="/selector/selectable-radio-cards">selector / カード型の radio selection</Link>
+          、0 件以上の複数選択や未選択許容が主題なら{' '}
+          <Link to="/checkbox/selectable-cards">checkbox / カード型の複数選択</Link>{' '}
+          を使います。
+        </>
+      );
+    }
+
     if (categoryId === 'native-select') {
       return (
         <>
@@ -120,7 +132,7 @@ export default function SelectorPatternDetailContent({entryId}: Props): ReactNod
   const contextNote = buildContextNote(entry.contextNoteKey, entry.category);
 
   return (
-    <div className={`container margin-vert--lg ${styles.root}`}>
+    <div className={`margin-vert--lg ${styles.root}`}>
       <nav aria-label="パンくず">
         <ol className={styles.backLinks}>
           <li>

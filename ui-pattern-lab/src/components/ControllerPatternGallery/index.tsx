@@ -2,7 +2,7 @@ import {useId, useState, type ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import ControllerPatternMetadataPanel from '@site/src/components/ControllerPatternMetadataPanel';
-import ControllerPatternSectionCard from '@site/src/components/ControllerPatternSectionCard';
+import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
 import ControllerPatternSnippetPanel from '@site/src/components/ControllerPatternSnippetPanel';
 import type {
   ControllerPatternEntry,
@@ -83,27 +83,11 @@ function buildMetadataItems(entry: ControllerPatternEntry): ControllerPatternMet
 
 function PreviewPanel({
   entry,
-  density,
 }: {
   entry: ControllerPatternEntry;
-  density: 'list' | 'detail';
 }): ReactNode {
   const Demo = demoByKind[entry.demoKind];
-  const content = <Demo />;
-
-  if (density === 'detail') {
-    return (
-      <ControllerPatternSectionCard
-        ariaLabel={`${entry.title}のプレビュー`}
-        description="本番コードそのものではなく、pattern の要点と操作感を把握するための preview demo です。"
-        label="見た目"
-        title="プレビュー">
-        {content}
-      </ControllerPatternSectionCard>
-    );
-  }
-
-  return content;
+  return <Demo />;
 }
 
 function SegmentedViewSwitcherDemo(): ReactNode {
@@ -340,35 +324,26 @@ export default function ControllerPatternGallery({
     <div className={clsx(styles.root, density === 'detail' && styles.detailRoot)}>
       <div className={clsx(styles.grid, density === 'detail' && styles.detailGrid)}>
         {entries.map((entry) => {
+          const metadataItems = buildMetadataItems(entry);
+
           if (density === 'detail') {
             return (
               <div className={styles.detailContent} id={entry.id} key={entry.id}>
-                <header className={styles.cardHeader}>
-                  <div>
-                    <Heading as="h3" className={styles.cardTitle}>
-                      {entry.title}
-                    </Heading>
-                    <p className={styles.cardSummary}>{entry.summary}</p>
-                  </div>
-                  <ul className={styles.tagList}>
-                    {entry.tags.map((tag) => (
-                      <li className={styles.tag} key={`${entry.id}-${tag}`}>
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </header>
-
-                <PreviewPanel density={density} entry={entry} />
-                <ControllerPatternSnippetPanel
-                  density={density}
-                  entryTitle={entry.title}
+                <PatternReferenceContent
+                  id={entry.id}
+                  notes={metadataItems.map((item) => ({
+                    id: `${entry.id}-${item.tone}`,
+                    label: item.label,
+                    value: item.value,
+                  }))}
+                  preview={
+                    <div className={clsx(styles.demoPanel, styles.detailPreviewPanel)}>
+                      <PreviewPanel entry={entry} />
+                    </div>
+                  }
                   snippets={entry.snippets}
-                />
-                <ControllerPatternMetadataPanel
-                  density={density}
-                  entryTitle={entry.title}
-                  items={buildMetadataItems(entry)}
+                  summary={entry.summary}
+                  title={entry.title}
                 />
               </div>
             );
@@ -393,7 +368,7 @@ export default function ControllerPatternGallery({
               </header>
 
               <div className={styles.cardBody}>
-                <PreviewPanel density={density} entry={entry} />
+                <PreviewPanel entry={entry} />
                 <ControllerPatternSnippetPanel
                   density={density}
                   entryTitle={entry.title}
@@ -402,7 +377,7 @@ export default function ControllerPatternGallery({
                 <ControllerPatternMetadataPanel
                   density={density}
                   entryTitle={entry.title}
-                  items={buildMetadataItems(entry)}
+                  items={metadataItems}
                 />
               </div>
             </article>

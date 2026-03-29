@@ -31,6 +31,25 @@
   gap: 1.25rem;
 }
 
+.detailMainGrid {
+  align-items: start;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detailMainGrid > * {
+  min-width: 0;
+}
+
+.detailMainGrid > section {
+  gap: 0;
+}
+
+.detailMainGrid > section > :first-child {
+  display: none;
+}
+
 .card {
   background: var(--checkbox-gallery-surface);
   border: 1px solid var(--checkbox-gallery-border);
@@ -116,6 +135,16 @@
   padding: 0.75rem;
 }
 
+.detailPreviewPanel .previewHeader,
+.detailPreviewPanel .demoNote,
+.detailPreviewPanel .selectionNote,
+.detailPreviewPanel .summaryPillList,
+.detailPreviewPanel .specList,
+.detailPreviewPanel .crossReference,
+.detailPreviewPanel .previewCardHiddenInDetail {
+  display: none;
+}
+
 .demoFrame {
   display: flex;
   flex-direction: column;
@@ -145,6 +174,23 @@
   gap: 0.85rem;
   min-width: 0;
   padding: 0.9rem;
+}
+
+.previewCardHiddenInDetail {
+  display: grid;
+}
+
+.referencePreviewFrame {
+  display: grid;
+  width: min(100%, 28rem);
+}
+
+.compactReferenceVariantPreview {
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+  min-height: auto;
+  padding: 1.25rem;
 }
 
 .card .previewCard {
@@ -520,6 +566,10 @@
 
 @media screen and (max-width: 996px) {
   .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detailMainGrid {
     grid-template-columns: 1fr;
   }
 }

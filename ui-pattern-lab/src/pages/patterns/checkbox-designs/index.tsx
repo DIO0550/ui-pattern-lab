@@ -8,8 +8,8 @@ export default function CheckboxDesignPatternsPage(): ReactNode {
     <Layout
       title="チェックボックスデザインパターン"
       description="checkbox を radio button / switch / select と見比べつつ、複数選択、mixed state、押しやすさの判断を先に整理できるページです。">
-      <header className="hero hero--primary">
-        <div className="container">
+      <header className="hero hero--primary pattern-page-hero">
+        <div className="container pattern-page-hero__inner">
           <Heading as="h1" className="hero__title">
             チェックボックスデザインパターン
           </Heading>
@@ -21,7 +21,7 @@ export default function CheckboxDesignPatternsPage(): ReactNode {
         </div>
       </header>
 
-      <main>
+      <main className="pattern-page-main">
         <CheckboxPatternPageContent />
       </main>
     </Layout>

@@ -1,10 +1,10 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
+import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
 import TablePatternMetadataPanel, {
   type TablePatternMetadataItem,
 } from '@site/src/components/TablePatternMetadataPanel';
-import TablePatternSectionCard from '@site/src/components/TablePatternSectionCard';
 import TablePatternSnippetPanel from '@site/src/components/TablePatternSnippetPanel';
 import type {
   DemoKind,
@@ -300,39 +300,21 @@ export default function TablePatternGallery({
           if (density === 'detail') {
             return (
               <div key={entry.id} id={entry.id} className={styles.detailContent}>
-                <div className={styles.cardHeader}>
-                  <Heading as="h3" className={styles.cardTitle}>
-                    {entry.title}
-                  </Heading>
-                  <p className={styles.cardSummary}>{entry.summary}</p>
-                  <ul aria-label={`${entry.title}のタグ`} className={styles.tagList}>
-                    {entry.tags.map((tag) => (
-                      <li className={styles.tag} key={tag}>
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <TablePatternSectionCard
-                  ariaLabel={`${entry.title}のプレビュー`}
-                  label="見た目"
-                  title="プレビュー">
-                  <div className={styles.demoPanel}>
-                    <Demo />
-                  </div>
-                </TablePatternSectionCard>
-
-                <TablePatternSnippetPanel
-                  density={density}
-                  entryTitle={entry.title}
+                <PatternReferenceContent
+                  id={entry.id}
+                  notes={metadataItems.map((item) => ({
+                    id: `${entry.id}-${item.tone}`,
+                    label: item.label,
+                    value: item.value,
+                  }))}
+                  preview={
+                    <div className={clsx(styles.demoPanel, styles.detailPreviewPanel)}>
+                      <Demo />
+                    </div>
+                  }
                   snippets={entry.snippets}
-                />
-
-                <TablePatternMetadataPanel
-                  density={density}
-                  entryTitle={entry.title}
-                  items={metadataItems}
+                  summary={entry.summary}
+                  title={entry.title}
                 />
               </div>
             );

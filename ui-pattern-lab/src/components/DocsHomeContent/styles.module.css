@@ -1,54 +1,177 @@
 .root {
   display: grid;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .intro {
+  background:
+    radial-gradient(circle at top right, rgba(74, 103, 245, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 251, 0.94));
+  border: 1px solid var(--upl-border-subtle);
+  border-radius: 1.5rem;
+  box-shadow: var(--upl-shadow-lg);
   display: grid;
-  gap: 0.75rem;
-  max-width: 48rem;
+  gap: 1.5rem;
+  overflow: hidden;
+  padding: clamp(1.5rem, 2.8vw, 2.3rem);
+  position: relative;
+}
+
+.intro::after {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.16), transparent 64%);
+  content: '';
+  height: 16rem;
+  pointer-events: none;
+  position: absolute;
+  right: -2rem;
+  top: 0;
+  width: 16rem;
+}
+
+.introBody,
+.introMetaGrid,
+.introCardGrid {
+  position: relative;
+  z-index: 1;
+}
+
+.introBody {
+  display: grid;
+  gap: 1rem;
+  max-width: 68ch;
+}
+
+.introEyebrow {
+  align-self: flex-start;
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  border: 1px solid var(--upl-border-strong);
+  border-radius: 999px;
+  color: var(--ifm-color-primary-dark);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.38rem 0.78rem;
+}
+
+.introTitle {
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+  margin: 0;
+  max-width: 13ch;
 }
 
 .lead {
-  font-size: 1.1rem;
-  line-height: 1.7;
+  font-size: 1.08rem;
+  line-height: 1.85;
   margin: 0;
+  max-width: 64ch;
 }
 
 .muted {
   color: var(--ifm-color-emphasis-700);
+  line-height: 1.78;
   margin: 0;
+  max-width: 60ch;
+}
+
+.introMetaGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
+}
+
+.introMetaCard {
+  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid var(--upl-border-subtle);
+  border-radius: 1.2rem;
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem 1.05rem;
+}
+
+.introMetaLabel {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.introMetaValue {
+  color: var(--ifm-heading-color);
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.introMetaDescription {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.introCardGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 }
 
 .section {
   display: grid;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
-.grid {
+.sectionHeader {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.45rem;
+  max-width: 60ch;
+}
+
+.sectionHeader h2 {
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.sectionLead {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.75;
+  margin: 0;
 }
 
 .categoryGrid {
   display: grid;
-  gap: 0.9rem;
+  gap: 1rem;
   grid-template-columns: 1fr;
 }
 
 .accordionItem {
-  background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 1rem;
-  box-shadow: var(--ifm-global-shadow-lw);
+  background: color-mix(
+    in srgb,
+    var(--ifm-background-surface-color) 94%,
+    var(--ifm-color-primary) 6%
+  );
+  border: 1px solid var(--upl-border-subtle);
+  border-radius: 1.25rem;
+  box-shadow: var(--upl-shadow-sm);
   overflow: hidden;
-  transition: border-color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .accordionItem:hover,
 .accordionItem:focus-within {
-  border-color: var(--ifm-color-primary);
+  border-color: var(--upl-border-strong);
+  box-shadow: var(--upl-shadow-lg);
+  transform: translateY(-1px);
+}
+
+.accordionItemOpen {
+  background: var(--ifm-background-surface-color);
+  border-color: var(--upl-border-strong);
 }
 
 .accordionHeading {
@@ -61,8 +184,8 @@
   color: inherit;
   cursor: pointer;
   display: grid;
-  gap: 0.75rem;
-  padding: 1.1rem 1.25rem;
+  gap: 1rem;
+  padding: 1.25rem 1.35rem;
   text-align: left;
   width: 100%;
 }
@@ -73,39 +196,51 @@
 }
 
 .accordionLabel {
-  color: var(--ifm-color-primary);
-  font-size: 0.75rem;
+  align-self: flex-start;
+  background: var(--upl-surface-subtle);
+  border-radius: 999px;
+  color: var(--ifm-color-primary-dark);
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+  padding: 0.35rem 0.7rem;
   text-transform: uppercase;
 }
 
 .accordionHeaderRow {
   align-items: start;
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   justify-content: space-between;
 }
 
 .accordionTitle {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.38;
 }
 
 .accordionStatus {
-  background: color-mix(in srgb, var(--ifm-color-primary) 14%, transparent);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid transparent;
   border-radius: 999px;
-  color: var(--ifm-font-color-base);
+  color: var(--ifm-color-emphasis-800);
   flex-shrink: 0;
   font-size: 0.78rem;
   font-weight: 700;
-  padding: 0.25rem 0.6rem;
+  padding: 0.28rem 0.68rem;
+}
+
+.accordionStatusOpen {
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  border-color: var(--upl-border-strong);
+  color: var(--ifm-color-primary-dark);
 }
 
 .accordionDescription {
   color: var(--ifm-color-emphasis-700);
-  line-height: 1.7;
+  line-height: 1.75;
+  margin: 0;
 }
 
 .accordionMetaRow {
@@ -116,20 +251,30 @@
 }
 
 .accordionMetaText {
-  color: var(--ifm-color-primary);
+  color: var(--ifm-color-emphasis-800);
   font-size: 0.92rem;
   font-weight: 600;
 }
 
 .accordionChevron {
+  align-items: center;
+  background: var(--upl-surface-subtle);
+  border-radius: 999px;
   color: var(--ifm-color-primary);
+  display: inline-flex;
   flex-shrink: 0;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  height: 2rem;
+  justify-content: center;
   line-height: 1;
-  transition: transform 0.2s ease;
+  transition:
+    transform 0.24s ease,
+    background-color 0.24s ease;
+  width: 2rem;
 }
 
 .accordionChevronOpen {
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
   transform: rotate(180deg);
 }
 
@@ -156,24 +301,32 @@
 }
 
 .accordionPanelContent {
-  border-top: 1px solid var(--ifm-color-emphasis-200);
+  border-top: 1px solid var(--upl-border-subtle);
   display: grid;
   gap: 1rem;
-  padding: 0.3rem 1.25rem 1.25rem;
+  padding: 0 1.35rem 1.35rem;
 }
 
 .linkGroupStack,
 .linkStack,
 .linkSection {
   display: grid;
-  gap: 0.85rem;
 }
 
 .linkGroupStack {
-  gap: 1rem;
+  gap: 1.15rem;
+}
+
+.linkStack {
+  gap: 0.85rem;
+}
+
+.linkSection {
+  gap: 0.85rem;
 }
 
 .linkSectionTitle {
+  font-size: 1rem;
   margin: 0;
 }
 
@@ -186,17 +339,18 @@
 .listLinkCard {
   background: color-mix(
     in srgb,
-    var(--ifm-card-background-color, var(--ifm-background-surface-color)) 94%,
+    var(--ifm-background-surface-color) 94%,
     var(--ifm-color-primary) 6%
   );
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 0.9rem;
+  border: 1px solid var(--upl-border-subtle);
+  border-radius: 1rem;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.7rem;
   padding: 1rem;
   transition:
     border-color 0.2s ease,
     background-color 0.2s ease,
+    box-shadow 0.2s ease,
     transform 0.2s ease;
 }
 
@@ -208,20 +362,27 @@
 }
 
 .listLinkTitle {
-  margin: 0;
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .listLinkDescription {
   color: var(--ifm-color-emphasis-700);
-  line-height: 1.6;
+  line-height: 1.68;
   margin: 0;
 }
 
 .listLinkMeta {
-  color: var(--ifm-color-primary);
+  align-self: flex-start;
+  background: var(--upl-surface-subtle);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--ifm-color-primary-dark);
   flex-shrink: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.28rem 0.55rem;
+  white-space: nowrap;
 }
 
 .cardLink {
@@ -232,21 +393,26 @@
 }
 
 .card {
-  background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 1rem;
-  box-shadow: var(--ifm-global-shadow-lw);
+  background: color-mix(
+    in srgb,
+    var(--ifm-background-surface-color) 93%,
+    var(--ifm-color-primary) 7%
+  );
+  border: 1px solid var(--upl-border-subtle);
+  border-radius: 1.2rem;
+  box-shadow: var(--upl-shadow-sm);
   display: grid;
-  gap: 0.65rem;
+  gap: 0.75rem;
   height: 100%;
-  padding: 1.25rem;
+  padding: 1.15rem;
   transition:
     border-color 0.2s ease,
+    box-shadow 0.2s ease,
     transform 0.2s ease;
 }
 
 .cardEyebrow {
-  color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary-dark);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -254,47 +420,71 @@
 }
 
 .cardTitle {
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
   margin: 0;
 }
 
 .cardDescription {
   color: var(--ifm-color-emphasis-700);
+  line-height: 1.68;
   margin: 0;
 }
 
 .cardMeta {
-  color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary-dark);
   font-size: 0.9rem;
   font-weight: 600;
   margin: 0;
-}
-
-[data-theme='dark'] .accordionItem,
-[data-theme='dark'] .listLinkCard,
-[data-theme='dark'] .card {
-  border-color: var(--ifm-color-emphasis-300);
 }
 
 .listLink:hover .listLinkCard,
 .listLink:focus-visible .listLinkCard,
 .cardLink:hover .card,
 .cardLink:focus-visible .card {
-  border-color: var(--ifm-color-primary);
-  transform: translateY(-1px);
+  border-color: var(--upl-border-strong);
+  box-shadow: var(--upl-shadow-lg);
+  transform: translateY(-2px);
 }
 
-.cardLink:hover .card,
-.cardLink:focus-visible .card {
-  transform: translateY(-2px);
+[data-theme='dark'] .intro {
+  background:
+    radial-gradient(circle at top right, rgba(143, 162, 255, 0.22), transparent 34%),
+    linear-gradient(180deg, rgba(16, 29, 49, 0.96), rgba(7, 17, 31, 0.94));
+}
+
+[data-theme='dark'] .introMetaCard,
+[data-theme='dark'] .accordionStatus {
+  background: rgba(10, 18, 33, 0.62);
+}
+
+@media screen and (max-width: 768px) {
+  .root {
+    gap: 2rem;
+  }
+
+  .intro {
+    padding: 1.4rem;
+  }
+
+  .introTitle {
+    max-width: 16ch;
+  }
 }
 
 @media screen and (max-width: 640px) {
   .root {
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
 
   .lead {
     font-size: 1rem;
+  }
+
+  .accordionTrigger,
+  .accordionPanelContent {
+    padding-inline: 1rem;
   }
 
   .accordionHeaderRow,
@@ -306,6 +496,11 @@
   .accordionStatus,
   .listLinkMeta {
     align-self: flex-start;
+  }
+
+  .introMetaGrid,
+  .introCardGrid {
+    grid-template-columns: 1fr;
   }
 }
 

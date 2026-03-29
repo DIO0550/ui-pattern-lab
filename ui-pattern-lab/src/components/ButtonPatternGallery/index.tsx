@@ -475,20 +475,22 @@ export default function ButtonPatternGallery({
                   </ul>
                 </div>
 
-                <ButtonPatternSectionCard
-                  ariaLabel={`${entry.title}のプレビュー`}
-                  label="見た目"
-                  title="プレビュー">
-                  <div className={styles.demoPanel}>
-                    <Demo />
-                  </div>
-                </ButtonPatternSectionCard>
+                <div className={styles.detailMainGrid}>
+                  <ButtonPatternSnippetPanel
+                    density={density}
+                    entryTitle={entry.title}
+                    snippets={entry.snippets}
+                  />
 
-                <ButtonPatternSnippetPanel
-                  density={density}
-                  entryTitle={entry.title}
-                  snippets={entry.snippets}
-                />
+                  <ButtonPatternSectionCard
+                    ariaLabel={`${entry.title}のプレビュー`}
+                    label="見た目"
+                    title="プレビュー">
+                    <div className={clsx(styles.demoPanel, styles.detailPreviewPanel)}>
+                      <Demo />
+                    </div>
+                  </ButtonPatternSectionCard>
+                </div>
 
                 <ButtonPatternMetadataPanel
                   density={density}

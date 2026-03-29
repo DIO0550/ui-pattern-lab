@@ -28,6 +28,25 @@
   gap: 1.25rem;
 }
 
+.detailMainGrid {
+  align-items: start;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detailMainGrid > * {
+  min-width: 0;
+}
+
+.detailMainGrid > section {
+  gap: 0;
+}
+
+.detailMainGrid > section > :first-child {
+  display: none;
+}
+
 .card {
   background: var(--gallery-surface);
   border: 1px solid var(--gallery-border);
@@ -107,6 +126,11 @@
 
 .card .demoPanel {
   padding: 0.75rem;
+}
+
+.detailPreviewPanel .previewLabel,
+.detailPreviewPanel .demoNote {
+  display: none;
 }
 
 .demoFrame {
@@ -309,6 +333,10 @@
 
 @media screen and (max-width: 996px) {
   .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detailMainGrid {
     grid-template-columns: 1fr;
   }
 }

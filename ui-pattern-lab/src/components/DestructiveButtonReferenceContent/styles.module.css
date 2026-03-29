@@ -1,0 +1,111 @@
+.button {
+  align-items: center;
+  background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.9rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.buttonIcon {
+  display: inline-flex;
+  line-height: 1;
+}
+
+.filledButton {
+  background: var(--ifm-color-danger);
+  border-color: var(--ifm-color-danger);
+  box-shadow: 0 0.6rem 1.2rem color-mix(in srgb, var(--ifm-color-danger) 18%, transparent);
+  color: #ffffff;
+}
+
+.filledButton:hover {
+  background: var(--ifm-color-danger-dark);
+  border-color: var(--ifm-color-danger-dark);
+}
+
+.outlinedButton {
+  background: color-mix(in srgb, var(--ifm-color-danger) 10%, transparent);
+  border-color: color-mix(in srgb, var(--ifm-color-danger) 36%, var(--ifm-color-emphasis-300));
+  color: var(--ifm-color-danger);
+}
+
+.outlinedButton:hover {
+  background: color-mix(in srgb, var(--ifm-color-danger) 16%, transparent);
+}
+
+.ghostDangerButton {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ifm-color-danger) 32%, transparent);
+  color: var(--ifm-color-danger);
+}
+
+.ghostDangerButton:hover {
+  background: color-mix(in srgb, var(--ifm-color-danger) 10%, transparent);
+}
+
+.iconOnlyButton {
+  inline-size: 2.75rem;
+  padding-inline: 0;
+}
+
+.actionRow {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.neutralButton {
+  border-color: var(--ifm-color-emphasis-300);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.neutralButton:hover {
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-emphasis-100) 60%,
+    var(--ifm-card-background-color, var(--ifm-background-surface-color))
+  );
+}
+
+.badSameButton {
+  background: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+  color: #ffffff;
+}
+
+.badSameButton:hover {
+  background: var(--ifm-color-primary-dark);
+  border-color: var(--ifm-color-primary-dark);
+}
+
+.badPlainButton {
+  border-color: var(--ifm-color-emphasis-300);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.badPlainButton:hover {
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-emphasis-100) 60%,
+    var(--ifm-card-background-color, var(--ifm-background-surface-color))
+  );
+}

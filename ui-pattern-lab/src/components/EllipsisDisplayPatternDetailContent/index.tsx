@@ -4,6 +4,8 @@ import EllipsisDisplayPatternGallery from '@site/src/components/EllipsisDisplayP
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
 import type {EllipsisDisplayPatternEntryId} from '@site/src/data/ellipsisDisplayPatternTypes';
 
+import styles from './styles.module.css';
+
 type EllipsisDisplayPatternDetailContentProps = {
   entryId: EllipsisDisplayPatternEntryId;
 };
@@ -18,14 +20,18 @@ export default function EllipsisDisplayPatternDetailContent({
   }
 
   return (
-    <div className="container margin-vert--lg">
-      <p className="margin-bottom--sm">
+    <div className={`margin-vert--lg ${styles.root}`}>
+      <div className={styles.backLinks}>
         <Link to="/ellipsis-display">省略表示カテゴリ</Link>
-        {' / '}
+        <span aria-hidden="true">/</span>
         <Link to="/patterns/ellipsis-display-designs">パターン比較</Link>
-      </p>
-      <p>
-        「{entry.title}」の preview、CSS / TSX 例、設計メモをまとめて確認できます。
+      </div>
+      <p className={styles.lead}>
+        このページでは「{entry.title}」の preview に加えて、対応する CSS / TSX
+        サンプルと設計メモをまとめて確認できます。比較一覧へ戻る場合は{' '}
+        <Link to="/patterns/ellipsis-display-designs">省略表示デザインパターン</Link>
+        、カテゴリ全体へ戻る場合は <Link to="/ellipsis-display">省略表示カテゴリ</Link>
+        を参照してください。
       </p>
       <EllipsisDisplayPatternGallery density="detail" entries={[entry]} />
     </div>

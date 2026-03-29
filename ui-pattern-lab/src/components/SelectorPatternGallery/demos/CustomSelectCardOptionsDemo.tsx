@@ -23,7 +23,8 @@ export default function CustomSelectCardOptionsDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           description="option row が高密度になるほど、radio card や combobox との差分を明示しておく必要があります。"
-          label="比較メモ">
+          label="比較メモ"
+          className={styles.previewCardHiddenInDetail}>
           <div className={styles.selectionSummary}>
             <ul className={styles.summaryPillList}>
               <li className={styles.summaryPill}>高密度 option row</li>

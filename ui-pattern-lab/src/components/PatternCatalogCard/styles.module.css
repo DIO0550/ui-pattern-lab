@@ -6,43 +6,44 @@
 }
 
 .card {
-  background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 1rem;
-  box-shadow: var(--ifm-global-shadow-lw);
-  display: grid;
-  gap: 0.75rem;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--upl-border-subtle);
+  border-radius: 1.35rem;
+  box-shadow: var(--upl-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   height: 100%;
-  min-height: 14rem;
+  min-height: 15rem;
   padding: 1.25rem;
   transition:
     border-color 0.2s ease,
     background-color 0.2s ease,
+    box-shadow 0.2s ease,
     transform 0.2s ease;
 }
 
 .featuredCard {
-  background: color-mix(
-    in srgb,
-    var(--ifm-card-background-color, var(--ifm-background-surface-color)) 90%,
-    var(--ifm-color-primary) 10%
-  );
-  border-color: color-mix(in srgb, var(--ifm-color-primary) 24%, var(--ifm-color-emphasis-200));
-  gap: 0.85rem;
-  max-width: 44rem;
-}
-
-.familyCard {
-  gap: 0.85rem;
+  background:
+    radial-gradient(circle at top right, rgba(74, 103, 245, 0.16), transparent 34%),
+    color-mix(in srgb, var(--ifm-background-surface-color) 92%, var(--ifm-color-primary) 8%);
+  border-color: var(--upl-border-strong);
   min-height: 16rem;
 }
 
+.familyCard {
+  min-height: 17rem;
+}
+
 .mutedTone {
-  background: color-mix(
-    in srgb,
-    var(--ifm-card-background-color, var(--ifm-background-surface-color)) 96%,
-    var(--ifm-color-primary) 4%
-  );
+  background: color-mix(in srgb, var(--ifm-background-surface-color) 95%, var(--upl-surface-subtle));
+}
+
+.cardBody {
+  display: grid;
+  flex: 1;
+  gap: 0.85rem;
+  align-content: start;
 }
 
 .cardHeader {
@@ -53,7 +54,7 @@
 }
 
 .eyebrow {
-  color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary-dark);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -61,7 +62,8 @@
 }
 
 .badge {
-  background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  border: 1px solid transparent;
   border-radius: 999px;
   font-size: 0.72rem;
   font-weight: 700;
@@ -71,6 +73,8 @@
 }
 
 .title {
+  letter-spacing: -0.03em;
+  line-height: 1.35;
   margin: 0;
 }
 
@@ -90,21 +94,53 @@
   margin: 0;
 }
 
-.featuredCard .description {
-  -webkit-line-clamp: 4;
+.cardFooter,
+.familyFooter {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: auto;
 }
 
-.meta,
-.primaryLinkRow {
-  color: var(--ifm-color-primary);
-  font-size: 0.9rem;
-  font-weight: 600;
-  line-height: 1.5;
-  margin: 0;
+.cardFooter {
+  align-items: end;
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 
 .meta {
-  margin-top: auto;
+  margin: 0;
+}
+
+.metaPill {
+  align-items: center;
+  background: var(--upl-surface-subtle);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--ifm-color-primary-dark);
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 0.32rem 0.6rem;
+}
+
+.cardAction {
+  color: var(--ifm-heading-color);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.cardAction::after {
+  color: var(--ifm-color-primary);
+  content: '→';
+  margin-left: 0.4rem;
+}
+
+.primaryLinkRow {
+  color: var(--ifm-color-primary-dark);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .primaryLink,
@@ -124,23 +160,34 @@
 .supplementalLinkList {
   color: var(--ifm-color-emphasis-700);
   display: grid;
-  gap: 0.45rem;
+  gap: 0.55rem;
+  list-style: none;
   margin: 0;
-  padding-left: 1.2rem;
+  padding: 0;
 }
 
-[data-theme='dark'] .card {
-  border-color: var(--ifm-color-emphasis-300);
+.supplementalLinkItem {
+  border-top: 1px solid var(--upl-border-subtle);
+  padding-top: 0.6rem;
 }
 
 [data-theme='dark'] .featuredCard {
-  border-color: color-mix(in srgb, var(--ifm-color-primary) 35%, var(--ifm-color-emphasis-300));
+  background:
+    radial-gradient(circle at top right, rgba(143, 162, 255, 0.24), transparent 34%),
+    color-mix(in srgb, var(--ifm-background-surface-color) 92%, rgba(143, 162, 255, 0.14));
+}
+
+[data-theme='dark'] .badge,
+[data-theme='dark'] .metaPill {
+  background: color-mix(in srgb, var(--ifm-color-primary) 16%, transparent);
 }
 
 .cardLink:hover .card,
 .cardLink:focus-visible .card,
+.familyCard:hover,
 .familyCard:focus-within {
-  border-color: var(--ifm-color-primary);
+  border-color: var(--upl-border-strong);
+  box-shadow: var(--upl-shadow-lg);
   transform: translateY(-2px);
 }
 
@@ -156,5 +203,9 @@
 
   .badge {
     align-self: flex-start;
+  }
+
+  .cardFooter {
+    grid-template-columns: 1fr;
   }
 }

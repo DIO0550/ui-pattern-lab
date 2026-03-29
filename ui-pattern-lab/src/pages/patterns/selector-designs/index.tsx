@@ -8,8 +8,8 @@ export default function SelectorDesignPatternsPage(): ReactNode {
     <Layout
       title="セレクタデザインパターン"
       description="selector 全体の判断ハブとして、radio / native select / custom select / combobox / reference family を比較軸から選び分けるページです。">
-      <header className="hero hero--primary">
-        <div className="container">
+      <header className="hero hero--primary pattern-page-hero">
+        <div className="container pattern-page-hero__inner">
           <Heading as="h1" className="hero__title">
             セレクタデザインパターン
           </Heading>
@@ -21,7 +21,7 @@ export default function SelectorDesignPatternsPage(): ReactNode {
         </div>
       </header>
 
-      <main>
+      <main className="pattern-page-main">
         <SelectorPatternPageContent />
       </main>
     </Layout>

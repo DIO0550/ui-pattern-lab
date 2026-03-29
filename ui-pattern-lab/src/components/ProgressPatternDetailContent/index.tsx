@@ -113,7 +113,7 @@ export default function ProgressPatternDetailContent({
   const contextNote = buildContextNote(entry.id);
 
   return (
-    <div className={`container margin-vert--lg ${styles.root}`}>
+    <div className={`margin-vert--lg ${styles.root}`}>
       <div className={styles.backLinks}>
         <Link to="/progress">プログレス</Link>
         <span aria-hidden="true">/</span>

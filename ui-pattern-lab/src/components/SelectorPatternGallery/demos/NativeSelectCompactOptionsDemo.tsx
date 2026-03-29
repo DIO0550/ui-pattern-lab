@@ -83,7 +83,8 @@ export default function NativeSelectCompactOptionsDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           description="native select を baseline にし、要件が超えたときだけ custom select / combobox へ進みます。"
-          label="切り替えの目安">
+          label="切り替えの目安"
+          className={styles.previewCardHiddenInDetail}>
           <div className={styles.selectionSummary}>
             <ul className={styles.summaryPillList}>
               <li className={styles.summaryPill}>候補圧縮が主題</li>

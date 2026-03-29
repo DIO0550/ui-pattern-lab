@@ -119,7 +119,7 @@ export default function ComboboxEmptyAndLoadingStatesDemo(): ReactNode {
                   {loadingMode ? 'loading mode' : expanded ? 'interactive' : 'collapsed'}
                 </span>
               </div>
-              <div className={styles.summaryPillList}>
+              <div className={clsx(styles.summaryPillList, styles.previewAuxiliaryHiddenInDetail)}>
                 <button
                   className="button button--secondary button--sm"
                   onClick={() => setLoadingMode((current) => !current)}
@@ -204,7 +204,7 @@ export default function ComboboxEmptyAndLoadingStatesDemo(): ReactNode {
                 </p>
               </div>
             </section>
-            <div className={styles.selectionSummary}>
+            <div className={clsx(styles.selectionSummary, styles.previewAuxiliaryHiddenInDetail)}>
               <p className={styles.selectionNote}>現在の値: {selectedAssignee?.label ?? '未確定'}</p>
               <ul className={styles.summaryPillList}>
                 <li className={styles.summaryPill}>{loadingMode ? 'loading 中' : 'loading なし'}</li>
@@ -216,7 +216,8 @@ export default function ComboboxEmptyAndLoadingStatesDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           description="empty と loading は見た目だけでなく、aria-live の文言も含めて 1 セットで設計します。"
-          label="状態設計">
+          label="状態設計"
+          className={styles.previewCardHiddenInDetail}>
           <ul className={styles.specList}>
             <li className={styles.specItem}>loading / no results / selected を同時に出さない</li>
             <li className={styles.specItem}>現在の値が残るなら status text でも再掲する</li>
