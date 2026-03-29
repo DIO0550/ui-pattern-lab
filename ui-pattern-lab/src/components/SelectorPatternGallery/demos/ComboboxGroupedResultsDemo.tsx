@@ -219,7 +219,7 @@ export default function ComboboxGroupedResultsDemo(): ReactNode {
                 </p>
               </div>
             </section>
-            <div className={styles.selectionSummary}>
+            <div className={clsx(styles.selectionSummary, styles.previewAuxiliaryHiddenInDetail)}>
               <p className={styles.selectionNote}>現在の値: {selectedAssignee?.label ?? '未確定'}</p>
               <ul className={styles.summaryPillList}>
                 <li className={styles.summaryPill}>group: {filteredGroups.length} 件</li>
@@ -231,7 +231,8 @@ export default function ComboboxGroupedResultsDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           description="group label を導入しても、active option と status text の一貫性を崩さないことが重要です。"
-          label="設計メモ">
+          label="設計メモ"
+          className={styles.previewCardHiddenInDetail}>
           <ul className={styles.specList}>
             <li className={styles.specItem}>query が空でも group のまとまりを保つ</li>
             <li className={styles.specItem}>Arrow key が group 境界をまたいでも active index を安定させる</li>

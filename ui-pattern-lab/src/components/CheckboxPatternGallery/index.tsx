@@ -3,8 +3,11 @@ import {useEffect, useRef, useState} from 'react';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
+import ButtonReferenceLayout, {
+  type ButtonReferenceVariant,
+} from '@site/src/components/ButtonReferenceLayout';
 import CheckboxPatternMetadataPanel from '@site/src/components/CheckboxPatternMetadataPanel';
-import CheckboxPatternSectionCard from '@site/src/components/CheckboxPatternSectionCard';
+import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
 import CheckboxPatternSnippetPanel from '@site/src/components/CheckboxPatternSnippetPanel';
 import type {
   CheckboxPatternEntry,
@@ -24,6 +27,7 @@ type PreviewCardProps = {
   label: string;
   description: string;
   children: ReactNode;
+  className?: string;
 };
 
 type DemoCheckboxProps = Omit<ComponentPropsWithoutRef<'input'>, 'type'> & {
@@ -115,9 +119,9 @@ const selectableCardOptions = [
 
 type SelectableCardOptionId = (typeof selectableCardOptions)[number]['id'];
 
-function PreviewCard({label, description, children}: PreviewCardProps): ReactNode {
+function PreviewCard({label, description, children, className}: PreviewCardProps): ReactNode {
   return (
-    <section className={styles.previewCard}>
+    <section className={clsx(styles.previewCard, className)}>
       <div className={styles.previewHeader}>
         <span className={styles.previewLabel}>{label}</span>
         <p className={styles.previewDescription}>{description}</p>
@@ -261,7 +265,8 @@ function MultipleIndependentSelectionDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           label="選択結果"
-          description="checkbox は未選択のままでも成立し、必要な分だけ組み合わせられます。">
+          description="checkbox は未選択のままでも成立し、必要な分だけ組み合わせられます。"
+          className={styles.previewCardHiddenInDetail}>
           <div className={styles.selectionSummary}>
             <p className={styles.selectionNote}>
               {selectedLabels.length > 0
@@ -420,7 +425,8 @@ function SelectableCardsDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           label="判断軸"
-          description="情報量の多い候補を複数選択させるときに向く派生パターンです。">
+          description="情報量の多い候補を複数選択させるときに向く派生パターンです。"
+          className={styles.previewCardHiddenInDetail}>
           <div className={styles.selectionSummary}>
             <p className={styles.selectionNote}>
               {selectedTitles.length > 0
@@ -519,6 +525,322 @@ function StatesAndAccessibilityDemo(): ReactNode {
   );
 }
 
+const checkboxStateBaseCss = `.checkboxField {
+  align-items: flex-start;
+  background: var(--checkbox-gallery-surface);
+  border: 1px solid color-mix(in srgb, var(--checkbox-gallery-emphasis) 12%, var(--checkbox-gallery-border));
+  border-radius: 0.9rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto 1fr;
+  padding: 0.75rem;
+}
+
+.checkboxInput {
+  accent-color: var(--ifm-color-primary);
+  block-size: 1.125rem;
+  inline-size: 1.125rem;
+  margin: 0;
+}`;
+
+function buildCheckboxStateReferenceVariants(): readonly ButtonReferenceVariant[] {
+  return [
+    {
+      id: 'unchecked',
+      name: 'Unchecked',
+      description: '通常時の未選択状態です。',
+      previewClassName: styles.compactReferenceVariantPreview,
+      preview: (
+        <div className={styles.referencePreviewFrame}>
+          <CheckboxField control={<DemoCheckbox readOnly />} label="通知を受け取る" />
+        </div>
+      ),
+      tabs: [
+        {
+          id: 'unchecked-css',
+          label: 'CSS',
+          language: 'css',
+          code: checkboxStateBaseCss,
+        },
+        {
+          id: 'unchecked-tsx',
+          label: 'TSX',
+          language: 'tsx',
+          code: `<label className={styles.checkboxField}>
+  <span className={styles.checkboxControlSlot}>
+    <input className={styles.checkboxInput} readOnly type="checkbox" />
+  </span>
+  <span className={styles.checkboxText}>
+    <span className={styles.checkboxLabel}>通知を受け取る</span>
+  </span>
+</label>`,
+        },
+      ],
+    },
+    {
+      id: 'checked',
+      name: 'Checked',
+      description: '選択済みの基準状態です。',
+      previewClassName: styles.compactReferenceVariantPreview,
+      preview: (
+        <div className={styles.referencePreviewFrame}>
+          <CheckboxField
+            control={<DemoCheckbox checked readOnly />}
+            label="コメントも受け取る"
+          />
+        </div>
+      ),
+      tabs: [
+        {
+          id: 'checked-css',
+          label: 'CSS',
+          language: 'css',
+          code: checkboxStateBaseCss,
+          note: 'checked state 自体は native checkbox の状態で表現し、レイアウトは unchecked と同じ基準を使います。',
+        },
+        {
+          id: 'checked-tsx',
+          label: 'TSX',
+          language: 'tsx',
+          code: `<label className={styles.checkboxField}>
+  <span className={styles.checkboxControlSlot}>
+    <input checked className={styles.checkboxInput} readOnly type="checkbox" />
+  </span>
+  <span className={styles.checkboxText}>
+    <span className={styles.checkboxLabel}>コメントも受け取る</span>
+  </span>
+</label>`,
+        },
+      ],
+    },
+    {
+      id: 'focus-visible',
+      name: 'Focus visible',
+      description: 'キーボード移動時の輪郭を示す状態です。',
+      previewClassName: styles.compactReferenceVariantPreview,
+      preview: (
+        <div className={styles.referencePreviewFrame}>
+          <CheckboxField
+            className={styles.focusField}
+            control={<DemoCheckbox checked readOnly />}
+            helperText="outline と helper text を併用して現在位置を見失わないようにします。"
+            label="キーボード操作でも見失わない"
+          />
+        </div>
+      ),
+      tabs: [
+        {
+          id: 'focus-visible-css',
+          label: 'CSS',
+          language: 'css',
+          code: `${checkboxStateBaseCss}
+
+.focusField {
+  outline: 3px solid color-mix(in srgb, var(--ifm-color-primary) 30%, white);
+  outline-offset: 2px;
+}`,
+        },
+        {
+          id: 'focus-visible-tsx',
+          label: 'TSX',
+          language: 'tsx',
+          code: `<label className={clsx(styles.checkboxField, styles.focusField)}>
+  <span className={styles.checkboxControlSlot}>
+    <input checked className={styles.checkboxInput} readOnly type="checkbox" />
+  </span>
+  <span className={styles.checkboxText}>
+    <span className={styles.checkboxLabel}>キーボード操作でも見失わない</span>
+    <span className={styles.checkboxHelper}>
+      outline と helper text を併用して現在位置を見失わないようにします。
+    </span>
+  </span>
+</label>`,
+        },
+      ],
+    },
+    {
+      id: 'disabled',
+      name: 'Disabled',
+      description: '操作不可の理由を補う状態です。',
+      previewClassName: styles.compactReferenceVariantPreview,
+      preview: (
+        <div className={styles.referencePreviewFrame}>
+          <CheckboxField
+            control={<DemoCheckbox checked disabled readOnly />}
+            helperText="権限がないため変更できません。"
+            label="管理者が固定した設定"
+          />
+        </div>
+      ),
+      tabs: [
+        {
+          id: 'disabled-css',
+          label: 'CSS',
+          language: 'css',
+          code: `${checkboxStateBaseCss}
+
+.checkboxInput:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}`,
+        },
+        {
+          id: 'disabled-tsx',
+          label: 'TSX',
+          language: 'tsx',
+          code: `<label className={styles.checkboxField}>
+  <span className={styles.checkboxControlSlot}>
+    <input checked className={styles.checkboxInput} disabled readOnly type="checkbox" />
+  </span>
+  <span className={styles.checkboxText}>
+    <span className={styles.checkboxLabel}>管理者が固定した設定</span>
+    <span className={styles.checkboxHelper}>権限がないため変更できません。</span>
+  </span>
+</label>`,
+        },
+      ],
+    },
+    {
+      id: 'error',
+      name: 'Error',
+      description: 'aria-invalid と補助文を併記する状態です。',
+      previewClassName: styles.compactReferenceVariantPreview,
+      preview: (
+        <div className={styles.referencePreviewFrame}>
+          <CheckboxField
+            className={styles.errorField}
+            control={<DemoCheckbox aria-invalid="true" readOnly />}
+            errorText="同意しないと次へ進めません。"
+            helperText="送信前に内容を確認できます。"
+            label="利用規約に同意する"
+          />
+        </div>
+      ),
+      tabs: [
+        {
+          id: 'error-css',
+          label: 'CSS',
+          language: 'css',
+          code: `${checkboxStateBaseCss}
+
+.errorField {
+  background: color-mix(in srgb, var(--ifm-color-danger) 8%, var(--checkbox-gallery-surface));
+  border-color: color-mix(in srgb, var(--ifm-color-danger) 35%, var(--checkbox-gallery-border));
+}
+
+.errorField .checkboxInput {
+  accent-color: var(--ifm-color-danger);
+}
+
+.checkboxError {
+  color: var(--ifm-color-danger);
+  font-weight: 600;
+}`,
+        },
+        {
+          id: 'error-tsx',
+          label: 'TSX',
+          language: 'tsx',
+          code: `const helperId = 'terms-helper';
+const errorId = 'terms-error';
+
+<label className={clsx(styles.checkboxField, styles.errorField)}>
+  <span className={styles.checkboxControlSlot}>
+    <input
+    aria-describedby={\`\${helperId} \${errorId}\`}
+    aria-invalid="true"
+    className={styles.checkboxInput}
+    readOnly
+    type="checkbox"
+  />
+  </span>
+  <span className={styles.checkboxText}>
+    <span className={styles.checkboxLabel}>利用規約に同意する</span>
+    <span className={styles.checkboxHelper} id={helperId}>
+      送信前に内容を確認できます。
+    </span>
+    <span className={styles.checkboxError} id={errorId}>
+      同意しないと次へ進めません。
+    </span>
+  </span>
+</label>`,
+        },
+      ],
+    },
+    {
+      id: 'mixed',
+      name: 'Mixed',
+      description: '一部選択中を示す状態です。',
+      previewClassName: styles.compactReferenceVariantPreview,
+      preview: (
+        <div className={styles.referencePreviewFrame}>
+          <CheckboxField
+            control={<DemoCheckbox aria-checked="mixed" indeterminate readOnly />}
+            helperText="子設定の一部だけが有効です。"
+            label="チーム共有権限"
+          />
+        </div>
+      ),
+      tabs: [
+        {
+          id: 'mixed-css',
+          label: 'CSS',
+          language: 'css',
+          code: checkboxStateBaseCss,
+          note:
+            'mixed の視覚差分は native checkbox に委ねつつ、meaning は `indeterminate` property と `aria-checked="mixed"` を合わせて扱います。',
+        },
+        {
+          id: 'mixed-tsx',
+          label: 'TSX',
+          language: 'tsx',
+          code: `const inputRef = useRef<HTMLInputElement>(null);
+
+useEffect(() => {
+  if (inputRef.current) {
+    inputRef.current.indeterminate = true;
+  }
+}, []);
+
+<label className={styles.checkboxField}>
+  <span className={styles.checkboxControlSlot}>
+    <input
+    aria-checked="mixed"
+    className={styles.checkboxInput}
+    ref={inputRef}
+    readOnly
+    type="checkbox"
+  />
+  </span>
+  <span className={styles.checkboxText}>
+    <span className={styles.checkboxLabel}>チーム共有権限</span>
+    <span className={styles.checkboxHelper}>子設定の一部だけが有効です。</span>
+  </span>
+</label>`,
+          note:
+            'mixed state は見た目だけではなく、DOM property の indeterminate と `aria-checked="mixed"` を揃えて扱います。',
+        },
+      ],
+    },
+  ] as const;
+}
+
+function renderStatesAndAccessibilityDetail(
+  entry: CheckboxPatternEntry,
+  metadataItems: CheckboxPatternMetadataItem[],
+): ReactNode {
+  return (
+    <ButtonReferenceLayout
+      notes={metadataItems.map((item) => ({
+        id: `${entry.id}-${item.tone}`,
+        label: item.label,
+        value: item.value,
+      }))}
+      variants={buildCheckboxStateReferenceVariants()}
+    />
+  );
+}
+
 function MobileAndTouchTargetsDemo(): ReactNode {
   const [selectedIds, setSelectedIds] = useState<
     Array<(typeof mobileOptions)[number]['id']>
@@ -559,7 +881,8 @@ function MobileAndTouchTargetsDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           label="モバイルでの判断軸"
-          description="checkbox は各項目の説明を見せながら複数選択させたいときに向きます。">
+          description="checkbox は各項目の説明を見せながら複数選択させたいときに向きます。"
+          className={styles.previewCardHiddenInDetail}>
           <ul className={styles.specList}>
             <li className={styles.specItem}>min-height は 48px 相当を目安にする</li>
             <li className={styles.specItem}>checkbox 本体だけでなくラベル全体をタップ可能にする</li>
@@ -626,43 +949,35 @@ export default function CheckboxPatternGallery({entries, density}: Props): React
             ) : null;
 
           if (density === 'detail') {
+            if (entry.id === 'states-and-accessibility') {
+              return (
+                <div className={styles.detailContent} id={entry.id} key={entry.id}>
+                  {renderStatesAndAccessibilityDetail(entry, metadataItems)}
+                </div>
+              );
+            }
+
             return (
               <div className={styles.detailContent} id={entry.id} key={entry.id}>
-                <div className={styles.cardHeader}>
-                  <Heading as="h3" className={styles.cardTitle}>
-                    {entry.title}
-                  </Heading>
-                  <p className={styles.cardSummary}>{entry.summary}</p>
-                  <ul aria-label={`${entry.title}のタグ`} className={styles.tagList}>
-                    {entry.tags.map((tag) => (
-                      <li className={styles.tag} key={tag}>
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <CheckboxPatternSectionCard
-                  ariaLabel={`${entry.title}のプレビュー`}
-                  label="見た目"
-                  title="プレビュー">
-                  <div className={styles.demoPanel}>
-                    <Demo />
-                  </div>
-                </CheckboxPatternSectionCard>
-
-                {crossReference}
-
-                <CheckboxPatternSnippetPanel
-                  density={density}
-                  entryTitle={entry.title}
+                <PatternReferenceContent
+                  id={entry.id}
+                  notes={metadataItems.map((item) => ({
+                    id: `${entry.id}-${item.tone}`,
+                    label: item.label,
+                    value: item.value,
+                  }))}
+                  preview={
+                    <div
+                      className={clsx(
+                        styles.demoPanel,
+                        styles.detailPreviewPanel,
+                      )}>
+                      <Demo />
+                    </div>
+                  }
                   snippets={entry.snippets}
-                />
-
-                <CheckboxPatternMetadataPanel
-                  density={density}
-                  entryTitle={entry.title}
-                  items={metadataItems}
+                  summary={entry.summary}
+                  title={entry.title}
                 />
               </div>
             );

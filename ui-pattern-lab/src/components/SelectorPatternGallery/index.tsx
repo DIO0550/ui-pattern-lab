@@ -2,7 +2,7 @@ import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import SelectorPatternMetadataPanel from '@site/src/components/SelectorPatternMetadataPanel';
-import SelectorPatternSectionCard from '@site/src/components/SelectorPatternSectionCard';
+import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
 import SelectorPatternSnippetPanel from '@site/src/components/SelectorPatternSnippetPanel';
 import type {
   SelectorPatternEntry,
@@ -83,43 +83,21 @@ export default function SelectorPatternGallery({entries, density}: Props): React
           if (density === 'detail') {
             return (
               <div className={styles.detailContent} id={entry.id} key={entry.id}>
-                <div className={styles.cardHeader}>
-                  <div className={styles.entryHeader}>
-                    <Heading as="h3" className={styles.cardTitle}>
-                      {entry.title}
-                    </Heading>
-                    {referenceBadge}
-                  </div>
-                  <p className={styles.cardSummary}>{entry.summary}</p>
-                  <ul aria-label={`${entry.title}のタグ`} className={styles.tagList}>
-                    {entry.tags.map((tag) => (
-                      <li className={styles.tag} key={tag}>
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <SelectorPatternSectionCard
-                  ariaLabel={`${entry.title}のプレビュー`}
-                  label="見た目"
-                  title="プレビュー">
-                  <div className={styles.demoPanel}>
-                    <Demo />
-                  </div>
-                </SelectorPatternSectionCard>
-
-                <SelectorPatternSnippetPanel
-                  density={density}
-                  entryId={entry.id}
-                  entryTitle={entry.title}
+                <PatternReferenceContent
+                  id={entry.id}
+                  notes={metadataItems.map((item) => ({
+                    id: `${entry.id}-${item.tone}`,
+                    label: item.label,
+                    value: item.value,
+                  }))}
+                  preview={
+                    <div className={clsx(styles.demoPanel, styles.detailPreviewPanel)}>
+                      <Demo />
+                    </div>
+                  }
                   snippets={entry.snippets}
-                />
-
-                <SelectorPatternMetadataPanel
-                  density={density}
-                  entryTitle={entry.title}
-                  items={metadataItems}
+                  summary={entry.summary}
+                  title={entry.title}
                 />
               </div>
             );

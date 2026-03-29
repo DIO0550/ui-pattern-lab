@@ -1,6 +1,12 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import ButtonPatternGallery from '@site/src/components/ButtonPatternGallery';
+import DestructiveButtonReferenceContent from '@site/src/components/DestructiveButtonReferenceContent';
+import HierarchyButtonReferenceContent from '@site/src/components/HierarchyButtonReferenceContent';
+import IconAndCompoundReferenceContent from '@site/src/components/IconAndCompoundReferenceContent';
+import InteractiveStatesReferenceContent from '@site/src/components/InteractiveStatesReferenceContent';
+import SpacingAndSizingReferenceContent from '@site/src/components/SpacingAndSizingReferenceContent';
+import ToggleAndSelectionReferenceContent from '@site/src/components/ToggleAndSelectionReferenceContent';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import type {ButtonPatternEntryId} from '@site/src/data/buttonPatternTypes';
 
@@ -21,8 +27,25 @@ export default function ButtonPatternDetailContent({
 
   const showSelectorReference = entry.id === 'toggle-and-selection';
 
+  const detailContent =
+    entry.id === 'destructive-actions' ? (
+      <DestructiveButtonReferenceContent entry={entry} />
+    ) : entry.id === 'hierarchy-and-emphasis' ? (
+      <HierarchyButtonReferenceContent entry={entry} />
+    ) : entry.id === 'interactive-states' ? (
+      <InteractiveStatesReferenceContent entry={entry} />
+    ) : entry.id === 'icon-and-compound-actions' ? (
+      <IconAndCompoundReferenceContent entry={entry} />
+    ) : entry.id === 'toggle-and-selection' ? (
+      <ToggleAndSelectionReferenceContent entry={entry} />
+    ) : entry.id === 'spacing-and-sizing' ? (
+      <SpacingAndSizingReferenceContent entry={entry} />
+    ) : (
+      <ButtonPatternGallery density="detail" entries={[entry]} />
+    );
+
   return (
-    <div className={`container margin-vert--lg ${styles.root}`}>
+    <div className={`margin-vert--lg ${styles.root}`}>
       <div className={styles.backLinks}>
         <Link to="/button">ボタン</Link>
         <span aria-hidden="true">/</span>
@@ -43,7 +66,7 @@ export default function ButtonPatternDetailContent({
           を参照してください。toggle-and-selection では押した瞬間に状態や表示モードが変わる UI を扱います。
         </p>
       ) : null}
-      <ButtonPatternGallery density="detail" entries={[entry]} />
+      {detailContent}
     </div>
   );
 }

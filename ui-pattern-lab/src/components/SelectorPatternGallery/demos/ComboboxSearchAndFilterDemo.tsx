@@ -166,7 +166,7 @@ export default function ComboboxSearchAndFilterDemo(): ReactNode {
                 </p>
               </div>
             </section>
-            <div className={styles.selectionSummary}>
+            <div className={clsx(styles.selectionSummary, styles.previewAuxiliaryHiddenInDetail)}>
               <p className={styles.selectionNote}>現在の値: {selectedAssignee?.label ?? '未確定'}</p>
               <ul className={styles.summaryPillList}>
                 <li className={styles.summaryPill}>query: {inputValue.length > 0 ? inputValue : '空'}</li>
@@ -178,7 +178,8 @@ export default function ComboboxSearchAndFilterDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           description="searchable single-select の最小構造だけを扱い、production で必要な周辺要件は切り分けます。"
-          label="scope と非 scope">
+          label="scope と非 scope"
+          className={styles.previewCardHiddenInDetail}>
           <ul className={styles.specList}>
             <li className={styles.specItem}>
               検索・候補描画・Enter 確定まで動く最小の single-select combobox

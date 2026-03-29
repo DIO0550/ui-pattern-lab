@@ -23,7 +23,8 @@ export default function CustomSelectSoftOptionsDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           description="説明文を載せても、single-select の責務と native との差分は明確にしておきます。"
-          label="使いどころ">
+          label="使いどころ"
+          className={styles.previewCardHiddenInDetail}>
           <div className={styles.selectionSummary}>
             <ul className={styles.summaryPillList}>
               <li className={styles.summaryPill}>supporting text</li>

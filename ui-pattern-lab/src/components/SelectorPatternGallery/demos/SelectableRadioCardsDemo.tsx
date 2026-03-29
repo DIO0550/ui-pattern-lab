@@ -42,7 +42,8 @@ export default function SelectableRadioCardsDemo(): ReactNode {
         </PreviewCard>
         <PreviewCard
           description="checkbox card と違い、複数同時選択や select-all は前提にしません。"
-          label="境界メモ">
+          label="境界メモ"
+          className={styles.previewCardHiddenInDetail}>
           <div className={styles.selectionSummary}>
             <p className={styles.selectionNote}>現在の値: {selectedPlan.title}</p>
             <ul className={styles.summaryPillList}>
