@@ -290,13 +290,19 @@
 }
 
 .variantDetailNoteLabel {
+  align-items: center;
+  align-self: start;
   background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
   border-radius: 999px;
   display: inline-flex;
   font-size: 0.72rem;
   font-weight: 700;
-  inline-size: fit-content;
-  padding: 0.25rem 0.6rem;
+  inline-size: max-content;
+  line-height: 1.2;
+  max-inline-size: 100%;
+  min-block-size: 1.75rem;
+  padding: 0.3rem 0.65rem;
+  white-space: nowrap;
 }
 
 .variantDetailNote p {
@@ -383,13 +389,19 @@
 }
 
 .noteTag {
+  align-items: center;
+  align-self: start;
   background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
   border-radius: 999px;
   display: inline-flex;
   font-size: 0.72rem;
   font-weight: 700;
-  inline-size: fit-content;
-  padding: 0.25rem 0.6rem;
+  inline-size: max-content;
+  line-height: 1.2;
+  max-inline-size: 100%;
+  min-block-size: 1.75rem;
+  padding: 0.3rem 0.65rem;
+  white-space: nowrap;
 }
 
 .noteCard p {

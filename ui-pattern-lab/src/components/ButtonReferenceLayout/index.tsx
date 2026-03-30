@@ -75,6 +75,58 @@ function buildDefaultNotes(entry: EntryNoteSource): ButtonReferenceNote[] {
   ];
 }
 
+function pickNoteValue(
+  notes: readonly ButtonReferenceNote[],
+  labelKeywords: readonly string[],
+): string | undefined {
+  return notes.find((note) =>
+    labelKeywords.some((keyword) => note.label.includes(keyword)),
+  )?.value;
+}
+
+function buildFallbackGuides(
+  notes: readonly ButtonReferenceNote[],
+  variants: readonly ButtonReferenceVariant[],
+): readonly ButtonReferenceGuide[] {
+  const firstVariant = variants[0];
+
+  if (!firstVariant) {
+    return [];
+  }
+
+  const solution =
+    pickNoteValue(notes, ['解決方法']) ??
+    firstVariant.description ??
+    '状態説明や補助情報を近くに置き、使い分けの根拠を UI から読めるようにします。';
+  const problem = pickNoteValue(notes, ['課題']);
+  const stateOrAccessibility =
+    pickNoteValue(notes, ['状態設計', 'アクセシビリティ', '操作設計', '比較メモ']) ??
+    '状態説明や補助文がなく、見た目だけで使い分けを判断させる例です。';
+
+  return [
+    {
+      id: `${firstVariant.id}-default-guide-do`,
+      tone: 'do',
+      description: solution,
+      preview: firstVariant.preview,
+    },
+    {
+      id: `${firstVariant.id}-default-guide-dont`,
+      tone: 'dont',
+      description:
+        problem
+          ? `${problem} を放置したまま、見た目や配置だけで使い分ける構成にしないでください。`
+          : '状態説明・補助文・影響範囲を UI から切り離し、見た目だけで判断させないでください。',
+      preview: (
+        <div className={styles.noteCard}>
+          <span className={styles.noteTag}>状態説明不足</span>
+          <p>{stateOrAccessibility}</p>
+        </div>
+      ),
+    },
+  ] as const;
+}
+
 /** Renders the code panel for a single reference variant. */
 function VariantCodePanel({
   tabs,
@@ -192,9 +244,12 @@ export default function ButtonReferenceLayout({
   entry,
   guides = [],
   notes,
+  variantNote,
   variants,
 }: ButtonReferenceLayoutProps): ReactNode {
   const resolvedNotes = notes ? [...notes] : entry ? buildDefaultNotes(entry) : [];
+  const resolvedGuides =
+    guides.length > 0 ? [...guides] : buildFallbackGuides(resolvedNotes, variants);
   const variantsWithDetailNotes = variants.filter(
     (variant): variant is ButtonReferenceVariant & {detailNotes: readonly ButtonReferenceNote[]} =>
       Array.isArray(variant.detailNotes) && variant.detailNotes.length > 0,
@@ -204,12 +259,14 @@ export default function ButtonReferenceLayout({
     <div className={styles.root}>
       <section className={styles.section}>
         <div className={styles.sectionLabel}>バリアント</div>
+        {variantNote ? <p className={styles.variantNote}>{variantNote}</p> : null}
 
         <div className={styles.variantList}>
           {variants.map((variant) => (
             <article className={styles.variantBlock} key={variant.id}>
               <div className={styles.variantHeader}>
                 <span className={styles.variantName}>{variant.name}</span>
+                <p className={styles.variantDescription}>{variant.description}</p>
               </div>
               <div className={styles.variantSplit}>
                 <div
@@ -259,7 +316,7 @@ export default function ButtonReferenceLayout({
         </div>
       </section>
 
-      <GuidelineSection guides={guides} />
+      <GuidelineSection guides={resolvedGuides} />
     </div>
   );
 }

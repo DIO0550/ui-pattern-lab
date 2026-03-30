@@ -1,11 +1,12 @@
 import type {ReactNode} from 'react';
 import ButtonReferenceLayout, {
+  type ButtonReferenceCodeTab,
   type ButtonReferenceGuide,
   type ButtonReferenceNote,
   type ButtonReferenceVariant,
 } from '@site/src/components/ButtonReferenceLayout';
 
-type PatternReferenceSnippetItem = {
+export type PatternReferenceSnippetItem = {
   id: string;
   label: string;
   language: string;
@@ -18,50 +19,70 @@ type PatternReferenceSnippets = {
   items: readonly PatternReferenceSnippetItem[];
 };
 
-type Props = {
-  id: string;
-  title: string;
-  summary: string;
-  preview: ReactNode;
+type SharedProps = {
   notes: readonly ButtonReferenceNote[];
-  snippets?: PatternReferenceSnippets;
   guides?: readonly ButtonReferenceGuide[];
   variantNote?: string;
 };
 
+type SingleVariantProps = {
+  id: string;
+  title: string;
+  summary: string;
+  preview: ReactNode;
+  snippets?: PatternReferenceSnippets;
+  variants?: never;
+};
+
+type ExplicitVariantsProps = {
+  variants: readonly ButtonReferenceVariant[];
+  id?: never;
+  title?: never;
+  summary?: never;
+  preview?: never;
+  snippets?: never;
+};
+
+type Props = SharedProps & (SingleVariantProps | ExplicitVariantsProps);
+
+/** Converts generic snippet items into code tabs for the shared reference layout. */
+export function buildReferenceCodeTabs(
+  items: readonly PatternReferenceSnippetItem[] | undefined,
+): ButtonReferenceCodeTab[] {
+  return (
+    items?.map((item) => ({
+      id: item.id,
+      label: item.label,
+      code: item.code,
+      language: item.language,
+      note: item.note,
+    })) ?? []
+  );
+}
+
 /** Renders a single-pattern reference view using the shared split preview/code layout. */
-export default function PatternReferenceContent({
-  id,
-  title,
-  summary,
-  preview,
-  notes,
-  snippets,
-  guides,
-  variantNote,
-}: Props): ReactNode {
-  const variants = [
-    {
-      id,
-      name: title,
-      description: summary,
-      preview,
-      tabs:
-        snippets?.items.map((item) => ({
-          id: item.id,
-          label: item.label,
-          code: item.code,
-          language: item.language,
-          note: item.note,
-        })) ?? [],
-    },
-  ] satisfies readonly ButtonReferenceVariant[];
+export default function PatternReferenceContent(props: Props): ReactNode {
+  const {guides, notes, variantNote} = props;
+  const variants =
+    'variants' in props
+      ? props.variants
+      : ([
+          {
+            id: props.id,
+            name: props.title,
+            description: props.summary,
+            preview: props.preview,
+            tabs: buildReferenceCodeTabs(props.snippets?.items),
+          },
+        ] satisfies readonly ButtonReferenceVariant[]);
+  const resolvedVariantNote =
+    variantNote ?? ('snippets' in props ? props.snippets?.snippetSummary : undefined);
 
   return (
     <ButtonReferenceLayout
       guides={guides}
       notes={notes}
-      variantNote={variantNote ?? snippets?.snippetSummary}
+      variantNote={resolvedVariantNote}
       variants={variants}
     />
   );

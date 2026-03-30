@@ -10,6 +10,10 @@ import type {
 } from '@site/src/data/selectorPatternTypes';
 
 import {demoRegistry} from './demoRegistry';
+import {
+  statesAndValidationGuides,
+  statesAndValidationReferenceVariants,
+} from './demos/StatesAndValidationDemo';
 import styles from './styles.module.css';
 
 type Props = {
@@ -75,21 +79,35 @@ export default function SelectorPatternGallery({entries, density}: Props): React
         {sortedEntries.map((entry) => {
           const Demo = demoRegistry[entry.demoKind];
           const metadataItems = buildMetadataItems(entry);
+          const detailNotes = metadataItems.map((item) => ({
+            id: `${entry.id}-${item.tone}`,
+            label: item.label,
+            value: item.value,
+          }));
           const referenceBadge =
             entry.entryType === 'reference' ? (
               <span className={styles.referenceBadge}>共通品質リファレンス</span>
             ) : null;
 
           if (density === 'detail') {
+            if (entry.id === 'states-and-validation') {
+              return (
+                <div className={styles.detailContent} id={entry.id} key={entry.id}>
+                  <PatternReferenceContent
+                    guides={statesAndValidationGuides}
+                    notes={detailNotes}
+                    variantNote={entry.snippets?.snippetSummary}
+                    variants={statesAndValidationReferenceVariants}
+                  />
+                </div>
+              );
+            }
+
             return (
               <div className={styles.detailContent} id={entry.id} key={entry.id}>
                 <PatternReferenceContent
                   id={entry.id}
-                  notes={metadataItems.map((item) => ({
-                    id: `${entry.id}-${item.tone}`,
-                    label: item.label,
-                    value: item.value,
-                  }))}
+                  notes={detailNotes}
                   preview={
                     <div className={clsx(styles.demoPanel, styles.detailPreviewPanel)}>
                       <Demo />

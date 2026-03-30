@@ -1,7 +1,13 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
-import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
+import type {
+  ButtonReferenceGuide,
+  ButtonReferenceVariant,
+} from '@site/src/components/ButtonReferenceLayout';
+import PatternReferenceContent, {
+  buildReferenceCodeTabs,
+} from '@site/src/components/PatternReferenceContent';
 import TablePatternMetadataPanel, {
   type TablePatternMetadataItem,
 } from '@site/src/components/TablePatternMetadataPanel';
@@ -154,6 +160,126 @@ function ResponsiveStackDemo(): ReactNode {
   );
 }
 
+function buildResponsiveStackReferenceVariants(
+  entry: TablePatternEntry,
+): readonly ButtonReferenceVariant[] {
+  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
+
+  return [
+    {
+      id: 'desktop-table',
+      name: '広い画面の表',
+      description: '列の比較性を優先し、広い viewport では table のまま見せます。',
+      preview: (
+        <section className={styles.previewPanel}>
+          <table className={styles.demoTable}>
+            <thead>
+              <tr>
+                <th scope="col">プラン</th>
+                <th scope="col">担当</th>
+                <th scope="col">進捗</th>
+                <th scope="col">更新</th>
+              </tr>
+            </thead>
+            <tbody>
+              {responsiveRows.map((row) => (
+                <tr key={row.plan}>
+                  <td>{row.plan}</td>
+                  <td>{row.owner}</td>
+                  <td>{row.status}</td>
+                  <td>{row.updated}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      ),
+      tabs,
+    },
+    {
+      id: 'mobile-stack',
+      name: 'モバイルの積み上げ',
+      description: '積み上げ後も各値の前にラベルを残し、1 行ごとの意味を保ちます。',
+      preview: (
+        <section className={clsx(styles.previewPanel, styles.mobileViewport)}>
+          <div className={styles.mobileCardList}>
+            {responsiveRows.map((row) => (
+              <article key={row.plan} className={styles.mobileCard}>
+                <strong className={styles.mobileCardTitle}>{row.plan}</strong>
+                <dl className={styles.mobileCardMeta}>
+                  <div>
+                    <dt>担当</dt>
+                    <dd>{row.owner}</dd>
+                  </div>
+                  <div>
+                    <dt>進捗</dt>
+                    <dd>{row.status}</dd>
+                  </div>
+                  <div>
+                    <dt>更新</dt>
+                    <dd>{row.updated}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </section>
+      ),
+      tabs,
+    },
+  ] as const;
+}
+
+const responsiveStackGuides = [
+  {
+    id: 'responsive-stack-do',
+    tone: 'do',
+    description:
+      '狭い画面へ積み上げるときも、各値の前にラベルを残して 1 行ごとの意味を保ちます。',
+    preview: (
+      <section className={clsx(styles.previewPanel, styles.mobileViewport)}>
+        <div className={styles.mobileCardList}>
+          <article className={styles.mobileCard}>
+            <strong className={styles.mobileCardTitle}>スターター</strong>
+            <dl className={styles.mobileCardMeta}>
+              <div>
+                <dt>担当</dt>
+                <dd>Ava</dd>
+              </div>
+              <div>
+                <dt>進捗</dt>
+                <dd>準備完了</dd>
+              </div>
+              <div>
+                <dt>更新</dt>
+                <dd>2時間前</dd>
+              </div>
+            </dl>
+          </article>
+        </div>
+      </section>
+    ),
+  },
+  {
+    id: 'responsive-stack-dont',
+    tone: 'dont',
+    description:
+      '値だけを縦に積むと、どれが担当・進捗・更新なのかが分からず、比較もしにくくなります。',
+    preview: (
+      <section className={clsx(styles.previewPanel, styles.mobileViewport)}>
+        <article className={styles.mobileCard}>
+          <strong className={styles.mobileCardTitle}>スターター</strong>
+          <div className={styles.mobileCardMeta}>
+            <div>Ava</div>
+            <div>準備完了</div>
+            <div>2時間前</div>
+          </div>
+        </article>
+      </section>
+    ),
+  },
+] satisfies readonly ButtonReferenceGuide[];
+
 function HorizontalScrollDemo(): ReactNode {
   return (
     <div className={styles.demoFrame}>
@@ -296,17 +422,31 @@ export default function TablePatternGallery({
               value: entry.accessibilityNotes,
             },
           ];
+          const detailNotes = metadataItems.map((item) => ({
+            id: `${entry.id}-${item.tone}`,
+            label: item.label,
+            value: item.value,
+          }));
 
           if (density === 'detail') {
+            if (entry.id === 'responsive-stack') {
+              return (
+                <div key={entry.id} id={entry.id} className={styles.detailContent}>
+                  <PatternReferenceContent
+                    guides={responsiveStackGuides}
+                    notes={detailNotes}
+                    variantNote={entry.snippets?.snippetSummary}
+                    variants={buildResponsiveStackReferenceVariants(entry)}
+                  />
+                </div>
+              );
+            }
+
             return (
               <div key={entry.id} id={entry.id} className={styles.detailContent}>
                 <PatternReferenceContent
                   id={entry.id}
-                  notes={metadataItems.map((item) => ({
-                    id: `${entry.id}-${item.tone}`,
-                    label: item.label,
-                    value: item.value,
-                  }))}
+                  notes={detailNotes}
                   preview={
                     <div className={clsx(styles.demoPanel, styles.detailPreviewPanel)}>
                       <Demo />
