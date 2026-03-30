@@ -94,7 +94,7 @@ const sidebars: SidebarsConfig = {
       items: [
         {
           type: 'category',
-          label: 'Radio',
+          label: 'ラジオボタン',
           collapsible: true,
           collapsed: true,
           items: [
@@ -104,14 +104,14 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
-          label: 'Native select',
+          label: 'ネイティブセレクト',
           collapsible: true,
           collapsed: true,
           items: ['selector/native-select-compact-options'],
         },
         {
           type: 'category',
-          label: 'Custom select',
+          label: 'カスタムセレクト',
           collapsible: true,
           collapsed: true,
           items: [
@@ -122,7 +122,7 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
-          label: 'Combobox',
+          label: 'コンボボックス',
           collapsible: true,
           collapsed: true,
           items: [
@@ -133,7 +133,7 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
-          label: 'States / validation',
+          label: '状態・バリデーション',
           collapsible: true,
           collapsed: true,
           items: ['selector/states-and-validation'],
