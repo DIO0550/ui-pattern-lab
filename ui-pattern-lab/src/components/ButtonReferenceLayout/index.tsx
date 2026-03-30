@@ -2,6 +2,7 @@ import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import type {ReactNode} from 'react';
 import CodeBlock from '@theme/CodeBlock';
 import type {ButtonPatternEntry} from '@site/src/data/buttonPatternTypes';
+import {getReferenceNoteTone} from '@site/src/components/referenceNoteTone';
 
 import styles from './styles.module.css';
 
@@ -362,7 +363,10 @@ export default function ButtonReferenceLayout({
                 <h3 className={styles.variantDetailTitle}>{variant.name}</h3>
                 <div className={styles.variantDetailItems}>
                   {variant.detailNotes.map((note) => (
-                    <div className={styles.variantDetailNote} key={note.id}>
+                    <div
+                      className={styles.variantDetailNote}
+                      data-note-tone={getReferenceNoteTone(note.id, note.label)}
+                      key={note.id}>
                       <span className={styles.variantDetailNoteLabel}>{note.label}</span>
                       <p>{note.value}</p>
                     </div>
@@ -382,7 +386,10 @@ export default function ButtonReferenceLayout({
 
         <div className={styles.notesGrid}>
           {resolvedNotes.map((note) => (
-            <div className={styles.noteCard} key={note.id}>
+            <div
+              className={styles.noteCard}
+              data-note-tone={getReferenceNoteTone(note.id, note.label)}
+              key={note.id}>
               <span className={styles.noteTag}>{note.label}</span>
               <p>{note.value}</p>
             </div>

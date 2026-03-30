@@ -301,8 +301,11 @@
 }
 
 .variantDetailNote {
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
+  --note-accent: var(--ifm-color-primary);
+  --note-surface: color-mix(in srgb, var(--note-accent) 7%, var(--surface));
+  --note-border: color-mix(in srgb, var(--note-accent) 22%, var(--border-soft));
+  background: var(--note-surface);
+  border: 1px solid var(--note-border);
   border-radius: 0.9rem;
   display: grid;
   gap: 0.55rem;
@@ -312,8 +315,9 @@
 .variantDetailNoteLabel {
   align-items: center;
   align-self: start;
-  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  background: color-mix(in srgb, var(--note-accent) 12%, transparent);
   border-radius: 999px;
+  color: color-mix(in srgb, var(--note-accent) 82%, var(--ifm-font-color-base));
   display: inline-flex;
   font-size: 0.72rem;
   font-weight: 700;
@@ -399,8 +403,11 @@
 }
 
 .noteCard {
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
+  --note-accent: var(--ifm-color-primary);
+  --note-surface: color-mix(in srgb, var(--note-accent) 7%, var(--surface));
+  --note-border: color-mix(in srgb, var(--note-accent) 22%, var(--border-soft));
+  background: var(--note-surface);
+  border: 1px solid var(--note-border);
   border-radius: 1rem;
   box-shadow: var(--ifm-global-shadow-lw);
   display: grid;
@@ -411,8 +418,9 @@
 .noteTag {
   align-items: center;
   align-self: start;
-  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  background: color-mix(in srgb, var(--note-accent) 12%, transparent);
   border-radius: 999px;
+  color: color-mix(in srgb, var(--note-accent) 82%, var(--ifm-font-color-base));
   display: inline-flex;
   font-size: 0.72rem;
   font-weight: 700;
@@ -428,6 +436,41 @@
   color: var(--text-muted);
   line-height: 1.65;
   margin: 0;
+}
+
+.noteCard[data-note-tone='problem'],
+.variantDetailNote[data-note-tone='problem'] {
+  --note-accent: var(--ifm-color-warning);
+}
+
+.noteCard[data-note-tone='solution'],
+.variantDetailNote[data-note-tone='solution'] {
+  --note-accent: var(--ifm-color-success);
+}
+
+.noteCard[data-note-tone='usage'],
+.variantDetailNote[data-note-tone='usage'] {
+  --note-accent: var(--ifm-color-primary);
+}
+
+.noteCard[data-note-tone='layout'],
+.variantDetailNote[data-note-tone='layout'] {
+  --note-accent: #7c3aed;
+}
+
+.noteCard[data-note-tone='state'],
+.variantDetailNote[data-note-tone='state'] {
+  --note-accent: #0f766e;
+}
+
+.noteCard[data-note-tone='accessibility'],
+.variantDetailNote[data-note-tone='accessibility'] {
+  --note-accent: var(--ifm-color-info);
+}
+
+[data-theme='dark'] .noteCard,
+[data-theme='dark'] .variantDetailNote {
+  --note-surface: color-mix(in srgb, var(--note-accent) 10%, var(--surface));
 }
 
 .guideGrid {

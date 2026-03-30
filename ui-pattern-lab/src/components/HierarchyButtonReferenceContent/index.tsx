@@ -1,6 +1,7 @@
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import type {ReactNode} from 'react';
 import type {ButtonPatternEntry} from '@site/src/data/buttonPatternTypes';
+import {getReferenceNoteTone} from '@site/src/components/referenceNoteTone';
 
 import styles from './styles.module.css';
 
@@ -488,7 +489,10 @@ export default function HierarchyButtonReferenceContent({
 
         <div className={styles.notesGrid}>
           {notes.map((note) => (
-            <div className={styles.noteCard} key={note.id}>
+            <div
+              className={styles.noteCard}
+              data-note-tone={getReferenceNoteTone(note.id, note.label)}
+              key={note.id}>
               <span className={styles.noteTag}>{note.label}</span>
               <p>{note.value}</p>
             </div>
