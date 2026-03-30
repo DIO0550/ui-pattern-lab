@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import type {ReactNode} from 'react';
 import CodeBlock from '@theme/CodeBlock';
 import type {ButtonPatternEntry} from '@site/src/data/buttonPatternTypes';
@@ -63,6 +63,10 @@ type ButtonReferenceLayoutProps = {
       notes: readonly ButtonReferenceNote[];
     }
 );
+
+const COLLAPSED_CODE_BODY_MAX_HEIGHT_PX = 320;
+const CODE_BODY_OVERFLOW_TOLERANCE_PX = 4;
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 function buildDefaultNotes(entry: EntryNoteSource): ButtonReferenceNote[] {
   return [
@@ -133,7 +137,57 @@ function VariantCodePanel({
 }: {
   tabs: ButtonReferenceTabs;
 }): ReactNode {
-  if (tabs.length === 0) {
+  const firstTab = tabs[0];
+  const [activeTabId, setActiveTabId] = useState(firstTab?.id ?? '');
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpandable, setIsExpandable] = useState(false);
+  const codeBodyRef = useRef<HTMLDivElement | null>(null);
+  const activeTab = firstTab ? tabs.find((tab) => tab.id === activeTabId) ?? firstTab : undefined;
+  const shouldRenderHighlightedHtml = Boolean(activeTab?.highlightedHtml);
+
+  useEffect(() => {
+    if (!activeTab) {
+      return;
+    }
+
+    setIsExpanded(false);
+  }, [activeTab?.id]);
+
+  useIsomorphicLayoutEffect(() => {
+    const codeBody = codeBodyRef.current;
+
+    if (!activeTab || !codeBody) {
+      return;
+    }
+
+    const updateExpandableState = (): void => {
+      const nextIsExpandable =
+        codeBody.scrollHeight >
+        COLLAPSED_CODE_BODY_MAX_HEIGHT_PX + CODE_BODY_OVERFLOW_TOLERANCE_PX;
+      setIsExpandable(nextIsExpandable);
+
+      if (!nextIsExpandable) {
+        setIsExpanded(false);
+      }
+    };
+
+    updateExpandableState();
+
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateExpandableState();
+    });
+    resizeObserver.observe(codeBody);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [activeTab?.id, shouldRenderHighlightedHtml]);
+
+  if (!activeTab) {
     return (
       <div className={styles.variantCodeWrap}>
         <div className={styles.variantCodeBar}>
@@ -146,9 +200,12 @@ function VariantCodePanel({
     );
   }
 
-  const [activeTabId, setActiveTabId] = useState(tabs[0].id);
-  const activeTab = tabs.find((tab) => tab.id === activeTabId) ?? tabs[0];
-  const shouldRenderHighlightedHtml = Boolean(activeTab.highlightedHtml);
+  const collapsedCodeBodyStyle = isExpanded
+    ? undefined
+    : {maxHeight: `${COLLAPSED_CODE_BODY_MAX_HEIGHT_PX}px`};
+  const codeBodyClassName = isExpanded
+    ? styles.variantCodeBody
+    : `${styles.variantCodeBody} ${styles.variantCodeBodyCollapsed}`;
 
   return (
     <div className={styles.variantCodeWrap}>
@@ -163,6 +220,7 @@ function VariantCodePanel({
               }
               key={tab.id}
               onClick={() => {
+                setIsExpanded(false);
                 setActiveTabId(tab.id);
               }}
               type="button">
@@ -170,20 +228,36 @@ function VariantCodePanel({
             </button>
           ))}
         </div>
-        <button
-          className={styles.codeCopy}
-          onClick={() => {
-            if (typeof navigator !== 'undefined' && navigator.clipboard) {
-              void navigator.clipboard.writeText(activeTab.code);
-            }
-          }}
-          type="button">
-          Copy
-        </button>
+        <div className={styles.codeActions}>
+          {isExpandable ? (
+            <button
+              aria-expanded={isExpanded}
+              className={styles.codeToggle}
+              onClick={() => {
+                setIsExpanded((currentValue) => !currentValue);
+              }}
+              type="button">
+              {isExpanded ? '折りたたむ' : '全体を表示'}
+            </button>
+          ) : null}
+          <button
+            className={styles.codeCopy}
+            onClick={() => {
+              if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                void navigator.clipboard.writeText(activeTab.code);
+              }
+            }}
+            type="button">
+            Copy
+          </button>
+        </div>
       </div>
 
       <div className={styles.variantCode}>
-        <div className={styles.variantCodeBody}>
+        <div
+          className={codeBodyClassName}
+          ref={codeBodyRef}
+          style={collapsedCodeBodyStyle}>
           {shouldRenderHighlightedHtml ? (
             <pre dangerouslySetInnerHTML={{__html: activeTab.highlightedHtml}} />
           ) : (
