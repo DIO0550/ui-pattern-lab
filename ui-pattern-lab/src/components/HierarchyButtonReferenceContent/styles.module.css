@@ -91,11 +91,14 @@
 }
 
 .variantSplit {
+  align-items: start;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 1rem 1.25rem 1.25rem;
 }
 
 .variantDemo {
+  align-self: start;
   align-items: center;
   background: var(--preview-bg);
   background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
@@ -104,13 +107,16 @@
   display: flex;
   justify-content: center;
   min-height: 17.5rem;
+  min-width: 0;
   padding: 2rem;
 }
 
 .variantCodeWrap {
+  align-self: start;
   border-left: 1px solid var(--border-soft);
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .variantCodeBar {
@@ -118,12 +124,15 @@
   background: var(--code-header);
   border-bottom: 1px solid var(--code-border);
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   justify-content: space-between;
   padding: 0 1rem;
 }
 
 .variantCodeTabs {
   display: flex;
+  min-width: 0;
 }
 
 .variantCodeTab {
@@ -157,7 +166,15 @@
   right: 4px;
 }
 
-.codeCopy {
+.codeActions {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.codeCopy,
+.codeToggle {
   background: none;
   border: 1px solid var(--code-border);
   border-radius: 0.35rem;
@@ -168,7 +185,8 @@
   padding: 0.2rem 0.55rem;
 }
 
-.codeCopy:hover {
+.codeCopy:hover,
+.codeToggle:hover {
   border-color: color-mix(in srgb, var(--ifm-color-primary) 24%, var(--code-border));
   color: var(--code-text);
 }
@@ -184,6 +202,24 @@
   line-height: 1.8;
   overflow-x: auto;
   padding: 1.1rem 1.25rem;
+}
+
+.variantCodeLabel {
+  color: var(--code-muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.7rem 0;
+}
+
+.variantCodeBody {
+  inline-size: 100%;
+  min-inline-size: 100%;
+}
+
+.variantCodeBodyCollapsed {
+  overflow: auto;
+  scrollbar-gutter: stable;
 }
 
 .variantCode pre {
@@ -307,8 +343,11 @@
 }
 
 .noteCard {
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
+  --note-accent: var(--ifm-color-primary);
+  --note-surface: color-mix(in srgb, var(--note-accent) 7%, var(--surface));
+  --note-border: color-mix(in srgb, var(--note-accent) 22%, var(--border-soft));
+  background: var(--note-surface);
+  border: 1px solid var(--note-border);
   border-radius: 1rem;
   box-shadow: var(--ifm-global-shadow-lw);
   display: grid;
@@ -317,8 +356,9 @@
 }
 
 .noteTag {
-  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  background: color-mix(in srgb, var(--note-accent) 12%, transparent);
   border-radius: 999px;
+  color: color-mix(in srgb, var(--note-accent) 82%, var(--ifm-font-color-base));
   display: inline-flex;
   font-size: 0.72rem;
   font-weight: 700;
@@ -330,6 +370,34 @@
   color: var(--text-muted);
   line-height: 1.65;
   margin: 0;
+}
+
+.noteCard[data-note-tone='problem'] {
+  --note-accent: var(--ifm-color-warning);
+}
+
+.noteCard[data-note-tone='solution'] {
+  --note-accent: var(--ifm-color-success);
+}
+
+.noteCard[data-note-tone='usage'] {
+  --note-accent: var(--ifm-color-primary);
+}
+
+.noteCard[data-note-tone='layout'] {
+  --note-accent: #7c3aed;
+}
+
+.noteCard[data-note-tone='state'] {
+  --note-accent: #0f766e;
+}
+
+.noteCard[data-note-tone='accessibility'] {
+  --note-accent: var(--ifm-color-info);
+}
+
+[data-theme='dark'] .noteCard {
+  --note-surface: color-mix(in srgb, var(--note-accent) 10%, var(--surface));
 }
 
 .guideGrid {
@@ -390,11 +458,16 @@
 @media screen and (max-width: 996px) {
   .variantSplit {
     grid-template-columns: 1fr;
+    padding: 1rem;
   }
 
   .variantCodeWrap {
     border-left: none;
     border-top: 1px solid var(--border-soft);
+  }
+
+  .variantDemo {
+    padding: 1.5rem;
   }
 
   .notesGrid {
@@ -403,5 +476,15 @@
 
   .guideGrid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .variantSplit {
+    padding: 0.85rem;
+  }
+
+  .variantDemo {
+    padding: 1.25rem;
   }
 }
