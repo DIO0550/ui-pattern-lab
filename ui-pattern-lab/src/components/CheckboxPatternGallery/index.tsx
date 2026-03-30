@@ -3,11 +3,14 @@ import {useEffect, useRef, useState} from 'react';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
-import ButtonReferenceLayout, {
+import {
+  type ButtonReferenceGuide,
   type ButtonReferenceVariant,
 } from '@site/src/components/ButtonReferenceLayout';
 import CheckboxPatternMetadataPanel from '@site/src/components/CheckboxPatternMetadataPanel';
-import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
+import PatternReferenceContent, {
+  buildReferenceCodeTabs,
+} from '@site/src/components/PatternReferenceContent';
 import CheckboxPatternSnippetPanel from '@site/src/components/CheckboxPatternSnippetPanel';
 import type {
   CheckboxPatternEntry,
@@ -381,6 +384,90 @@ function SingleCheckboxAndIndeterminateDemo(): ReactNode {
   );
 }
 
+function MixedSelectionReferencePreview(): ReactNode {
+  const [childState, setChildState] = useState(initialNotificationState);
+  const selectedCount = notificationChildOptions.filter(
+    (option) => childState[option.id],
+  ).length;
+  const isAllChecked = selectedCount === notificationChildOptions.length;
+  const isMixed = selectedCount > 0 && !isAllChecked;
+
+  function setAllChildren(nextChecked: boolean): void {
+    setChildState({
+      billing: nextChecked,
+      exports: nextChecked,
+      mentions: nextChecked,
+    });
+  }
+
+  function toggleChild(optionId: NotificationChildId): void {
+    setChildState((current) => ({
+      ...current,
+      [optionId]: !current[optionId],
+    }));
+  }
+
+  return (
+    <div className={styles.referencePreviewFrame}>
+      <div className={styles.checkboxStack}>
+        <CheckboxField
+          control={
+            <DemoCheckbox
+              aria-checked={isMixed ? 'mixed' : isAllChecked}
+              checked={isAllChecked}
+              indeterminate={isMixed}
+              onChange={(event) => setAllChildren(event.currentTarget.checked)}
+            />
+          }
+          helperText={`3 件中 ${selectedCount} 件を選択中`}
+          label="管理者向け通知をすべて選択"
+        />
+        <div className={styles.childGroup}>
+          {notificationChildOptions.map((option) => (
+            <CheckboxField
+              className={styles.childField}
+              control={
+                <DemoCheckbox
+                  checked={childState[option.id]}
+                  onChange={() => toggleChild(option.id)}
+                />
+              }
+              key={option.id}
+              label={option.label}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SingleConsentReferencePreview(): ReactNode {
+  const [agreed, setAgreed] = useState(false);
+
+  return (
+    <div className={styles.referencePreviewFrame}>
+      <div className={styles.checkboxStack}>
+        <CheckboxField
+          control={
+            <DemoCheckbox
+              checked={agreed}
+              onChange={() => setAgreed((current) => !current)}
+            />
+          }
+          helperText="送信前に内容を確認できます。"
+          label="利用規約に同意する"
+        />
+        <p className={styles.selectionNote}>
+          {agreed
+            ? '同意済みです。送信フローを進められます。'
+            : '同意すると送信できます。'}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function SelectableCardsDemo(): ReactNode {
   const [selectedIds, setSelectedIds] = useState<Array<SelectableCardOptionId>>([
     'security',
@@ -542,6 +629,170 @@ const checkboxStateBaseCss = `.checkboxField {
   inline-size: 1.125rem;
   margin: 0;
 }`;
+
+function buildCheckboxDetailNotes(
+  entry: CheckboxPatternEntry,
+  metadataItems: CheckboxPatternMetadataItem[],
+) {
+  return metadataItems.map((item) => ({
+    id: `${entry.id}-${item.tone}`,
+    label: item.label,
+    value: item.value,
+  }));
+}
+
+function buildSingleCheckboxReferenceVariants(): readonly ButtonReferenceVariant[] {
+  return [
+    {
+      id: 'select-all-mixed',
+      name: 'Select-all / mixed',
+      description: '親は子の状態から checked / mixed / unchecked を導出します。',
+      preview: <MixedSelectionReferencePreview />,
+      previewClassName: styles.compactReferenceVariantPreview,
+      tabs: buildReferenceCodeTabs([
+        {
+          id: 'single-checkbox-parent-css',
+          label: 'CSS',
+          language: 'css',
+          code: `.parentItem,
+.childItem {
+  align-items: flex-start;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto 1fr;
+}
+
+.childGroup {
+  display: grid;
+  gap: 0.75rem;
+  margin-left: 1.75rem;
+}
+
+.checkboxHelper {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.875rem;
+  margin: 0;
+}`,
+          note: '親子関係は余白とインデントで見せ、mixed state は文言でも意味を補います。',
+        },
+        {
+          id: 'single-checkbox-parent-tsx',
+          label: 'TSX',
+          language: 'tsx',
+          code: `const checkboxItems = [
+  {id: 'billing', label: '請求通知', checked: true},
+  {id: 'exports', label: 'CSV出力完了', checked: true},
+  {id: 'mentions', label: 'メンション通知', checked: false},
+] as const;
+const [items, setItems] = useState({
+  billing: checkboxItems[0].checked,
+  exports: checkboxItems[1].checked,
+  mentions: checkboxItems[2].checked,
+});
+const parentRef = useRef<HTMLInputElement>(null);
+const checkedCount = Object.values(items).filter(Boolean).length;
+const isAllChecked = checkedCount === Object.keys(items).length;
+const isMixed = checkedCount > 0 && !isAllChecked;
+
+useEffect(() => {
+  if (!parentRef.current) {
+    return;
+  }
+
+  parentRef.current.indeterminate = isMixed;
+}, [isMixed]);
+
+<>
+  <label className={styles.parentItem}>
+    <input
+      ref={parentRef}
+      aria-checked={isMixed ? 'mixed' : isAllChecked}
+      checked={isAllChecked}
+      onChange={(event) => {
+        const nextChecked = event.currentTarget.checked;
+        setItems({
+          billing: nextChecked,
+          exports: nextChecked,
+          mentions: nextChecked,
+        });
+      }}
+      type="checkbox"
+    />
+    <span className={styles.checkboxLabel}>
+      <span>管理者に関連する通知をすべて選択</span>
+      <span className={styles.checkboxHelper}>
+        一部だけ選ばれているときは mixed を表示します。
+      </span>
+    </span>
+  </label>
+
+  <div className={styles.childGroup}>
+    {checkboxItems.map((item) => (
+      <label className={styles.childItem} key={item.id}>
+        <input
+          checked={items[item.id]}
+          onChange={(event) => {
+            const nextChecked = event.currentTarget.checked;
+            setItems((current) => ({
+              ...current,
+              [item.id]: nextChecked,
+            }));
+          }}
+          type="checkbox"
+        />
+        <span>{item.label}</span>
+      </label>
+    ))}
+  </div>
+</>`,
+          note: 'mixed state は見た目だけでなく、`indeterminate` と `aria-checked="mixed"` をそろえて扱います。',
+        },
+      ]),
+    },
+    {
+      id: 'single-consent',
+      name: '単独同意',
+      description: '送信前の確認は、即時切り替え UI と分けて扱います。',
+      preview: <SingleConsentReferencePreview />,
+      previewClassName: styles.compactReferenceVariantPreview,
+      tabs: buildReferenceCodeTabs([
+        {
+          id: 'single-checkbox-consent-css',
+          label: 'CSS',
+          language: 'css',
+          code: `.parentItem {
+  align-items: flex-start;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto 1fr;
+}
+
+.checkboxHelper {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.875rem;
+  margin: 0;
+}`,
+          note: '単独同意は親子選択と混ぜず、確認入力として読める余白と文言を保ちます。',
+        },
+        {
+          id: 'single-checkbox-consent-tsx',
+          label: 'TSX',
+          language: 'tsx',
+          code: `<label className={styles.parentItem}>
+  <input type="checkbox" />
+  <span className={styles.checkboxLabel}>
+    <span>利用規約に同意する</span>
+    <span className={styles.checkboxHelper}>
+      送信前の確認として扱う単独 checkbox です。
+    </span>
+  </span>
+</label>`,
+          note: '即時設定の ON / OFF を強調したい場合は switch や toggle button を選びます。',
+        },
+      ]),
+    },
+  ] as const;
+}
 
 function buildCheckboxStateReferenceVariants(): readonly ButtonReferenceVariant[] {
   return [
@@ -825,18 +1076,103 @@ useEffect(() => {
   ] as const;
 }
 
+const checkboxStateGuides = [
+  {
+    id: 'state-context-do',
+    tone: 'do',
+    description:
+      'error や mixed の意味は色だけに頼らず、helper / error 文言と関連付けを近くに置いて補います。',
+    preview: (
+      <div className={styles.referencePreviewFrame}>
+        <CheckboxField
+          className={styles.errorField}
+          control={<DemoCheckbox aria-invalid="true" readOnly />}
+          errorText="同意しないと次へ進めません。"
+          helperText="送信前に内容を確認できます。"
+          label="利用規約に同意する"
+        />
+      </div>
+    ),
+  },
+  {
+    id: 'state-context-dont',
+    tone: 'dont',
+    description:
+      '赤い見た目や checked 状態だけで意味を伝えようとすると、何を直せばいいかや現在の状態が読み取りにくくなります。',
+    preview: (
+      <div className={styles.referencePreviewFrame}>
+        <div className={styles.selectionSummary}>
+          <CheckboxField
+            control={<DemoCheckbox aria-invalid="true" readOnly />}
+            label="利用規約に同意する"
+          />
+          <p className={styles.checkboxHelper}>
+            補助文や error 文言がなく、状態の意味が UI から読み取りにくい例です。
+          </p>
+        </div>
+      </div>
+    ),
+  },
+] satisfies readonly ButtonReferenceGuide[];
+
+const singleCheckboxGuides = [
+  {
+    id: 'single-checkbox-do',
+    tone: 'do',
+    description:
+      '送信前の確認は単独 checkbox と helper 文で補い、mixed state が必要な親子選択とは分けて扱います。',
+    preview: (
+      <div className={styles.referencePreviewFrame}>
+        <div className={styles.checkboxStack}>
+          <CheckboxField
+            control={<DemoCheckbox readOnly />}
+            helperText="送信前に内容を確認できます。"
+            label="利用規約に同意する"
+          />
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'single-checkbox-dont',
+    tone: 'dont',
+    description:
+      '即時切り替えの ON / OFF と同じノリで扱うと、確認入力なのか設定変更なのかが読み取りにくくなります。',
+    preview: (
+      <div className={styles.referencePreviewFrame}>
+        <div className={styles.selectionSummary}>
+          <p className={styles.selectionNote}>通知をオンにする</p>
+          <CheckboxField control={<DemoCheckbox checked readOnly />} label="利用規約" />
+        </div>
+      </div>
+    ),
+  },
+] satisfies readonly ButtonReferenceGuide[];
+
 function renderStatesAndAccessibilityDetail(
   entry: CheckboxPatternEntry,
   metadataItems: CheckboxPatternMetadataItem[],
 ): ReactNode {
   return (
-    <ButtonReferenceLayout
-      notes={metadataItems.map((item) => ({
-        id: `${entry.id}-${item.tone}`,
-        label: item.label,
-        value: item.value,
-      }))}
+    <PatternReferenceContent
+      guides={checkboxStateGuides}
+      notes={buildCheckboxDetailNotes(entry, metadataItems)}
+      variantNote={entry.snippets?.snippetSummary}
       variants={buildCheckboxStateReferenceVariants()}
+    />
+  );
+}
+
+function renderSingleCheckboxAndIndeterminateDetail(
+  entry: CheckboxPatternEntry,
+  metadataItems: CheckboxPatternMetadataItem[],
+): ReactNode {
+  return (
+    <PatternReferenceContent
+      guides={singleCheckboxGuides}
+      notes={buildCheckboxDetailNotes(entry, metadataItems)}
+      variantNote={entry.snippets?.snippetSummary}
+      variants={buildSingleCheckboxReferenceVariants()}
     />
   );
 }
@@ -957,15 +1293,19 @@ export default function CheckboxPatternGallery({entries, density}: Props): React
               );
             }
 
+            if (entry.id === 'single-checkbox-and-indeterminate') {
+              return (
+                <div className={styles.detailContent} id={entry.id} key={entry.id}>
+                  {renderSingleCheckboxAndIndeterminateDetail(entry, metadataItems)}
+                </div>
+              );
+            }
+
             return (
               <div className={styles.detailContent} id={entry.id} key={entry.id}>
                 <PatternReferenceContent
                   id={entry.id}
-                  notes={metadataItems.map((item) => ({
-                    id: `${entry.id}-${item.tone}`,
-                    label: item.label,
-                    value: item.value,
-                  }))}
+                  notes={buildCheckboxDetailNotes(entry, metadataItems)}
                   preview={
                     <div
                       className={clsx(

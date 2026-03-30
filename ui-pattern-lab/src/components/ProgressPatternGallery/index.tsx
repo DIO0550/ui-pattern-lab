@@ -1,8 +1,14 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
+import type {
+  ButtonReferenceGuide,
+  ButtonReferenceVariant,
+} from '@site/src/components/ButtonReferenceLayout';
 import ProgressPatternMetadataPanel from '@site/src/components/ProgressPatternMetadataPanel';
-import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
+import PatternReferenceContent, {
+  buildReferenceCodeTabs,
+} from '@site/src/components/PatternReferenceContent';
 import ProgressPatternSnippetPanel from '@site/src/components/ProgressPatternSnippetPanel';
 import type {
   ProgressDemoKind,
@@ -613,6 +619,381 @@ function StepperStatusTrackerDemo(): ReactNode {
   );
 }
 
+function buildDeterminateReferenceVariants(
+  entry: ProgressPatternEntry,
+): readonly ButtonReferenceVariant[] {
+  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
+
+  return determinatePreviews.map((preview) => ({
+    id: preview.id,
+    name: preview.label,
+    description: preview.description,
+    preview: (
+      <div className={styles.metricStack}>
+        <div
+          aria-label={`${preview.label}の進捗率`}
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={preview.value}
+          aria-valuetext={preview.value === 100 ? `${preview.value}% 完了` : `${preview.value}%`}
+          className={styles.progressRail}
+          role="progressbar">
+          <span className={styles.progressFill} style={{width: `${preview.value}%`}} />
+        </div>
+        <div className={styles.progressMeta}>
+          <span className={styles.progressValue}>{preview.label}</span>
+          <span className={styles.progressState}>{preview.stateText}</span>
+        </div>
+      </div>
+    ),
+    tabs,
+  }));
+}
+
+function buildCircularReferenceVariants(
+  entry: ProgressPatternEntry,
+): readonly ButtonReferenceVariant[] {
+  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
+
+  return circularPreviews.map((preview) => ({
+    id: preview.id,
+    name: preview.label,
+    description: preview.description,
+    preview: (
+      <CircularProgressMeter
+        centerLabel={preview.centerLabel}
+        label={preview.label}
+        size={preview.size}
+        stateText={preview.stateText}
+        title={preview.title}
+        value={preview.value}
+      />
+    ),
+    tabs,
+  }));
+}
+
+function buildIndeterminateReferenceVariants(
+  entry: ProgressPatternEntry,
+): readonly ButtonReferenceVariant[] {
+  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
+
+  return indeterminatePreviews.map((preview) => ({
+    id: preview.id,
+    name: preview.label,
+    description: preview.description,
+    preview: (
+      <div className={styles.busyStack}>
+        <div className={styles.busyHeader}>
+          <span className={styles.busyTitle}>{preview.title}</span>
+          <span className={styles.busyText}>{preview.statusText}</span>
+        </div>
+        <div
+          aria-label={preview.title}
+          aria-valuetext="進捗率は未確定"
+          className={styles.indeterminateRail}
+          role="progressbar">
+          <span aria-hidden="true" className={styles.indeterminateBar} />
+        </div>
+      </div>
+    ),
+    tabs,
+  }));
+}
+
+function buildLoadingSpinnerReferenceVariants(
+  entry: ProgressPatternEntry,
+): readonly ButtonReferenceVariant[] {
+  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
+
+  return spinnerPreviews.map((preview) => ({
+    id: preview.id,
+    name: preview.label,
+    description: preview.description,
+    preview: (
+      <div className={styles.statusColumn}>
+        {preview.statuses.map((status) => (
+          <div
+            aria-label={status.ariaLabel}
+            className={styles.spinnerRow}
+            key={status.ariaLabel}
+            role="status">
+            <span
+              aria-hidden="true"
+              className={clsx(styles.spinnerGlyph, status.isStatic && styles.spinnerGlyphStatic)}
+            />
+            <span>{status.label}</span>
+          </div>
+        ))}
+      </div>
+    ),
+    tabs,
+  }));
+}
+
+function buildSkeletonReferenceVariants(
+  entry: ProgressPatternEntry,
+): readonly ButtonReferenceVariant[] {
+  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
+
+  return skeletonPreviews.map((preview) => ({
+    id: preview.id,
+    name: preview.label,
+    description: preview.description,
+    preview: (
+      <SkeletonSurface
+        animation={preview.animation}
+        label={preview.label}
+        statusText={preview.statusText}
+      />
+    ),
+    tabs,
+  }));
+}
+
+function buildProgressReferenceVariants(
+  entry: ProgressPatternEntry,
+): readonly ButtonReferenceVariant[] | null {
+  if (entry.id === 'progress-bar-determinate') {
+    return buildDeterminateReferenceVariants(entry);
+  }
+
+  if (entry.id === 'circular-progress-determinate') {
+    return buildCircularReferenceVariants(entry);
+  }
+
+  if (entry.id === 'progress-bar-indeterminate') {
+    return buildIndeterminateReferenceVariants(entry);
+  }
+
+  if (entry.id === 'loading-spinner') {
+    return buildLoadingSpinnerReferenceVariants(entry);
+  }
+
+  if (entry.id === 'skeleton-placeholder') {
+    return buildSkeletonReferenceVariants(entry);
+  }
+
+  return null;
+}
+
+function buildProgressReferenceGuides(
+  entry: ProgressPatternEntry,
+): readonly ButtonReferenceGuide[] | undefined {
+  if (entry.id === 'progress-bar-determinate') {
+    return [
+      {
+        id: 'determinate-context-do',
+        tone: 'do',
+        description:
+          '割合だけでなく件数や完了後の状態も近くに置き、0% / 100% の意味を読み違えにくくします。',
+        preview: (
+          <div className={styles.metricStack}>
+            <div
+              aria-label="45% の進捗率"
+              aria-valuemax={100}
+              aria-valuemin={0}
+              aria-valuenow={45}
+              className={styles.progressRail}
+              role="progressbar">
+              <span className={styles.progressFill} style={{width: '45%'}} />
+            </div>
+            <div className={styles.progressMeta}>
+              <span className={styles.progressValue}>45%</span>
+              <span className={styles.progressState}>
+                残り 12 件 / 完了後に確認画面へ進みます
+              </span>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: 'determinate-context-dont',
+        tone: 'dont',
+        description:
+          '色付きバーだけにすると、何の処理がどこまで進んだのかや完了条件が UI から読み取りにくくなります。',
+        preview: (
+          <div className={styles.metricStack}>
+            <div className={styles.progressRail}>
+              <span className={styles.progressFill} style={{width: '45%'}} />
+            </div>
+            <span className={styles.busyText}>45%</span>
+          </div>
+        ),
+      },
+    ] as const;
+  }
+
+  if (entry.id === 'circular-progress-determinate') {
+    return [
+      {
+        id: 'circular-context-do',
+        tone: 'do',
+        description:
+          '円形 progress は known total を前提にし、割合の近くへ task 名や残り時間も併記します。',
+        preview: (
+          <CircularProgressMeter
+            centerLabel="同期済み"
+            label="Large"
+            size="large"
+            stateText="残り 8 分の見込み"
+            title="顧客同期の進捗"
+            value={68}
+          />
+        ),
+      },
+      {
+        id: 'circular-context-dont',
+        tone: 'dont',
+        description:
+          '割合だけを単独で置くと、何が 68% なのかや次にどうなるかが分からず、意味の弱い装飾になりがちです。',
+        preview: (
+          <div className={clsx(styles.circularMeter, styles.circularMeterDefault)}>
+            <div className={styles.circularMeterVisual}>
+              <svg
+                aria-hidden="true"
+                className={styles.circularMeterSvg}
+                viewBox={`0 0 ${CIRCULAR_VIEWBOX_SIZE} ${CIRCULAR_VIEWBOX_SIZE}`}>
+                <circle
+                  className={styles.circularTrack}
+                  cx={CIRCULAR_RING_CENTER}
+                  cy={CIRCULAR_RING_CENTER}
+                  r={CIRCULAR_RING_RADIUS}
+                />
+                <circle
+                  className={styles.circularFill}
+                  cx={CIRCULAR_RING_CENTER}
+                  cy={CIRCULAR_RING_CENTER}
+                  r={CIRCULAR_RING_RADIUS}
+                  strokeDasharray={CIRCULAR_RING_CIRCUMFERENCE}
+                  strokeDashoffset={calculateCircularProgressOffset(68)}
+                />
+              </svg>
+              <div className={styles.circularMeterCenter}>
+                <span className={styles.circularValue}>68%</span>
+              </div>
+            </div>
+          </div>
+        ),
+      },
+    ] as const;
+  }
+
+  if (entry.id === 'progress-bar-indeterminate') {
+    return [
+      {
+        id: 'indeterminate-scope-do',
+        tone: 'do',
+        description:
+          '完了率が未確定でも、どの領域が処理中かと reduced motion 時の意味をテキストで補います。',
+        preview: (
+          <div aria-busy="true" className={styles.busyStack}>
+            <div className={styles.busyHeader}>
+              <span className={styles.busyTitle}>売上レポートを集計中</span>
+              <span className={styles.busyText}>完了時刻はまだ見積もれません</span>
+            </div>
+            <div className={styles.indeterminateRail} role="progressbar">
+              <span aria-hidden="true" className={styles.indeterminateBar} />
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: 'indeterminate-scope-dont',
+        tone: 'dont',
+        description:
+          'section 全体の待機を spinner だけで示すと、どこが処理中なのかやいつ終わる想定なのかが伝わりません。',
+        preview: (
+          <div className={styles.statusColumn}>
+            <div className={styles.spinnerRow}>
+              <span aria-hidden="true" className={styles.spinnerGlyph} />
+              <span>読み込み中...</span>
+            </div>
+          </div>
+        ),
+      },
+    ] as const;
+  }
+
+  if (entry.id === 'loading-spinner') {
+    return [
+      {
+        id: 'spinner-label-do',
+        tone: 'do',
+        description:
+          'spinner は局所的な待機に限定し、複数ある場合は対象ごとに label を分けて読み上げも区別します。',
+        preview: (
+          <div className={styles.statusColumn}>
+            <div className={styles.spinnerRow}>
+              <span aria-hidden="true" className={styles.spinnerGlyph} />
+              <span>注文履歴を更新中</span>
+            </div>
+            <div className={styles.spinnerRow}>
+              <span
+                aria-hidden="true"
+                className={clsx(styles.spinnerGlyph, styles.spinnerGlyphStatic)}
+              />
+              <span>請求情報を更新中</span>
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: 'spinner-label-dont',
+        tone: 'dont',
+        description:
+          '同じ「読み込み中」を複数並べたり、対象を示さず回転だけを見せると待機箇所を判断しにくくなります。',
+        preview: (
+          <div className={styles.statusColumn}>
+            <div className={styles.spinnerRow}>
+              <span aria-hidden="true" className={styles.spinnerGlyph} />
+              <span>読み込み中...</span>
+            </div>
+            <div className={styles.spinnerRow}>
+              <span aria-hidden="true" className={styles.spinnerGlyph} />
+              <span>読み込み中...</span>
+            </div>
+          </div>
+        ),
+      },
+    ] as const;
+  }
+
+  if (entry.id === 'skeleton-placeholder') {
+    return [
+      {
+        id: 'skeleton-layout-do',
+        tone: 'do',
+        description:
+          'skeleton は最終レイアウトに近い骨組みを先に見せ、static / pulse / shimmer は 1 surface ごとに整理します。',
+        preview: (
+          <SkeletonSurface
+            animation="static"
+            label="Static"
+            statusText="本文の高さを先に確保します"
+          />
+        ),
+      },
+      {
+        id: 'skeleton-layout-dont',
+        tone: 'dont',
+        description:
+          'カード全体を spinner 1 個へ置き換えると、読み込み後の密度や配置が想像できず、待機中のレイアウトも不安定になります。',
+        preview: (
+          <div className={styles.statusColumn}>
+            <div className={styles.spinnerRow}>
+              <span aria-hidden="true" className={styles.spinnerGlyph} />
+              <span>記事カードを読み込み中</span>
+            </div>
+          </div>
+        ),
+      },
+    ] as const;
+  }
+
+  return undefined;
+}
+
 const demoByKind: Record<ProgressDemoKind, DemoRenderer> = {
   'progress-bar-determinate': DeterminateDemo,
   'circular-progress-determinate': CircularProgressDemo,
@@ -656,17 +1037,33 @@ export default function ProgressPatternGallery({
         {entries.map((entry) => {
           const Demo = demoByKind[entry.demoKind];
           const metadataItems = buildMetadataItems(entry);
+          const detailNotes = metadataItems.map((item) => ({
+            id: `${entry.id}-${item.tone}`,
+            label: item.label,
+            value: item.value,
+          }));
+          const detailVariants = buildProgressReferenceVariants(entry);
+          const detailGuides = buildProgressReferenceGuides(entry);
 
           if (density === 'detail') {
+            if (detailVariants) {
+              return (
+                <div className={styles.detailContent} id={entry.id} key={entry.id}>
+                  <PatternReferenceContent
+                    guides={detailGuides}
+                    notes={detailNotes}
+                    variantNote={entry.snippets?.snippetSummary}
+                    variants={detailVariants}
+                  />
+                </div>
+              );
+            }
+
             return (
               <div className={styles.detailContent} id={entry.id} key={entry.id}>
                 <PatternReferenceContent
                   id={entry.id}
-                  notes={metadataItems.map((item) => ({
-                    id: `${entry.id}-${item.tone}`,
-                    label: item.label,
-                    value: item.value,
-                  }))}
+                  notes={detailNotes}
                   preview={
                     <div className={clsx(styles.demoPanel, styles.detailPreviewPanel)}>
                       <Demo density={density} />

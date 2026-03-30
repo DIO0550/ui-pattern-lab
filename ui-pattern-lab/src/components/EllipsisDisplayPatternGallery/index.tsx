@@ -2,10 +2,16 @@ import type {ReactNode} from 'react';
 import {useId, useState} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
+import type {
+  ButtonReferenceGuide,
+  ButtonReferenceVariant,
+} from '@site/src/components/ButtonReferenceLayout';
 import EllipsisDisplayPatternMetadataPanel, {
   type EllipsisDisplayPatternMetadataItem,
 } from '@site/src/components/EllipsisDisplayPatternMetadataPanel';
-import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
+import PatternReferenceContent, {
+  buildReferenceCodeTabs,
+} from '@site/src/components/PatternReferenceContent';
 import EllipsisDisplayPatternSnippetPanel from '@site/src/components/EllipsisDisplayPatternSnippetPanel';
 import type {
   EllipsisDisplayDemoKind,
@@ -251,6 +257,236 @@ function AccessibleDisclosureDemo({
   );
 }
 
+function buildSingleLineReferenceVariants(
+  entry: EllipsisDisplayPatternEntry,
+): readonly ButtonReferenceVariant[] {
+  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
+  const fixedVariants = singleLineExamples.map((example) => ({
+    id: `single-line-${example.label}`,
+    name: example.label,
+    description: example.meta,
+    preview: (
+      <article className={styles.singleLineCard}>
+        <span className={styles.singleLineLabel}>{example.label}</span>
+        <p className={styles.singleLineValue}>{example.value}</p>
+        <p className={styles.singleLineMeta}>{example.meta}</p>
+      </article>
+    ),
+    tabs,
+  }));
+
+  return [
+    ...fixedVariants,
+    {
+      id: 'single-line-responsive',
+      name: responsiveSingleLineExample.label,
+      description: responsiveSingleLineExample.meta,
+      preview: (
+        <div className={styles.resizableFrame}>
+          <article className={styles.singleLineCard}>
+            <span className={styles.singleLineLabel}>{responsiveSingleLineExample.label}</span>
+            <div className={styles.responsiveLineRow}>
+              <span className={styles.responsiveLinePrefix}>
+                {responsiveSingleLineExample.prefix}
+              </span>
+              <p className={styles.responsiveLineValue}>
+                {responsiveSingleLineExample.value}
+              </p>
+            </div>
+            <p className={styles.singleLineMeta}>{responsiveSingleLineExample.meta}</p>
+          </article>
+        </div>
+      ),
+      tabs,
+    },
+  ] as const;
+}
+
+function buildMultiLineClampReferenceVariants(
+  entry: EllipsisDisplayPatternEntry,
+): readonly ButtonReferenceVariant[] {
+  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
+
+  return clampExamples.map((example) => ({
+    id: `multi-line-${example.title}`,
+    name: example.title,
+    description: '3 行クランプを保ちながら一覧比較できる要約例です。',
+    preview: (
+      <article className={styles.clampCard}>
+        <Heading as="h4" className={styles.clampTitle}>
+          {example.title}
+        </Heading>
+        <p className={styles.clampSummary}>{example.summary}</p>
+      </article>
+    ),
+    tabs,
+  }));
+}
+
+function buildFullTextSupplementReferenceVariants(
+  entry: EllipsisDisplayPatternEntry,
+): readonly ButtonReferenceVariant[] {
+  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
+
+  return supplementExamples.map((example) => ({
+    id: `full-text-${example.title}`,
+    name: example.title,
+    description: '要約と全文補足を近接配置し、hover 依存にしない構成です。',
+    preview: (
+      <article className={styles.supplementCard}>
+        <Heading as="h4" className={styles.supplementTitle}>
+          {example.title}
+        </Heading>
+        <p className={styles.supplementPreview}>{example.preview}</p>
+        <div className={styles.supplementFullText}>
+          <span className={styles.supplementLabel}>全文補足</span>
+          <p className={styles.supplementText}>{example.fullText}</p>
+        </div>
+      </article>
+    ),
+    tabs,
+  }));
+}
+
+function buildEllipsisReferenceVariants(
+  entry: EllipsisDisplayPatternEntry,
+): readonly ButtonReferenceVariant[] | null {
+  if (entry.id === 'single-line-ellipsis') {
+    return buildSingleLineReferenceVariants(entry);
+  }
+
+  if (entry.id === 'multi-line-clamp') {
+    return buildMultiLineClampReferenceVariants(entry);
+  }
+
+  if (entry.id === 'full-text-supplement') {
+    return buildFullTextSupplementReferenceVariants(entry);
+  }
+
+  return null;
+}
+
+function buildEllipsisReferenceGuides(
+  entry: EllipsisDisplayPatternEntry,
+): readonly ButtonReferenceGuide[] | undefined {
+  if (entry.id === 'single-line-ellipsis') {
+    return [
+      {
+        id: 'single-line-context-do',
+        tone: 'do',
+        description:
+          '1 行省略でもラベルと全文導線を近くに残し、何の文字列が省略されたかを判断しやすくします。',
+        preview: (
+          <article className={styles.singleLineCard}>
+            <span className={styles.singleLineLabel}>通知タイトル</span>
+            <p className={styles.singleLineValue}>
+              支払い条件の更新に伴う請求タイミング調整のご案内
+            </p>
+            <p className={styles.singleLineMeta}>詳細画面で全文を確認</p>
+          </article>
+        ),
+      },
+      {
+        id: 'single-line-context-dont',
+        tone: 'dont',
+        description:
+          '省略だけして補足を置かないと、一覧で切れた文字列の意味や全文の確認方法が分かりません。',
+        preview: (
+          <article className={styles.singleLineCard}>
+            <span className={styles.singleLineLabel}>通知タイトル</span>
+            <p>
+              支払い条件の更新に伴う請求タイミング調整のご案内。重要な補足文も同じ行に続いています。
+            </p>
+          </article>
+        ),
+      },
+    ] as const;
+  }
+
+  if (entry.id === 'multi-line-clamp') {
+    return [
+      {
+        id: 'multi-line-balance-do',
+        tone: 'do',
+        description:
+          '一覧比較を保ちたい card 群では、各要約を同じ行数にそろえて視線の高さを安定させます。',
+        preview: (
+          <article className={styles.clampCard}>
+            <Heading as="h4" className={styles.clampTitle}>
+              長文の要約
+            </Heading>
+            <p className={styles.clampSummary}>
+              公開準備の前に承認と FAQ 更新を済ませ、短い要約だけ先に比較したいケースです。
+            </p>
+          </article>
+        ),
+      },
+      {
+        id: 'multi-line-balance-dont',
+        tone: 'dont',
+        description:
+          '長文をそのまま流すと card の高さがばらつき、隣の要約や CTA の位置も比較しにくくなります。',
+        preview: (
+          <article className={styles.clampCard}>
+            <Heading as="h4" className={styles.clampTitle}>
+              長文の要約
+            </Heading>
+            <p>
+              公開準備の前に承認と FAQ 更新を済ませ、関連チームへの共有、切り戻し条件、窓口一覧、補足の背景まで一覧カード内へそのまま流し込み続ける例です。
+            </p>
+          </article>
+        ),
+      },
+    ] as const;
+  }
+
+  if (entry.id === 'full-text-supplement') {
+    return [
+      {
+        id: 'full-text-supplement-do',
+        tone: 'do',
+        description:
+          '要約のすぐ近くに全文補足を置き、hover できない環境でも同じ情報へ到達できるようにします。',
+        preview: (
+          <article className={styles.supplementCard}>
+            <Heading as="h4" className={styles.supplementTitle}>
+              契約更新案内
+            </Heading>
+            <p className={styles.supplementPreview}>
+              契約更新の案内文は要約だけ先に表示し、完全な文面は同じカード内で補足します。
+            </p>
+            <div className={styles.supplementFullText}>
+              <span className={styles.supplementLabel}>全文補足</span>
+              <p className={styles.supplementText}>
+                例外条件、担当窓口、切り戻しの連絡先を含む完全な文面も同じカード内で参照できます。
+              </p>
+            </div>
+          </article>
+        ),
+      },
+      {
+        id: 'full-text-supplement-dont',
+        tone: 'dont',
+        description:
+          'tooltip や hover だけに全文を閉じ込めると、タッチ環境やキーボード操作で情報に到達できなくなります。',
+        preview: (
+          <article className={styles.supplementCard}>
+            <Heading as="h4" className={styles.supplementTitle}>
+              契約更新案内
+            </Heading>
+            <p className={styles.supplementPreview}>
+              契約更新の案内文は要約だけ先に表示します。
+            </p>
+            <p className={styles.singleLineMeta}>hover で全文を表示</p>
+          </article>
+        ),
+      },
+    ] as const;
+  }
+
+  return undefined;
+}
+
 const demoByKind: Record<EllipsisDisplayDemoKind, DemoRenderer> = {
   'single-line-ellipsis': SingleLineEllipsisDemo,
   'multi-line-clamp': MultiLineClampDemo,
@@ -283,17 +519,33 @@ export default function EllipsisDisplayPatternGallery({
               value: entry.accessibilityNotes,
             },
           ];
+          const detailNotes = metadataItems.map((item) => ({
+            id: `${entry.id}-${item.tone}`,
+            label: item.label,
+            value: item.value,
+          }));
+          const detailVariants = buildEllipsisReferenceVariants(entry);
+          const detailGuides = buildEllipsisReferenceGuides(entry);
 
           if (density === 'detail') {
+            if (detailVariants) {
+              return (
+                <article className={styles.detailContent} id={entry.id} key={entry.id}>
+                  <PatternReferenceContent
+                    guides={detailGuides}
+                    notes={detailNotes}
+                    variantNote={entry.snippets?.snippetSummary}
+                    variants={detailVariants}
+                  />
+                </article>
+              );
+            }
+
             return (
               <article className={styles.detailContent} id={entry.id} key={entry.id}>
                 <PatternReferenceContent
                   id={entry.id}
-                  notes={metadataItems.map((item) => ({
-                    id: `${entry.id}-${item.tone}`,
-                    label: item.label,
-                    value: item.value,
-                  }))}
+                  notes={detailNotes}
                   preview={
                     <div className={clsx(styles.demoPanel, styles.detailPreviewPanel)}>
                       <Demo density={density} entry={entry} />
