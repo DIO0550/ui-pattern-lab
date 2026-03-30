@@ -491,7 +491,7 @@ export default function DocsHomeContent(): ReactNode {
         <div className={styles.introBody}>
           <span className={styles.introEyebrow}>比較から入る UI リファレンス</span>
           <Heading as="h1" className={styles.introTitle}>
-            UI パターンを比較して、必要な実装例まで迷わずたどる
+            UIパターン比較ガイド
           </Heading>
           <p className={styles.lead}>
             UIパターンラボは、実装時に迷いやすい UI の見せ方を比較しながら選ぶためのドキュメントです。
