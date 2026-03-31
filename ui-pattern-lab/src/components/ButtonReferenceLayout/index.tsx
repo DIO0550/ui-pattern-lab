@@ -344,11 +344,13 @@ export default function ButtonReferenceLayout({
                 <p className={styles.variantDescription}>{variant.description}</p>
               </div>
               <div className={styles.variantSplit}>
-                <div
-                  className={[styles.variantDemo, variant.previewClassName]
-                    .filter(Boolean)
-                    .join(' ')}>
-                  {variant.preview}
+                <div className={styles.variantDemo}>
+                  <div
+                    className={[styles.variantDemoSurface, variant.previewClassName]
+                      .filter(Boolean)
+                      .join(' ')}>
+                    {variant.preview}
+                  </div>
                 </div>
                 <VariantCodePanel tabs={variant.tabs} />
               </div>
