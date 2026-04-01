@@ -471,7 +471,9 @@ export default function HierarchyButtonReferenceContent({
               </div>
               <div className={styles.variantSplit}>
                 <div className={styles.variantDemo}>
-                  <VariantPreview previewKind={variant.previewKind} />
+                  <div className={styles.variantDemoSurface}>
+                    <VariantPreview previewKind={variant.previewKind} />
+                  </div>
                 </div>
                 <VariantCodePanel tabs={variant.tabs} />
               </div>
