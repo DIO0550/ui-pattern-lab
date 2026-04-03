@@ -123,6 +123,10 @@ const config: Config = {
               label: '表示制御',
               to: '/controller',
             },
+            {
+              label: '入力',
+              to: '/input',
+            },
           ],
         },
         {

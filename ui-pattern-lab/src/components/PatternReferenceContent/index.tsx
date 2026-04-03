@@ -14,6 +14,8 @@ export type PatternReferenceSnippetItem = {
   note?: string;
 };
 
+export type PatternReferenceVariant = ButtonReferenceVariant;
+
 type PatternReferenceSnippets = {
   snippetSummary: string;
   items: readonly PatternReferenceSnippetItem[];
@@ -35,7 +37,7 @@ type SingleVariantProps = {
 };
 
 type ExplicitVariantsProps = {
-  variants: readonly ButtonReferenceVariant[];
+  variants: readonly PatternReferenceVariant[];
   id?: never;
   title?: never;
   summary?: never;

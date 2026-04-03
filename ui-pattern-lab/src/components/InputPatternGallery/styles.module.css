@@ -1,0 +1,424 @@
+.root {
+  --input-gallery-surface: var(
+    --ifm-card-background-color,
+    var(--ifm-background-surface-color)
+  );
+  --input-gallery-border: var(--ifm-color-emphasis-200);
+  --input-gallery-muted: var(--ifm-color-emphasis-700);
+  --input-gallery-emphasis: var(--ifm-color-primary);
+  display: block;
+}
+
+[data-theme='dark'] .root {
+  --input-gallery-border: var(--ifm-color-emphasis-300);
+  --input-gallery-muted: var(--ifm-color-emphasis-600);
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+.detailGrid {
+  grid-template-columns: 1fr;
+}
+
+.card {
+  background: var(--input-gallery-surface);
+  border: 1px solid var(--input-gallery-border);
+  border-radius: 1rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+  padding: 1rem;
+}
+
+.cardHeader {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.entryHeader {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.cardTitle {
+  margin-bottom: 0;
+}
+
+.titleLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.titleLink:hover {
+  text-decoration: underline;
+}
+
+.detailLink {
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cardSummary {
+  color: var(--input-gallery-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  background: color-mix(in srgb, var(--input-gallery-emphasis) 12%, transparent);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+}
+
+.demoPanel {
+  background: color-mix(
+    in srgb,
+    var(--input-gallery-emphasis) 3%,
+    var(--input-gallery-surface)
+  );
+  border: 1px solid var(--input-gallery-border);
+  border-radius: 0.9rem;
+  min-width: 0;
+  padding: 0.85rem;
+}
+
+.emptyState {
+  background: var(--input-gallery-surface);
+  border: 1px dashed var(--input-gallery-border);
+  border-radius: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.25rem;
+}
+
+.emptyState h3,
+.emptyState p {
+  margin: 0;
+}
+
+.previewCard {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.previewHeader {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.previewLabel {
+  color: var(--input-gallery-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.previewDescription {
+  color: var(--input-gallery-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.previewContent {
+  display: flex;
+  width: 100%;
+}
+
+.customDesignFrame {
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--ifm-color-primary) 14%, transparent), transparent 42%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--ifm-color-primary) 7%, var(--ifm-background-surface-color)),
+      var(--ifm-background-surface-color)
+    );
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 18%, var(--input-gallery-border));
+  border-radius: 1rem;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.9rem;
+  width: 100%;
+}
+
+.customDesignHeader {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.customDesignMetaRow {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.customDesignEyebrow {
+  color: var(--ifm-color-primary-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.customDesignBadge {
+  background: color-mix(in srgb, var(--ifm-color-primary) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 24%, transparent);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.35rem 0.55rem;
+}
+
+.customDesignTitle {
+  line-height: 1.4;
+}
+
+.customDesignDescription,
+.customDesignFooter {
+  color: var(--input-gallery-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.customDesignDescription {
+  font-size: 0.84rem;
+}
+
+.customDesignFooter {
+  font-size: 0.78rem;
+}
+
+.customDesignBody {
+  display: flex;
+  width: 100%;
+}
+
+.previewStack {
+  display: grid;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.fieldText {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.fieldLabelRow {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.fieldLabel {
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.requiredMark {
+  color: var(--ifm-color-danger);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.fieldHelper,
+.fieldError {
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.fieldHelper {
+  color: var(--input-gallery-muted);
+}
+
+.fieldError {
+  color: var(--ifm-color-danger-dark);
+}
+
+.inputControlWrap {
+  position: relative;
+  width: 100%;
+}
+
+.inputAdornment {
+  align-items: center;
+  color: var(--input-gallery-muted);
+  display: inline-flex;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.inputAdornmentLeading {
+  left: 0.85rem;
+}
+
+.inputAdornmentTrailing {
+  right: 0.85rem;
+}
+
+.inputControl {
+  appearance: none;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--upl-border-strong);
+  border-radius: 0.85rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  line-height: 1.5;
+  min-height: 2.85rem;
+  padding: 0.72rem 0.9rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+  width: 100%;
+}
+
+.inputControl::placeholder {
+  color: color-mix(in srgb, var(--input-gallery-muted) 75%, transparent);
+}
+
+.inputControl:focus-visible {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ifm-color-primary) 18%, transparent);
+  outline: none;
+}
+
+.inputControlLeading {
+  padding-left: 2.6rem;
+}
+
+.inputControlTrailing {
+  padding-right: 2.6rem;
+}
+
+.inputControlBoth {
+  padding-left: 2.6rem;
+  padding-right: 2.6rem;
+}
+
+.inputControlError {
+  border-color: var(--upl-border-error);
+}
+
+.inputControlSuccess {
+  border-color: var(--upl-border-success);
+}
+
+.inputControlBrand {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--ifm-color-primary) 8%, var(--ifm-background-surface-color)),
+      var(--ifm-background-surface-color)
+    );
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 32%, var(--upl-border-strong));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 0 1px color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
+}
+
+.inputControlDisabled {
+  background: color-mix(in srgb, var(--ifm-color-emphasis-100) 84%, transparent);
+  color: var(--input-gallery-muted);
+  cursor: not-allowed;
+}
+
+.inputControlReadonly {
+  background: color-mix(in srgb, var(--ifm-color-primary) 4%, var(--ifm-background-surface-color));
+}
+
+.trailingBadge {
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.28rem 0.5rem;
+}
+
+.adornmentButton {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 1.5rem;
+  min-width: 1.5rem;
+  padding: 0;
+}
+
+.adornmentButton:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ifm-color-primary) 52%, transparent);
+  outline-offset: 2px;
+}
+
+[data-theme='dark'] .card,
+[data-theme='dark'] .demoPanel,
+[data-theme='dark'] .inputControl {
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+[data-theme='dark'] .customDesignFrame {
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--ifm-color-primary) 18%, transparent), transparent 38%),
+    linear-gradient(180deg, rgba(20, 35, 59, 0.96), rgba(15, 26, 43, 0.98));
+}
+
+[data-theme='dark'] .customDesignEyebrow {
+  color: var(--ifm-color-primary-lightest);
+}
+
+[data-theme='dark'] .inputControlBrand {
+  background: linear-gradient(180deg, rgba(20, 35, 59, 0.92), rgba(15, 26, 43, 0.98));
+  border-color: color-mix(in srgb, var(--ifm-color-primary-light) 40%, var(--ifm-color-emphasis-300));
+}
+
+[data-theme='dark'] .fieldError {
+  color: #fca5a5;
+}
+
+@media screen and (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .entryHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

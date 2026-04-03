@@ -176,6 +176,24 @@ const sidebars: SidebarsConfig = {
         'controller/quantity-stepper-control',
       ],
     },
+    {
+      type: 'category',
+      label: '入力',
+      link: {
+        type: 'doc',
+        id: 'input',
+      },
+      collapsible: true,
+      collapsed: false,
+      items: [
+        'input/basic-input',
+        'input/label-helper-input',
+        'input/validation-state-input',
+        'input/addon-icon-input',
+        'input/disabled-readonly-input',
+        'input/custom-design-input',
+      ],
+    },
   ],
 };
 

@@ -1,0 +1,49 @@
+.root {
+  --input-gallery-surface-fallback: var(
+    --input-gallery-surface,
+    var(--ifm-card-background-color, var(--ifm-background-surface-color))
+  );
+  --input-gallery-border-fallback: var(
+    --input-gallery-border,
+    var(--ifm-color-emphasis-200)
+  );
+  --input-gallery-muted-fallback: var(
+    --input-gallery-muted,
+    var(--ifm-color-emphasis-700)
+  );
+  --input-gallery-emphasis-fallback: var(
+    --input-gallery-emphasis,
+    var(--ifm-color-primary)
+  );
+  display: grid;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.header {
+  border-bottom: 1px solid var(--input-gallery-border-fallback);
+  display: grid;
+  gap: 0.35rem;
+  padding-bottom: 0.65rem;
+}
+
+.label {
+  color: var(--input-gallery-muted-fallback);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.description {
+  color: var(--input-gallery-muted-fallback);
+  margin: 0;
+}
+
+.content {
+  min-width: 0;
+}

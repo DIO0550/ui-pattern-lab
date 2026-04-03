@@ -7,6 +7,7 @@ import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import {controllerPatternEntries} from '@site/src/data/controllerPatternEntries';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
+import {inputPatternEntries} from '@site/src/data/inputPatternEntries';
 import {progressPatternEntries} from '@site/src/data/progressPatternEntries';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
 import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
@@ -138,6 +139,31 @@ const controllerLinks = [
   ...controllerDetailLinks,
 ];
 
+const inputDetailLinks = inputPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/input/${entry.id}`,
+  description: entry.description,
+  meta: '詳細ページ',
+}));
+
+const inputLinks = [
+  {
+    title: '入力カテゴリ',
+    to: '/input',
+    description:
+      `カテゴリの入口ページです。単一行 text input の ${inputPatternEntries.length} パターンと関連導線をまとめて確認できます。`,
+    meta: 'カテゴリページ',
+  },
+  {
+    title: '入力デザインパターン',
+    to: '/patterns/input-designs',
+    description:
+      '基本 / 補助文 / バリデーション / アドオン / 非編集状態 / 自作デザイン を preview とコードつきで一覧できます。',
+    meta: '一覧ページ',
+  },
+  ...inputDetailLinks,
+];
+
 type LinkCard = {
   title: string;
   to: string;
@@ -161,7 +187,8 @@ type CategoryId =
   | 'checkbox'
   | 'selector'
   | 'progress'
-  | 'controller';
+  | 'controller'
+  | 'input';
 
 type CategoryCard = {
   id: CategoryId;
@@ -285,6 +312,15 @@ const categoryCards: CategoryCard[] = [
     links: controllerLinks,
     expandedMeta: 'クリックして表示制御関連の導線を閉じる',
     collapsedMeta: 'クリックして表示制御関連の導線を表示',
+  },
+  {
+    id: 'input',
+    title: '入力',
+    description:
+      '単一行 text input の基本形、helper、validation、addon、disabled / readOnly / required を整理するカテゴリです。',
+    links: inputLinks,
+    expandedMeta: 'クリックして入力関連の導線を閉じる',
+    collapsedMeta: 'クリックして入力関連の導線を表示',
   },
 ];
 

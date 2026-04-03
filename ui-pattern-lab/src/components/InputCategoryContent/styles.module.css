@@ -1,0 +1,62 @@
+.root {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.lead,
+.sectionLead,
+.contextNote {
+  line-height: 1.7;
+  margin: 0;
+}
+
+.lead {
+  font-size: 1.05rem;
+  max-width: 60rem;
+}
+
+.section {
+  display: grid;
+  gap: 1rem;
+}
+
+.sectionLead {
+  color: var(--ifm-color-emphasis-700);
+  max-width: 56rem;
+}
+
+.contextNote {
+  background: color-mix(
+    in srgb,
+    var(--ifm-color-primary) 5%,
+    var(--ifm-card-background-color, var(--ifm-background-surface-color))
+  );
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0.95rem;
+  max-width: 60rem;
+  padding: 0.9rem 1rem;
+}
+
+.contextNote a {
+  font-weight: 600;
+}
+
+.relatedGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+[data-theme='dark'] .contextNote {
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+@media screen and (max-width: 640px) {
+  .lead {
+    font-size: 1rem;
+  }
+
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+}
