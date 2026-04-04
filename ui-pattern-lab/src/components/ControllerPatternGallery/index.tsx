@@ -56,6 +56,207 @@ const segmentedViewModeDefinitions: Readonly<
 
 const segmentedViewPreviewItems = ['Orders', 'Returns', 'Scheduled', 'Drafts'] as const;
 
+const tabsInlinePanelOrder = ['overview', 'activity', 'settings'] as const;
+
+type TabsInlinePanelId = (typeof tabsInlinePanelOrder)[number];
+
+type TabsInlinePanelDefinition = {
+  label: string;
+  title: string;
+  description: string;
+  body: string;
+};
+
+const DEFAULT_TABS_INLINE_PANEL_ID: TabsInlinePanelId = 'activity';
+
+const tabsInlinePanelDefinitions: Readonly<
+  Record<TabsInlinePanelId, TabsInlinePanelDefinition>
+> = {
+  overview: {
+    label: '概要',
+    title: '概要',
+    description: 'アカウント全体の要点をひと目で確認する',
+    body: 'プロフィール、公開状態、接続済みサービスの要約',
+  },
+  activity: {
+    label: 'アクティビティ',
+    title: 'アクティビティ',
+    description: '最近の更新や通知の流れを追う',
+    body: '更新履歴、コメント、レビュー待ち項目の要約',
+  },
+  settings: {
+    label: '設定',
+    title: '設定',
+    description: '通知や公開範囲をこの場で調整する',
+    body: '通知、権限、表示設定のグループ',
+  },
+};
+
+const sortFilterToolbarFilterOrder = ['in-stock', 'free-shipping'] as const;
+
+type SortFilterToolbarFilterId = (typeof sortFilterToolbarFilterOrder)[number];
+
+type SortFilterToolbarFilterDefinition = {
+  label: string;
+};
+
+const sortFilterToolbarFilterDefinitions: Readonly<
+  Record<SortFilterToolbarFilterId, SortFilterToolbarFilterDefinition>
+> = {
+  'in-stock': {
+    label: '在庫あり',
+  },
+  'free-shipping': {
+    label: '送料無料',
+  },
+};
+
+const DEFAULT_SORT_FILTER_TOOLBAR_ACTIVE_FILTER_IDS: SortFilterToolbarFilterId[] = [
+  'in-stock',
+  'free-shipping',
+];
+
+const sortFilterToolbarSortOrder = ['popular', 'newest', 'price-asc'] as const;
+
+type SortFilterToolbarSortId = (typeof sortFilterToolbarSortOrder)[number];
+
+type SortFilterToolbarSortDefinition = {
+  label: string;
+};
+
+const DEFAULT_SORT_FILTER_TOOLBAR_SORT_ID: SortFilterToolbarSortId = 'popular';
+
+const sortFilterToolbarSortDefinitions: Readonly<
+  Record<SortFilterToolbarSortId, SortFilterToolbarSortDefinition>
+> = {
+  popular: {
+    label: '人気順',
+  },
+  newest: {
+    label: '新着順',
+  },
+  'price-asc': {
+    label: '価格の安い順',
+  },
+};
+
+type SortFilterToolbarResultCountKey =
+  | ''
+  | 'free-shipping'
+  | 'in-stock'
+  | 'in-stock|free-shipping';
+
+const sortFilterToolbarResultCountByKey: Readonly<
+  Record<SortFilterToolbarResultCountKey, number>
+> = {
+  '': 156,
+  'free-shipping': 142,
+  'in-stock': 142,
+  'in-stock|free-shipping': 128,
+};
+
+/**
+ * Returns the next tab id when keyboard navigation moves within the tablist.
+ */
+function getNextTabsInlinePanelId({
+  currentTabId,
+  key,
+}: {
+  currentTabId: TabsInlinePanelId;
+  key: string;
+}): TabsInlinePanelId | null {
+  const currentIndex = tabsInlinePanelOrder.indexOf(currentTabId);
+
+  if (currentIndex === -1) {
+    return null;
+  }
+
+  if (key === 'ArrowRight') {
+    return tabsInlinePanelOrder[(currentIndex + 1) % tabsInlinePanelOrder.length];
+  }
+
+  if (key === 'ArrowLeft') {
+    return tabsInlinePanelOrder[
+      (currentIndex - 1 + tabsInlinePanelOrder.length) % tabsInlinePanelOrder.length
+    ];
+  }
+
+  if (key === 'Home') {
+    return tabsInlinePanelOrder[0];
+  }
+
+  if (key === 'End') {
+    return tabsInlinePanelOrder[tabsInlinePanelOrder.length - 1];
+  }
+
+  return null;
+}
+
+/**
+ * Keeps the active filter ids in presentation order while toggling one filter.
+ */
+function toggleSortFilterToolbarFilter({
+  currentFilterIds,
+  filterId,
+}: {
+  currentFilterIds: readonly SortFilterToolbarFilterId[];
+  filterId: SortFilterToolbarFilterId;
+}): SortFilterToolbarFilterId[] {
+  const nextFilterIds = currentFilterIds.includes(filterId)
+    ? currentFilterIds.filter((currentFilterId) => currentFilterId !== filterId)
+    : [...currentFilterIds, filterId];
+
+  return sortFilterToolbarFilterOrder.filter((candidateId) =>
+    nextFilterIds.includes(candidateId),
+  );
+}
+
+/**
+ * Builds a stable lookup key for the active filter combination.
+ */
+function buildSortFilterToolbarKey(
+  filterIds: readonly SortFilterToolbarFilterId[],
+): SortFilterToolbarResultCountKey {
+  const hasInStock = filterIds.includes('in-stock');
+  const hasFreeShipping = filterIds.includes('free-shipping');
+
+  if (hasInStock && hasFreeShipping) {
+    return 'in-stock|free-shipping';
+  }
+
+  if (hasInStock) {
+    return 'in-stock';
+  }
+
+  if (hasFreeShipping) {
+    return 'free-shipping';
+  }
+
+  return '';
+}
+
+/**
+ * Narrows native select values to the known sort ids used in the demo.
+ */
+function isSortFilterToolbarSortId(
+  value: string,
+): value is SortFilterToolbarSortId {
+  return (
+    value === 'popular' || value === 'newest' || value === 'price-asc'
+  );
+}
+
+/**
+ * Returns the demo result count for the current filter combination.
+ */
+function getSortFilterToolbarResultCount(
+  filterIds: readonly SortFilterToolbarFilterId[],
+): number {
+  const lookupKey = buildSortFilterToolbarKey(filterIds);
+
+  return sortFilterToolbarResultCountByKey[lookupKey];
+}
+
 function EmptyState({message}: {message: string}): ReactNode {
   return <p className={styles.emptyState}>{message}</p>;
 }
@@ -165,45 +366,191 @@ function SegmentedViewSwitcherDemo(): ReactNode {
 }
 
 function TabsInlinePanelSwitcherDemo(): ReactNode {
+  const tabListLabelId = useId();
+  const tabIdBase = useId();
+  const [activeTabId, setActiveTabId] =
+    useState<TabsInlinePanelId>(DEFAULT_TABS_INLINE_PANEL_ID);
+
   return (
     <div className={styles.demoPanel}>
-      <div className={styles.mockTabList}>
-        <span className={styles.mockTab}>概要</span>
-        <span className={clsx(styles.mockTab, styles.mockTabActive)}>アクティビティ</span>
-        <span className={styles.mockTab}>設定</span>
+      <div
+        aria-labelledby={tabListLabelId}
+        className={styles.mockTabList}
+        role="tablist">
+        <span className={clsx(styles.mockEyebrow, styles.tabListLabel)} id={tabListLabelId}>
+          表示セクション
+        </span>
+        {tabsInlinePanelOrder.map((tabId) => {
+          const tab = tabsInlinePanelDefinitions[tabId];
+          const isActive = activeTabId === tabId;
+          const tabButtonId = `${tabIdBase}-${tabId}-tab`;
+          const tabPanelId = `${tabIdBase}-${tabId}-panel`;
+
+          return (
+            <button
+              aria-controls={tabPanelId}
+              aria-selected={isActive}
+              className={clsx(
+                styles.mockTab,
+                styles.tabTriggerButton,
+                isActive && styles.mockTabActive,
+              )}
+              id={tabButtonId}
+              key={tabId}
+              onClick={() => {
+                setActiveTabId((currentTabId) => {
+                  if (currentTabId === tabId) {
+                    return currentTabId;
+                  }
+
+                  return tabId;
+                });
+              }}
+              onKeyDown={(event) => {
+                const nextTabId = getNextTabsInlinePanelId({
+                  currentTabId: tabId,
+                  key: event.key,
+                });
+
+                if (!nextTabId) {
+                  return;
+                }
+
+                event.preventDefault();
+                setActiveTabId(nextTabId);
+                document.getElementById(`${tabIdBase}-${nextTabId}-tab`)?.focus();
+              }}
+              role="tab"
+              type="button">
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
-      <div className={styles.mockSurface}>
-        <div className={styles.mockHeader}>
-          <span className={styles.mockEyebrow}>Current panel</span>
-          <strong>アクティビティ</strong>
-        </div>
-        <div className={styles.mockParagraphGroup}>
-          <span className={styles.mockParagraph} />
-          <span className={styles.mockParagraph} />
-          <span className={styles.mockParagraphShort} />
-        </div>
-      </div>
-      <p className={styles.demoNote}>navigation ではなく inline panel switch であることを保つデモです。</p>
+      {tabsInlinePanelOrder.map((tabId) => {
+        const panel = tabsInlinePanelDefinitions[tabId];
+        const isActive = activeTabId === tabId;
+
+        return (
+          <div
+            aria-labelledby={`${tabIdBase}-${tabId}-tab`}
+            className={clsx(styles.mockSurface, styles.tabPanelSurface)}
+            hidden={!isActive}
+            id={`${tabIdBase}-${tabId}-panel`}
+            key={tabId}
+            role="tabpanel">
+            <div className={styles.tabPanelHeader}>
+              <span className={styles.mockEyebrow}>表示中のパネル</span>
+              <strong>{panel.title}</strong>
+            </div>
+            <p className={styles.tabPanelDescription}>{panel.description}</p>
+            <div className={styles.tabPanelBody}>{panel.body}</div>
+            <div className={styles.mockToolbarRow}>
+              <span className={styles.mockChip}>同一 view 内</span>
+              <span className={styles.mockChip}>panel switch</span>
+            </div>
+          </div>
+        );
+      })}
+      <p className={styles.demoNote}>
+        tablist と tabpanel の関係を保ちながら、同一ページ内の panel を切り替える interactive demo です。
+      </p>
     </div>
   );
 }
 
 function SortFilterToolbarDemo(): ReactNode {
+  const toolbarLabelId = useId();
+  const [selectedSortId, setSelectedSortId] = useState<SortFilterToolbarSortId>(
+    DEFAULT_SORT_FILTER_TOOLBAR_SORT_ID,
+  );
+  const [activeFilterIds, setActiveFilterIds] = useState<SortFilterToolbarFilterId[]>(
+    DEFAULT_SORT_FILTER_TOOLBAR_ACTIVE_FILTER_IDS,
+  );
+  const resultCount = getSortFilterToolbarResultCount(activeFilterIds);
+  const hasActiveFilters = activeFilterIds.length > 0;
+  const activeFilterSummary = hasActiveFilters
+    ? activeFilterIds
+        .map((filterId) => sortFilterToolbarFilterDefinitions[filterId].label)
+        .join('・')
+    : '絞り込みなし';
+
   return (
     <div className={styles.demoPanel}>
-      <div className={styles.mockToolbar}>
-        <div className={styles.mockToolbarRow}>
-          <span className={styles.mockMetric}>128 件</span>
-          <span className={styles.mockSelect}>人気順</span>
+      <div
+        aria-labelledby={toolbarLabelId}
+        className={styles.mockToolbar}
+        role="toolbar">
+        <div className={clsx(styles.mockToolbarRow, styles.toolbarHeaderRow)}>
+          <div className={styles.toolbarCountBlock}>
+            <span className={styles.mockEyebrow} id={toolbarLabelId}>
+              一覧コントロール
+            </span>
+            <output aria-live="polite" className={styles.mockMetric}>
+              {`${resultCount} 件`}
+            </output>
+          </div>
+          <label className={styles.toolbarSelectField}>
+            <span className={styles.mockEyebrow}>並び順</span>
+            <select
+              aria-label="並び順"
+              className={styles.toolbarSelect}
+              onChange={(event) => {
+                if (isSortFilterToolbarSortId(event.target.value)) {
+                  setSelectedSortId(event.target.value);
+                }
+              }}
+              value={selectedSortId}>
+              {sortFilterToolbarSortOrder.map((sortId) => (
+                <option key={sortId} value={sortId}>
+                  {sortFilterToolbarSortDefinitions[sortId].label}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
-        <div className={styles.mockToolbarRow}>
-          <span className={clsx(styles.mockChip, styles.mockChipActive)}>在庫あり</span>
-          <span className={clsx(styles.mockChip, styles.mockChipActive)}>送料無料</span>
-          <span className={styles.mockChip}>価格帯</span>
-          <span className={styles.mockChip}>絞り込みを開く</span>
+        <div className={clsx(styles.mockToolbarRow, styles.toolbarChipRow)}>
+          {sortFilterToolbarFilterOrder.map((filterId) => {
+            const filter = sortFilterToolbarFilterDefinitions[filterId];
+            const isActive = activeFilterIds.includes(filterId);
+
+            return (
+              <button
+                aria-pressed={isActive}
+                className={clsx(
+                  styles.mockChip,
+                  styles.toolbarFilterButton,
+                  isActive && styles.mockChipActive,
+                )}
+                key={filterId}
+                onClick={() => {
+                  setActiveFilterIds((currentFilterIds) =>
+                    toggleSortFilterToolbarFilter({
+                      currentFilterIds,
+                      filterId,
+                    }),
+                  );
+                }}
+                type="button">
+                {filter.label}
+              </button>
+            );
+          })}
+          <button
+            className={clsx(styles.mockButton, styles.toolbarClearButton)}
+            disabled={!hasActiveFilters}
+            onClick={() => setActiveFilterIds([])}
+            type="button">
+            条件をクリア
+          </button>
         </div>
+        <p aria-live="polite" className={styles.toolbarStatusText}>
+          {`${sortFilterToolbarSortDefinitions[selectedSortId].label}で表示中 ・ ${activeFilterSummary}`}
+        </p>
       </div>
-      <p className={styles.demoNote}>結果件数・sort・active filter を 1 つの操作面で束ねます。</p>
+      <p className={styles.demoNote}>
+        結果件数・並び順・active filter・clear action を同じ toolbar 面で扱う interactive demo です。
+      </p>
     </div>
   );
 }
