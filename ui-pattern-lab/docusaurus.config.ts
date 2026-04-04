@@ -124,7 +124,7 @@ const config: Config = {
               to: '/controller',
             },
             {
-              label: '入力',
+              label: 'テキストフィールド',
               to: '/input',
             },
           ],

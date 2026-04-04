@@ -12,7 +12,7 @@ type Props = {
 
 function TagList({tags}: {tags: string[]}): ReactNode {
   return (
-    <ul aria-label="input パターンのタグ" className={styles.tagList}>
+    <ul aria-label="テキストフィールドデザインのタグ" className={styles.tagList}>
       {tags.map((tag) => (
         <li className={styles.tag} key={tag}>
           {tag}

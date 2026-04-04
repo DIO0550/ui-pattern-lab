@@ -20,19 +20,19 @@ export default function InputCategoryContent(): ReactNode {
   return (
     <div className={`container margin-vert--lg ${styles.root}`}>
       <p className={styles.lead}>
-        入力カテゴリでは、単一行のテキスト入力を、基本、補助文、バリデーション、アドオン、非編集状態、
-        自作デザインまで整理します。textarea / file input / date picker / OTP は今回のスコープ外です。
+        テキストフィールドカテゴリでは、よくある UI ライブラリの input を自前で持つイメージで、CSS 付きの自作デザインを整理します。
+        それぞれのデザインで hover / focus / error / disabled まで含めた見え方を確認できます。
       </p>
       <p className={styles.contextNote}>
-        helper / error / disabled の横断ルールは{' '}
+        helper / error / aria-invalid といったルール自体は{' '}
         <Link to="/selector/states-and-validation">selector / states と validation の共通参照</Link>{' '}
-        も合わせて確認してください。入力カテゴリでは text-like な field の見せ方に集中します。
+        に寄せつつ、ここでは見た目のデザインと state 表現を CSS でどう作るかに集中します。
       </p>
 
       <section className={styles.section}>
-        <Heading as="h2">{patternCount} パターンを先に比較する</Heading>
+        <Heading as="h2">{patternCount} デザインを先に比較する</Heading>
         <p className={styles.sectionLead}>
-          まずは 基本 / 補助文 / バリデーション / アドオン / 非編集状態 / 自作デザイン の違いを見比べ、必要な detail ページへ進みます。
+          まずは アウトライン型 / フィルド型 / アンダーライン型 / ボーダーレス型 / ピル型 の違いを見比べ、必要な detail ページで主要状態の preview、TSX、CSS を個別に確認します。
         </p>
         <PatternCompareCardGrid items={compareItems} />
       </section>
@@ -41,15 +41,15 @@ export default function InputCategoryContent(): ReactNode {
         <Heading as="h2">関連導線</Heading>
         <div className={styles.relatedGrid}>
           <PatternCatalogCard
-            description={`${patternCount} パターンを preview とコードつきで一覧し、差分を一度に確認できる一覧ページです。`}
+            description={`${patternCount} デザインを preview / TSX / CSS つきで一覧し、差分を一度に確認できる一覧ページです。`}
             eyebrow="関連ページ"
-            title="入力デザインパターン"
+            title="自作テキストフィールドデザイン"
             to="/patterns/input-designs"
             tone="muted"
             variant="default"
           />
           <PatternCatalogCard
-            description="helper / error / disabled / aria-describedby など、control 横断の品質ルールをまとめた reference ページです。"
+            description="helper / error / disabled / aria-describedby など、state 設計の品質ルールをまとめた reference ページです。"
             eyebrow="cross-reference"
             title="states と validation の共通参照"
             to="/selector/states-and-validation"

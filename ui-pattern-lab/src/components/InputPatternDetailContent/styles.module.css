@@ -47,3 +47,7 @@
 [data-theme='dark'] .contextNote {
   border-color: var(--ifm-color-emphasis-300);
 }
+
+.widePreview {
+  padding: 0.9rem;
+}

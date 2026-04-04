@@ -148,17 +148,17 @@ const inputDetailLinks = inputPatternEntries.map((entry) => ({
 
 const inputLinks = [
   {
-    title: '入力カテゴリ',
+    title: 'テキストフィールドカテゴリ',
     to: '/input',
     description:
-      `カテゴリの入口ページです。単一行 text input の ${inputPatternEntries.length} パターンと関連導線をまとめて確認できます。`,
+      `カテゴリの入口ページです。UI ライブラリ風の自作テキストフィールドデザイン ${inputPatternEntries.length} 件と関連導線をまとめて確認できます。`,
     meta: 'カテゴリページ',
   },
   {
-    title: '入力デザインパターン',
+    title: '自作テキストフィールドデザイン',
     to: '/patterns/input-designs',
     description:
-      '基本 / 補助文 / バリデーション / アドオン / 非編集状態 / 自作デザイン を preview とコードつきで一覧できます。',
+      'アウトライン型 / フィルド型 / アンダーライン型 / ボーダーレス型 / ピル型 を preview / TSX / CSS つきで一覧できます。',
     meta: '一覧ページ',
   },
   ...inputDetailLinks,
@@ -315,12 +315,12 @@ const categoryCards: CategoryCard[] = [
   },
   {
     id: 'input',
-    title: '入力',
+    title: 'テキストフィールド',
     description:
-      '単一行 text input の基本形、helper、validation、addon、disabled / readOnly / required を整理するカテゴリです。',
+      'CSS module まで含めた自作テキストフィールドデザインを集約し、hover / focus / error / disabled を含む state 表現を比較するカテゴリです。',
     links: inputLinks,
-    expandedMeta: 'クリックして入力関連の導線を閉じる',
-    collapsedMeta: 'クリックして入力関連の導線を表示',
+    expandedMeta: 'クリックしてテキストフィールド関連の導線を閉じる',
+    collapsedMeta: 'クリックしてテキストフィールド関連の導線を表示',
   },
 ];
 
@@ -497,7 +497,7 @@ export default function DocsHomeContent(): ReactNode {
     {
       label: '収録カテゴリ',
       value: `${categoryCards.length} categories`,
-      description: '入力、表示制御、table、ellipsis まで横断して確認できます。',
+      description: 'テキストフィールド、表示制御、table、ellipsis まで横断して確認できます。',
     },
     {
       label: '導線の深さ',

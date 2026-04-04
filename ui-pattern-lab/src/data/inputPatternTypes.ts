@@ -1,10 +1,9 @@
 export type InputPatternEntryId =
-  | 'basic-input'
-  | 'label-helper-input'
-  | 'validation-state-input'
-  | 'addon-icon-input'
-  | 'disabled-readonly-input'
-  | 'custom-design-input';
+  | 'outline-text-field'
+  | 'filled-text-field'
+  | 'underline-text-field'
+  | 'borderless-text-field'
+  | 'pill-text-field';
 
 export type InputPatternSnippetItem = {
   id: string;

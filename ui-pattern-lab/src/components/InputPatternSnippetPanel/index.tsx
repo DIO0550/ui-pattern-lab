@@ -4,7 +4,6 @@ import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
 import InputPatternSectionCard from '@site/src/components/InputPatternSectionCard';
 import type {
-  InputPatternEntryId,
   InputPatternSnippetItem,
   InputPatternSnippets,
 } from '@site/src/data/inputPatternTypes';
@@ -14,7 +13,6 @@ import styles from './styles.module.css';
 type InputPatternSnippetPanelProps = {
   snippets?: InputPatternSnippets;
   density: 'list' | 'detail';
-  entryId: InputPatternEntryId;
   entryTitle: string;
 };
 
@@ -65,11 +63,12 @@ function SnippetCollection({items}: SnippetCollectionProps): ReactNode {
 export default function InputPatternSnippetPanel({
   snippets,
   density,
-  entryId,
   entryTitle,
 }: InputPatternSnippetPanelProps): ReactNode {
   const items = snippets?.items ?? [];
-  const snippetLabel = entryId === 'addon-icon-input' ? 'TSX サンプルを見る' : 'コードサンプルを見る';
+  const hasCss = items.some((item) => item.language.toLowerCase() === 'css');
+  const snippetLabel = hasCss ? 'TSX / CSS サンプルを見る' : 'TSX サンプルを見る';
+  const snippetTitle = hasCss ? 'TSX / CSS サンプル' : 'TSX サンプル';
 
   if (density === 'list') {
     if (items.length === 0 || !snippets) {
@@ -101,7 +100,7 @@ export default function InputPatternSnippetPanel({
       ariaLabel={`${entryTitle}のコードサンプル`}
       description={snippets?.snippetSummary}
       label="コード"
-      title="TSX サンプル">
+      title={snippetTitle}>
       {items.length > 0 ? (
         <div className={styles.content}>
           <SnippetCollection items={items} />

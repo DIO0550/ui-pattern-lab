@@ -1,30 +1,104 @@
-import type {
-  InputPatternEntryId,
-  InputPatternSnippets,
-} from '@site/src/data/inputPatternTypes';
-import type {
-  CustomDesignStateId,
-  CustomDesignVariantId,
-} from '@site/src/components/InputPatternGallery/customDesign';
+.previewStack {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
 
-export type InputPatternVariantSnippetMap = Record<string, InputPatternSnippets>;
+.previewStateBlock,
+.variantCard {
+  width: 100%;
+}
 
-type StateSnippetConfig = {
-  summary: string;
-  helperText?: string;
-  errorText?: string;
-  value?: string;
-  placeholder?: string;
-};
+.field {
+  display: grid;
+  gap: 0.42rem;
+  min-width: 0;
+  width: 100%;
+}
 
-const outlineCssSnippet = `.field[data-variant='outline'] .controlShell {
+.labelRow {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.label {
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.stateBadge {
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 20%, transparent);
+  border-radius: 999px;
+  color: var(--ifm-color-primary-dark);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.28rem 0.55rem;
+  text-transform: uppercase;
+}
+
+.controlShell {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+  display: flex;
+  min-height: 3rem;
+  padding: 0 0.9rem;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.controlShellError {
+  border-color: var(--ifm-color-danger);
+}
+
+.control {
+  background: transparent;
+  border: none;
+  color: var(--ifm-color-emphasis-900);
+  font: inherit;
+  min-width: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.control::placeholder {
+  color: var(--ifm-color-emphasis-500);
+}
+
+.control:focus {
+  outline: none;
+}
+
+.helperText {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.helperTextError {
+  color: var(--ifm-color-danger-dark);
+  font-weight: 600;
+}
+
+.field[data-variant='outline'] .controlShell {
   background: var(--ifm-background-surface-color);
   border-color: var(--ifm-color-emphasis-300);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
 .field[data-variant='outline'] .controlShell:hover,
 .field[data-variant='outline'][data-demo-state='hover'] .controlShell {
   border-color: color-mix(in srgb, var(--ifm-color-primary) 44%, var(--ifm-color-emphasis-300));
+  background: color-mix(in srgb, var(--ifm-color-primary) 3%, var(--ifm-background-surface-color));
 }
 
 .field[data-variant='outline'] .controlShell:focus-within,
@@ -34,15 +108,10 @@ const outlineCssSnippet = `.field[data-variant='outline'] .controlShell {
 }
 
 .field[data-variant='outline'][data-demo-state='error'] .controlShell {
-  border-color: var(--ifm-color-danger);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--ifm-color-danger) 12%, transparent);
 }
 
-.field[data-demo-state='disabled'] .controlShell {
-  background: color-mix(in srgb, var(--ifm-color-emphasis-100) 72%, var(--ifm-background-surface-color));
-}`;
-
-const filledCssSnippet = `.field[data-variant='filled'] .controlShell {
+.field[data-variant='filled'] .controlShell {
   background: color-mix(in srgb, var(--ifm-color-primary) 6%, var(--ifm-background-surface-color));
   border-color: color-mix(in srgb, var(--ifm-color-primary) 8%, var(--ifm-color-emphasis-200));
 }
@@ -50,6 +119,7 @@ const filledCssSnippet = `.field[data-variant='filled'] .controlShell {
 .field[data-variant='filled'] .controlShell:hover,
 .field[data-variant='filled'][data-demo-state='hover'] .controlShell {
   background: color-mix(in srgb, var(--ifm-color-primary) 9%, var(--ifm-background-surface-color));
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 18%, var(--ifm-color-emphasis-200));
 }
 
 .field[data-variant='filled'] .controlShell:focus-within,
@@ -61,10 +131,10 @@ const filledCssSnippet = `.field[data-variant='filled'] .controlShell {
 
 .field[data-variant='filled'][data-demo-state='error'] .controlShell {
   background: color-mix(in srgb, var(--ifm-color-danger) 5%, var(--ifm-background-surface-color));
-  border-color: var(--ifm-color-danger);
-}`;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ifm-color-danger) 10%, transparent);
+}
 
-const underlineCssSnippet = `.field[data-variant='underline'] .controlShell {
+.field[data-variant='underline'] .controlShell {
   background:
     linear-gradient(
       180deg,
@@ -76,10 +146,17 @@ const underlineCssSnippet = `.field[data-variant='underline'] .controlShell {
   border-radius: 0.8rem 0.8rem 0 0;
   border-right: none;
   border-top: none;
+  padding: 0.45rem 0.15rem;
 }
 
 .field[data-variant='underline'] .controlShell:hover,
 .field[data-variant='underline'][data-demo-state='hover'] .controlShell {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--ifm-color-primary) 6%, transparent),
+      transparent
+    );
   border-bottom-color: color-mix(in srgb, var(--ifm-color-primary) 52%, var(--ifm-color-emphasis-400));
 }
 
@@ -94,19 +171,18 @@ const underlineCssSnippet = `.field[data-variant='underline'] .controlShell {
   box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--ifm-color-danger) 18%, transparent);
 }
 
-.field[data-demo-state='disabled'][data-variant='underline'] .controlShell {
-  border-bottom-color: var(--ifm-color-emphasis-300);
-}`;
-
-const borderlessCssSnippet = `.field[data-variant='borderless'] .controlShell {
+.field[data-variant='borderless'] .controlShell {
   background: transparent;
   border-color: transparent;
+  border-radius: 0.7rem;
   box-shadow: inset 0 -1px 0 var(--ifm-color-emphasis-300);
+  padding: 0 0.35rem;
 }
 
 .field[data-variant='borderless'] .controlShell:hover,
 .field[data-variant='borderless'][data-demo-state='hover'] .controlShell {
   background: color-mix(in srgb, var(--ifm-color-primary) 4%, transparent);
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--ifm-color-primary) 48%, var(--ifm-color-emphasis-300));
 }
 
 .field[data-variant='borderless'] .controlShell:focus-within,
@@ -118,20 +194,23 @@ const borderlessCssSnippet = `.field[data-variant='borderless'] .controlShell {
 }
 
 .field[data-variant='borderless'][data-demo-state='error'] .controlShell {
+  background: color-mix(in srgb, var(--ifm-color-danger) 4%, transparent);
   box-shadow:
     inset 0 -2px 0 var(--ifm-color-danger),
     0 0 0 4px color-mix(in srgb, var(--ifm-color-danger) 10%, transparent);
-}`;
+}
 
-const pillCssSnippet = `.field[data-variant='pill'] .controlShell {
+.field[data-variant='pill'] .controlShell {
   background: color-mix(in srgb, var(--ifm-color-primary) 4%, var(--ifm-background-surface-color));
   border-color: color-mix(in srgb, var(--ifm-color-primary) 18%, var(--ifm-color-emphasis-200));
   border-radius: 999px;
+  padding: 0 1.05rem;
 }
 
 .field[data-variant='pill'] .controlShell:hover,
 .field[data-variant='pill'][data-demo-state='hover'] .controlShell {
   background: color-mix(in srgb, var(--ifm-color-primary) 7%, var(--ifm-background-surface-color));
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 34%, var(--ifm-color-emphasis-200));
 }
 
 .field[data-variant='pill'] .controlShell:focus-within,
@@ -144,83 +223,68 @@ const pillCssSnippet = `.field[data-variant='pill'] .controlShell {
 .field[data-variant='pill'][data-demo-state='error'] .controlShell {
   border-color: var(--ifm-color-danger);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--ifm-color-danger) 10%, transparent);
-}`;
-
-const stateConfigs: Record<CustomDesignStateId, StateSnippetConfig> = {
-  default: {
-    summary: '通常時のラベル、placeholder、helper を確認しつつ、hover / focus はその場で操作して見られる基準状態です。',
-    helperText: '公開ページに表示される名称です。',
-    placeholder: '例: Pattern Lab',
-  },
-  error: {
-    summary: 'error 時の輪郭色、メッセージ、input 本体の見え方を CSS で確認します。',
-    errorText: '2 文字以上で入力してください。',
-    value: 'P',
-  },
-  disabled: {
-    summary: 'disabled 時のトーンダウンと入力不可状態を CSS で確認します。',
-    helperText: 'ロール設定によりこの項目は固定です。',
-    value: 'system-generated',
-  },
-};
-
-function buildTsxSnippet(variant: CustomDesignVariantId, state: CustomDesignStateId): string {
-  const config = stateConfigs[state];
-  const propLines = [
-    `label="表示名"`,
-    config.errorText ? `errorText="${config.errorText}"` : undefined,
-    config.helperText ? `helperText="${config.helperText}"` : undefined,
-    config.placeholder ? `placeholder="${config.placeholder}"` : undefined,
-    `state="${state}"`,
-    config.value ? `value="${config.value}"` : undefined,
-    `variant="${variant}"`,
-  ].filter((line): line is string => Boolean(line));
-
-  return `import {CustomDesignTextInput} from '@site/src/components/InputPatternGallery/customDesign';
-
-<CustomDesignTextInput
-  ${propLines.join('\n  ')}
-/>`;
 }
 
-function buildSnippetMap(
-  variant: CustomDesignVariantId,
-  cssSnippet: string,
-): InputPatternVariantSnippetMap {
-  return Object.fromEntries(
-    (Object.entries(stateConfigs) as Array<[CustomDesignStateId, StateSnippetConfig]>).map(
-      ([state, config]) => [
-        state,
-        {
-          snippetSummary: config.summary,
-          items: [
-            {
-              id: 'tsx',
-              label: 'TSX',
-              language: 'tsx',
-              code: buildTsxSnippet(variant, state),
-              note:
-                'preview と同じ state を `state` prop で切り替え、見た目は CSS module 側で制御します。',
-            },
-            {
-              id: 'css',
-              label: 'CSS',
-              language: 'css',
-              code: cssSnippet,
-              note:
-                '抜粋は customDesign.module.css から取り、hover / focus / error / disabled を支える主要セレクタだけを残しています。',
-            },
-          ],
-        } satisfies InputPatternSnippets,
-      ],
-    ),
-  ) as InputPatternVariantSnippetMap;
+.field[data-demo-state='disabled'] .controlShell {
+  background: color-mix(in srgb, var(--ifm-color-emphasis-100) 72%, var(--ifm-background-surface-color));
+  border-color: color-mix(in srgb, var(--ifm-color-emphasis-300) 90%, transparent);
+  box-shadow: none;
 }
 
-export const inputPatternSnippets: Record<InputPatternEntryId, InputPatternVariantSnippetMap> = {
-  'outline-text-field': buildSnippetMap('outline', outlineCssSnippet),
-  'filled-text-field': buildSnippetMap('filled', filledCssSnippet),
-  'underline-text-field': buildSnippetMap('underline', underlineCssSnippet),
-  'borderless-text-field': buildSnippetMap('borderless', borderlessCssSnippet),
-  'pill-text-field': buildSnippetMap('pill', pillCssSnippet),
-};
+.field[data-demo-state='disabled'][data-variant='underline'] .controlShell {
+  border-bottom-color: var(--ifm-color-emphasis-300);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.field[data-demo-state='disabled'] .label,
+.field[data-demo-state='disabled'] .helperText,
+.field[data-demo-state='disabled'] .stateBadge,
+.field[data-demo-state='disabled'] .control {
+  color: var(--ifm-color-emphasis-500);
+}
+
+[data-theme='dark'] .label {
+  color: var(--ifm-color-emphasis-100);
+}
+
+[data-theme='dark'] .stateBadge {
+  border-color: color-mix(in srgb, var(--ifm-color-primary-light) 28%, transparent);
+  color: var(--ifm-color-primary-lightest);
+}
+
+[data-theme='dark'] .control {
+  color: var(--ifm-color-emphasis-100);
+}
+
+[data-theme='dark'] .helperText {
+  color: var(--ifm-color-emphasis-500);
+}
+
+[data-theme='dark'] .helperTextError {
+  color: color-mix(in srgb, var(--ifm-color-danger-light) 82%, white);
+}
+
+[data-theme='dark'] .field[data-variant='outline'] .controlShell {
+  background: rgba(16, 27, 46, 0.86);
+  border-color: rgba(120, 148, 196, 0.3);
+}
+
+[data-theme='dark'] .field[data-variant='filled'] .controlShell {
+  background: rgba(19, 33, 56, 0.92);
+  border-color: rgba(120, 148, 196, 0.24);
+}
+
+[data-theme='dark'] .field[data-variant='underline'] .controlShell {
+  border-bottom-color: rgba(143, 169, 216, 0.52);
+}
+
+[data-theme='dark'] .field[data-variant='borderless'] .controlShell {
+  box-shadow: inset 0 -1px 0 rgba(143, 169, 216, 0.32);
+}
+
+[data-theme='dark'] .field[data-variant='pill'] .controlShell {
+  background: rgba(18, 31, 53, 0.9);
+  border-color: rgba(120, 148, 196, 0.24);
+}

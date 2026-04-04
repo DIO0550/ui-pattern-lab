@@ -178,7 +178,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '入力',
+      label: 'テキストフィールド',
       link: {
         type: 'doc',
         id: 'input',
@@ -186,12 +186,11 @@ const sidebars: SidebarsConfig = {
       collapsible: true,
       collapsed: false,
       items: [
-        'input/basic-input',
-        'input/label-helper-input',
-        'input/validation-state-input',
-        'input/addon-icon-input',
-        'input/disabled-readonly-input',
-        'input/custom-design-input',
+        'input/outline-text-field',
+        'input/filled-text-field',
+        'input/underline-text-field',
+        'input/borderless-text-field',
+        'input/pill-text-field',
       ],
     },
   ],
