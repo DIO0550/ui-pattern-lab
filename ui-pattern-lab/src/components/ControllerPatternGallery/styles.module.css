@@ -188,6 +188,39 @@
   color: white;
 }
 
+[data-theme='dark'] .mockSurface,
+[data-theme='dark'] .mockToolbar,
+[data-theme='dark'] .segmentedResultPanel {
+  border-color: var(--ifm-color-emphasis-300);
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.92) 0%,
+    rgba(30, 41, 59, 0.92) 100%
+  );
+}
+
+[data-theme='dark'] .mockButton,
+[data-theme='dark'] .mockTab,
+[data-theme='dark'] .mockChip,
+[data-theme='dark'] .mockSelect,
+[data-theme='dark'] .toolbarSelect,
+[data-theme='dark'] .toolbarClearButton,
+[data-theme='dark'] .tabPanelBody {
+  border-color: var(--ifm-color-emphasis-400);
+  background: rgba(15, 23, 42, 0.82);
+  color: var(--ifm-color-emphasis-100);
+}
+
+[data-theme='dark'] .mockParagraph,
+[data-theme='dark'] .mockParagraphShort {
+  background: var(--ifm-color-emphasis-400);
+}
+
+[data-theme='dark'] .tabPanelDescription,
+[data-theme='dark'] .toolbarStatusText {
+  color: var(--ifm-color-emphasis-200);
+}
+
 .segmentedDemoHeader {
   display: flex;
   flex-wrap: wrap;
@@ -352,6 +385,96 @@
   gap: 0.5rem;
   padding-bottom: 0.25rem;
   border-bottom: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.tabListLabel {
+  flex-basis: 100%;
+}
+
+.tabTriggerButton,
+.toolbarFilterButton,
+.toolbarClearButton {
+  cursor: pointer;
+  font: inherit;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.tabTriggerButton:hover,
+.toolbarFilterButton:hover,
+.toolbarClearButton:not(:disabled):hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.mockTabActive:hover,
+.mockChipActive:hover {
+  background: var(--ifm-color-primary);
+}
+
+.tabTriggerButton:focus-visible,
+.toolbarFilterButton:focus-visible,
+.toolbarClearButton:focus-visible,
+.toolbarSelect:focus-visible {
+  outline: 3px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+.tabPanelSurface {
+  gap: 0.85rem;
+}
+
+.tabPanelHeader,
+.toolbarCountBlock,
+.toolbarSelectField {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.tabPanelDescription,
+.toolbarStatusText {
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.tabPanelBody {
+  padding: 0.85rem 0.9rem;
+  border-radius: 0.85rem;
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-emphasis-900);
+  font-weight: 600;
+}
+
+.toolbarHeaderRow {
+  justify-content: space-between;
+}
+
+.toolbarChipRow {
+  justify-content: flex-start;
+}
+
+.toolbarSelect {
+  min-height: 2.5rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.85rem;
+  background: white;
+  color: var(--ifm-color-emphasis-900);
+  font: inherit;
+  font-weight: 600;
+}
+
+.toolbarClearButton {
+  background: var(--ifm-color-emphasis-0);
+}
+
+.toolbarClearButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .mockParagraphGroup {
