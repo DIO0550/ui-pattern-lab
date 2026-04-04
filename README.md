@@ -1,30 +1,40 @@
-# docusaurus-devcontainer-template
+# UIパターンラボ
 
-Docusaurus + DevContainer のテンプレートリポジトリ。GitHub Pages へ自動デプロイ対応。
+UI パターンや各種 UI デザインを preview / code / CSS 付きで紹介する Docusaurus ベースのリファレンスです。  
+このプロジェクトの基本スタンスは **カスタムデザイン** で、既製 UI ライブラリの既定見た目をそのまま並べるのではなく、用途に合わせて設計した独自 UI を比較しながら整理します。
 
-## 使い方
+## 何を扱うか
 
-1. **Use this template** ボタンからリポジトリを作成
-2. GitHub Actions が自動で初期設定を実行
-   - `my-site/` がリポジトリ名にリネーム
-   - `docusaurus.config.ts` の設定を自動更新
-3. Settings → Pages → Source を **GitHub Actions** に設定
-4. デプロイ完了後、`https://<owner>.github.io/<repo>/` でアクセス可能
+- さまざまな UI / デザインパターン
+- 日本語ラベル前提のカテゴリ導線
+- detail / reference での preview と code の対応
+- TSX だけでなく CSS まで含めた実装例
 
 ## ローカル開発
 
-DevContainer で開発環境が自動構築されます。
-
 ```bash
-cd <repo-name>
+cd ui-pattern-lab
 pnpm install
 pnpm start
 ```
 
-## 構成
+## 主な確認コマンド
 
-- `.devcontainer/` - DevContainer 設定
-- `.github/workflows/` - GitHub Actions
-  - `setup.yml` - テンプレート初期化（初回のみ実行後削除）
-  - `deploy.yml` - GitHub Pages へデプロイ
-- `my-site/` - Docusaurus サイト（リポジトリ名にリネームされます）
+```bash
+cd ui-pattern-lab
+pnpm typecheck
+pnpm build
+```
+
+## 収録方針
+
+- 基本はカスタムデザインとして UI を紹介する
+- カテゴリ名・カテゴリ導線のラベルは日本語にする
+- detail / reference では `1 variant block : 1 code panel` を守る
+- preview だけでなく TSX / CSS を合わせて見られる構成にする
+
+## 主なディレクトリ
+
+- `ui-pattern-lab/docs/` - カテゴリページと詳細ページ
+- `ui-pattern-lab/src/components/` - preview / layout / 各 UI コンポーネント
+- `ui-pattern-lab/src/pages/patterns/` - 比較一覧ページ
