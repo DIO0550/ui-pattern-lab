@@ -1,62 +1,53 @@
-import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import type {ReactNode} from 'react';
+import ButtonReferenceLayout, {
+  type ButtonReferenceGuide,
+  type ButtonReferenceVariant,
+} from '@site/src/components/ButtonReferenceLayout';
 import type {ButtonPatternEntry} from '@site/src/data/buttonPatternTypes';
-import {getReferenceNoteTone} from '@site/src/components/referenceNoteTone';
 
 import styles from './styles.module.css';
 
-type HierarchyButtonReferenceContentProps = {
+type Props = {
   entry: ButtonPatternEntry;
 };
 
-type VariantPreviewKind = 'primary' | 'secondary' | 'tertiary' | 'ghost';
+type HierarchyButtonTone = 'primary' | 'secondary' | 'tertiary' | 'ghost';
 
-type CodeTab = {
-  id: string;
+type PreviewButtonProps = {
   label: string;
-  code: string;
-  highlightedHtml: string;
+  tone: HierarchyButtonTone;
 };
 
-type VariantDefinition = {
-  id: string;
-  name: string;
-  description: string;
-  previewKind: VariantPreviewKind;
-  tabs: CodeTab[];
-};
+function getToneClassName(tone: HierarchyButtonTone): string {
+  if (tone === 'primary') {
+    return styles.primaryButton;
+  }
 
-type NoteCard = {
-  id: 'problem' | 'solution' | 'usecase' | 'spacing' | 'state' | 'a11y';
-  label: string;
-  value: string;
-};
+  if (tone === 'secondary') {
+    return styles.secondaryButton;
+  }
 
-type GuideTone = 'do' | 'dont';
+  if (tone === 'tertiary') {
+    return styles.tertiaryButton;
+  }
 
-type GuidePreviewKind =
-  | 'primary-pair'
-  | 'double-primary'
-  | 'supporting-actions'
-  | 'ghost-primary';
+  return styles.ghostButton;
+}
 
-type GuideCard = {
-  id: string;
-  tone: GuideTone;
-  description: string;
-  previewKind: GuidePreviewKind;
-};
-
-const COLLAPSED_CODE_BODY_MAX_HEIGHT_PX = 320;
-const CODE_BODY_OVERFLOW_TOLERANCE_PX = 4;
-const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+function PreviewButton({label, tone}: PreviewButtonProps): ReactNode {
+  return (
+    <button className={`${styles.button} ${getToneClassName(tone)}`} type="button">
+      {label}
+    </button>
+  );
+}
 
 const variants = [
   {
     id: 'primary',
     name: 'Primary',
     description: '最も重要な主行動は 1 つに絞ります。',
-    previewKind: 'primary',
+    preview: <PreviewButton label="変更を保存" tone="primary" />,
     tabs: [
       {
         id: 'primary-css',
@@ -91,7 +82,7 @@ const variants = [
     id: 'secondary',
     name: 'Secondary',
     description: '主行動に並ぶ補助操作です。',
-    previewKind: 'secondary',
+    preview: <PreviewButton label="下書きに戻す" tone="secondary" />,
     tabs: [
       {
         id: 'secondary-css',
@@ -126,7 +117,7 @@ const variants = [
     id: 'tertiary',
     name: 'Tertiary',
     description: '詳細や補足的な操作に向きます。',
-    previewKind: 'tertiary',
+    preview: <PreviewButton label="変更点を確認" tone="tertiary" />,
     tabs: [
       {
         id: 'tertiary-css',
@@ -161,7 +152,7 @@ const variants = [
     id: 'ghost',
     name: 'Ghost',
     description: '一覧やカード内の軽い補助操作です。',
-    previewKind: 'ghost',
+    preview: <PreviewButton label="キャンセル" tone="ghost" />,
     tabs: [
       {
         id: 'ghost-css',
@@ -194,343 +185,61 @@ const variants = [
       },
     ],
   },
-] satisfies VariantDefinition[];
+] satisfies readonly ButtonReferenceVariant[];
 
-const guideCards = [
+const guides = [
   {
     id: 'primary-pair',
     tone: 'do',
     description:
       '主行動は 1 つに絞り、補助操作は secondary で一段弱めると優先順位が伝わりやすくなります。',
-    previewKind: 'primary-pair',
+    preview: (
+      <div className={styles.demoButtonRow}>
+        <PreviewButton label="下書きに戻す" tone="secondary" />
+        <PreviewButton label="変更を保存" tone="primary" />
+      </div>
+    ),
   },
   {
     id: 'double-primary',
     tone: 'dont',
     description:
       '同じ強さの primary を並べると、どちらを先に押すべきか瞬時に判断しにくくなります。',
-    previewKind: 'double-primary',
+    preview: (
+      <div className={styles.demoButtonRow}>
+        <PreviewButton label="下書きに戻す" tone="primary" />
+        <PreviewButton label="変更を保存" tone="primary" />
+      </div>
+    ),
   },
   {
     id: 'supporting-actions',
     tone: 'do',
     description:
       '詳細確認やキャンセルは tertiary / ghost に落として、主行動との強弱を維持します。',
-    previewKind: 'supporting-actions',
+    preview: (
+      <div className={styles.demoButtonRow}>
+        <PreviewButton label="変更点を確認" tone="tertiary" />
+        <PreviewButton label="キャンセル" tone="ghost" />
+      </div>
+    ),
   },
   {
     id: 'ghost-primary',
     tone: 'dont',
     description:
       '主行動まで ghost に落とすと、画面内でどの操作を優先すべきか伝わりません。',
-    previewKind: 'ghost-primary',
+    preview: <PreviewButton label="変更を保存" tone="ghost" />,
   },
-] satisfies GuideCard[];
+] satisfies readonly ButtonReferenceGuide[];
 
-function VariantPreview({
-  previewKind,
-}: {
-  previewKind: VariantPreviewKind;
-}): ReactNode {
-  if (previewKind === 'primary') {
-    return (
-      <button className={`${styles.button} ${styles.primaryButton}`} type="button">
-        変更を保存
-      </button>
-    );
-  }
-
-  if (previewKind === 'secondary') {
-    return (
-      <button className={`${styles.button} ${styles.secondaryButton}`} type="button">
-        下書きに戻す
-      </button>
-    );
-  }
-
-  if (previewKind === 'tertiary') {
-    return (
-      <button className={`${styles.button} ${styles.tertiaryButton}`} type="button">
-        変更点を確認
-      </button>
-    );
-  }
-
+export default function HierarchyButtonReferenceContent({entry}: Props): ReactNode {
   return (
-    <button className={`${styles.button} ${styles.ghostButton}`} type="button">
-      キャンセル
-    </button>
-  );
-}
-
-function GuidePreview({
-  previewKind,
-}: {
-  previewKind: GuidePreviewKind;
-}): ReactNode {
-  if (previewKind === 'primary-pair') {
-    return (
-      <div className={styles.demoButtonRow}>
-        <button className={`${styles.button} ${styles.secondaryButton}`} type="button">
-          下書きに戻す
-        </button>
-        <button className={`${styles.button} ${styles.primaryButton}`} type="button">
-          変更を保存
-        </button>
-      </div>
-    );
-  }
-
-  if (previewKind === 'double-primary') {
-    return (
-      <div className={styles.demoButtonRow}>
-        <button className={`${styles.button} ${styles.primaryButton}`} type="button">
-          下書きに戻す
-        </button>
-        <button className={`${styles.button} ${styles.primaryButton}`} type="button">
-          変更を保存
-        </button>
-      </div>
-    );
-  }
-
-  if (previewKind === 'supporting-actions') {
-    return (
-      <div className={styles.demoButtonRow}>
-        <button className={`${styles.button} ${styles.tertiaryButton}`} type="button">
-          変更点を確認
-        </button>
-        <button className={`${styles.button} ${styles.ghostButton}`} type="button">
-          キャンセル
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <button className={`${styles.button} ${styles.ghostButton}`} type="button">
-      変更を保存
-    </button>
-  );
-}
-
-function VariantCodePanel({
-  tabs,
-}: {
-  tabs: CodeTab[];
-}): ReactNode {
-  const firstTab = tabs[0];
-  const [activeTabId, setActiveTabId] = useState(firstTab?.id ?? '');
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isExpandable, setIsExpandable] = useState(false);
-  const codeBodyRef = useRef<HTMLDivElement | null>(null);
-  const activeTab = firstTab ? tabs.find((tab) => tab.id === activeTabId) ?? firstTab : undefined;
-
-  useEffect(() => {
-    if (!activeTab) {
-      return;
-    }
-
-    setIsExpanded(false);
-  }, [activeTab?.id]);
-
-  useIsomorphicLayoutEffect(() => {
-    const codeBody = codeBodyRef.current;
-
-    if (!activeTab || !codeBody) {
-      return;
-    }
-
-    const updateExpandableState = (): void => {
-      const nextIsExpandable =
-        codeBody.scrollHeight >
-        COLLAPSED_CODE_BODY_MAX_HEIGHT_PX + CODE_BODY_OVERFLOW_TOLERANCE_PX;
-      setIsExpandable(nextIsExpandable);
-
-      if (!nextIsExpandable) {
-        setIsExpanded(false);
-      }
-    };
-
-    updateExpandableState();
-
-    if (typeof ResizeObserver === 'undefined') {
-      return;
-    }
-
-    const resizeObserver = new ResizeObserver(() => {
-      updateExpandableState();
-    });
-    resizeObserver.observe(codeBody);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [activeTab?.id]);
-
-  if (!activeTab) {
-    return (
-      <div className={styles.variantCodeWrap}>
-        <div className={styles.variantCodeBar}>
-          <div className={styles.variantCodeTabs}>
-            <span className={styles.variantCodeLabel}>Code</span>
-          </div>
-        </div>
-        <div className={styles.variantCodeEmpty}>実装例は準備中です。</div>
-      </div>
-    );
-  }
-
-  const collapsedCodeBodyStyle = isExpanded
-    ? undefined
-    : {maxHeight: `${COLLAPSED_CODE_BODY_MAX_HEIGHT_PX}px`};
-  const codeBodyClassName = isExpanded
-    ? styles.variantCodeBody
-    : `${styles.variantCodeBody} ${styles.variantCodeBodyCollapsed}`;
-
-  return (
-    <div className={styles.variantCodeWrap}>
-      <div className={styles.variantCodeBar}>
-        <div className={styles.variantCodeTabs}>
-          {tabs.map((tab) => (
-            <button
-              className={
-                tab.id === activeTab.id
-                  ? `${styles.variantCodeTab} ${styles.variantCodeTabActive}`
-                  : styles.variantCodeTab
-              }
-              key={tab.id}
-              onClick={() => {
-                setIsExpanded(false);
-                setActiveTabId(tab.id);
-              }}
-              type="button">
-              {tab.label}
-            </button>
-          ))}
-        </div>
-        <div className={styles.codeActions}>
-          {isExpandable ? (
-            <button
-              aria-expanded={isExpanded}
-              className={styles.codeToggle}
-              onClick={() => {
-                setIsExpanded((currentValue) => !currentValue);
-              }}
-              type="button">
-              {isExpanded ? '折りたたむ' : '全体を表示'}
-            </button>
-          ) : null}
-          <button
-            className={styles.codeCopy}
-            onClick={() => {
-              if (typeof navigator !== 'undefined' && navigator.clipboard) {
-                void navigator.clipboard.writeText(activeTab.code);
-              }
-            }}
-            type="button">
-            Copy
-          </button>
-        </div>
-      </div>
-
-      <div className={styles.variantCode}>
-        <div
-          className={codeBodyClassName}
-          ref={codeBodyRef}
-          style={collapsedCodeBodyStyle}>
-          <pre dangerouslySetInnerHTML={{__html: activeTab.highlightedHtml}} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function HierarchyButtonReferenceContent({
-  entry,
-}: HierarchyButtonReferenceContentProps): ReactNode {
-  const notes: NoteCard[] = [
-    {id: 'problem', label: '課題', value: entry.problem},
-    {id: 'solution', label: '解決方法', value: entry.solution},
-    {id: 'usecase', label: '使いどころ', value: entry.whenToUse},
-    {id: 'spacing', label: '余白 / サイズ', value: entry.layoutNotes},
-    {id: 'state', label: '状態設計', value: entry.stateNotes},
-    {id: 'a11y', label: 'アクセシビリティ', value: entry.accessibilityNotes},
-  ];
-
-  return (
-    <div className={styles.root}>
-      <section className={styles.section}>
-        <div className={styles.sectionLabel}>バリアント</div>
-
-        <div className={styles.variantList}>
-          {variants.map((variant) => (
-            <article className={styles.variantBlock} key={variant.id}>
-              <div className={styles.variantHeader}>
-                <span className={styles.variantName}>{variant.name}</span>
-              </div>
-              <div className={styles.variantSplit}>
-                <div className={styles.variantDemo}>
-                  <div className={styles.variantDemoSurface}>
-                    <VariantPreview previewKind={variant.previewKind} />
-                  </div>
-                </div>
-                <VariantCodePanel tabs={variant.tabs} />
-              </div>
-            </article>
-          ))}
-        </div>
-
-      </section>
-
-      <hr className={styles.divider} />
-
-      <section className={styles.section}>
-        <div className={styles.sectionLabel}>設計メモ</div>
-        <h2 className={styles.sectionTitle}>課題 / 解決方法 / 使いどころ</h2>
-
-        <div className={styles.notesGrid}>
-          {notes.map((note) => (
-            <div
-              className={styles.noteCard}
-              data-note-tone={getReferenceNoteTone(note.id, note.label)}
-              key={note.id}>
-              <span className={styles.noteTag}>{note.label}</span>
-              <p>{note.value}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <hr className={styles.divider} />
-
-      <section className={styles.section}>
-        <div className={styles.sectionLabel}>ガイドライン</div>
-        <h2 className={styles.sectionTitle}>Do&apos;s &amp; Don&apos;ts</h2>
-
-        <div className={styles.guideGrid}>
-          {guideCards.map((guide) => (
-            <article
-              className={
-                guide.tone === 'do'
-                  ? `${styles.guideCard} ${styles.guideCardDo}`
-                  : `${styles.guideCard} ${styles.guideCardDont}`
-              }
-              key={guide.id}>
-              <div className={styles.guideFlag}>
-                <span>{guide.tone === 'do' ? '✓' : '✕'}</span>
-                {guide.tone === 'do' ? 'Do' : 'Don’t'}
-              </div>
-              <div className={styles.guideBody}>
-                <div className={styles.guideDemo}>
-                  <GuidePreview previewKind={guide.previewKind} />
-                </div>
-                <p>{guide.description}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    </div>
+    <ButtonReferenceLayout
+      entry={entry}
+      guides={guides}
+      variantSectionLabel="バリアント"
+      variants={variants}
+    />
   );
 }

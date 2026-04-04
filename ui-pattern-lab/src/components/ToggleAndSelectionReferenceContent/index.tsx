@@ -171,6 +171,7 @@ export default function ToggleAndSelectionReferenceContent({
     <ButtonReferenceLayout
       entry={entry}
       variantNote="単独トグルと選択群では pressed の意味が異なるため、ラベルとグルーピングで選択可能数を誤読させないようにします。"
+      variantSectionLabel="パターン"
       variants={variants}
     />
   );

@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import type {ReactNode} from 'react';
 import ButtonReferenceLayout, {
-  type ButtonReferenceCodeTab,
   type ButtonReferenceGuide,
   type ButtonReferenceNote,
   type ButtonReferenceVariant,
@@ -38,89 +37,6 @@ const selectableCardOptions = [
 
 const checkboxCriteria = ['複数選択', '未選択を許容', '情報量の多い候補'] as const;
 const radioCriteria = ['1 件だけ選択', '必ず 1 つ選ぶ', '単一の form value'] as const;
-const radioCardOptions = [
-  {
-    id: 'starter',
-    title: 'スターター',
-    description: '必要最低限の通知だけ受け取る',
-    detail: 'まずは軽く試したいチーム向け',
-  },
-  {
-    id: 'standard',
-    title: 'スタンダード',
-    description: '分析とセキュリティ通知をまとめて受け取る',
-    detail: '通常運用の既定プラン',
-  },
-] as const;
-
-const decisionAxisTabs = [
-  {
-    id: 'decision-axis-css',
-    label: 'CSS',
-    language: 'css',
-    code: `.axisGrid {
-  display: grid;
-  gap: 1rem;
-}
-
-.controlGroup {
-  border: 0;
-  display: grid;
-  gap: 0.75rem;
-  margin: 0;
-  padding: 0;
-}
-
-.controlLabel {
-  color: var(--ifm-color-emphasis-700);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  margin: 0;
-  text-transform: uppercase;
-}`,
-    note:
-      '左側 preview は説明文を置かず、checkbox card と radio card の control だけを並べます。',
-  },
-  {
-    id: 'decision-axis-tsx',
-    label: 'TSX',
-    language: 'tsx',
-    code: `const [selectedPackIds, setSelectedPackIds] = useState(['security']);
-const [selectedPlanId, setSelectedPlanId] = useState('standard');
-
-<div className={styles.axisGrid}>
-  <fieldset className={styles.controlGroup}>
-    <legend className={styles.controlLabel}>checkbox / selectable card</legend>
-    {packOptions.map((option) => (
-      <SelectableCardField
-        controlType="checkbox"
-        key={option.id}
-        onChange={() => togglePack(option.id)}
-        selected={selectedPackIds.includes(option.id)}
-        title={option.title}
-      />
-    ))}
-  </fieldset>
-
-  <fieldset className={styles.controlGroup}>
-    <legend className={styles.controlLabel}>selector / radio card</legend>
-    {planOptions.map((option) => (
-      <SelectableCardField
-        controlType="radio"
-        key={option.id}
-        name="plan"
-        onChange={() => setSelectedPlanId(option.id)}
-        selected={selectedPlanId === option.id}
-        title={option.title}
-      />
-    ))}
-  </fieldset>
-</div>`,
-    note:
-      '判断軸の説明は notes 側に寄せ、preview はコントロール本体だけで比較できるようにします。',
-  },
-] satisfies readonly ButtonReferenceCodeTab[];
 
 function buildNotes(entry: CheckboxPatternEntry): ButtonReferenceNote[] {
   return [
@@ -216,68 +132,6 @@ function SelectableCardVariantPreview(): ReactNode {
           ))}
         </div>
       </fieldset>
-    </PreviewFrame>
-  );
-}
-
-function DecisionAxisVariantPreview(): ReactNode {
-  const [selectedIds, setSelectedIds] = useState<
-    Array<(typeof selectableCardOptions)[number]['id']>
-  >(['security']);
-  const [selectedRadioId, setSelectedRadioId] = useState<
-    (typeof radioCardOptions)[number]['id']
-  >('standard');
-
-  function toggleOption(optionId: (typeof selectableCardOptions)[number]['id']): void {
-    setSelectedIds((current) => {
-      if (current.includes(optionId)) {
-        return current.filter((item) => item !== optionId);
-      }
-
-      return [...current, optionId];
-    });
-  }
-
-  return (
-    <PreviewFrame>
-      <div className={styles.axisGrid}>
-        <fieldset className={styles.controlGroup}>
-          <legend className={styles.controlLabel}>checkbox / selectable card</legend>
-          <div className={checkboxGalleryStyles.selectableCardList}>
-            {selectableCardOptions.slice(0, 2).map((option) => (
-              <SelectableCardField
-                description={option.description}
-                detail={option.detail}
-                key={option.id}
-                onChange={() => {
-                  toggleOption(option.id);
-                }}
-                selected={selectedIds.includes(option.id)}
-                title={option.title}
-              />
-            ))}
-          </div>
-        </fieldset>
-        <fieldset className={styles.controlGroup}>
-          <legend className={styles.controlLabel}>selector / radio card</legend>
-          <div className={checkboxGalleryStyles.selectableCardList}>
-            {radioCardOptions.map((option) => (
-              <SelectableCardField
-                controlType="radio"
-                description={option.description}
-                detail={option.detail}
-                key={option.id}
-                name="decision-axis-radio"
-                onChange={() => {
-                  setSelectedRadioId(option.id);
-                }}
-                selected={selectedRadioId === option.id}
-                title={option.title}
-              />
-            ))}
-          </div>
-        </fieldset>
-      </div>
     </PreviewFrame>
   );
 }
@@ -380,21 +234,14 @@ export default function SelectableCardsReferenceContent({entry}: Props): ReactNo
       preview: <SelectableCardVariantPreview />,
       tabs: selectableCardTabs,
     },
-    {
-      id: 'decision-axis',
-      name: '判断軸',
-      description:
-        '見た目が同じカードでも、選択数と未選択可否で checkbox card と radio card を分けます。',
-      preview: <DecisionAxisVariantPreview />,
-      tabs: decisionAxisTabs,
-    },
   ];
 
   return (
     <ButtonReferenceLayout
       guides={guides}
       notes={buildNotes(entry)}
-      variantNote="selectable card という見た目は共通でも、複数選択・未選択許容なら checkbox、最後に 1 つの値へ確定するなら radio を選びます。"
+      variantNote={`selectable card という見た目は共通でも、複数選択・未選択許容・情報量の多い候補なら checkbox を選びます。${radioCriteria.join('・')} を満たして最後に 1 つの form value へ確定するなら radio card へ分けてください。`}
+      variantSectionLabel="使い分け"
       variants={variants}
     />
   );
