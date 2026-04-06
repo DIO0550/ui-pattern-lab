@@ -40,14 +40,14 @@ export default function EllipsisDisplayPatternPageContent(): ReactNode {
     <PatternComparisonPageShell
       backLink={{
         to: '/ellipsis-display',
-        label: '省略表示カテゴリへ戻る',
+        label: '表示制限カテゴリへ戻る',
       }}
       summary={
         <>
-          <Heading as="h2">先に省略ルールを比べる</Heading>
+          <Heading as="h2">先に表示制限のルールを比べる</Heading>
           <p>
             table 専用の `cell-truncation` を置き換えるのではなく、list / card / summary /
-            disclosure を横断する generic な省略表示ルールを比較します。
+            disclosure を横断する generic な表示制限ルールを比較します。
           </p>
           <ul>
             <li>固定幅でも可変幅でも 1 行のまま密度を保つ基本形</li>
@@ -66,7 +66,8 @@ export default function EllipsisDisplayPatternPageContent(): ReactNode {
             ))}
           </ul>
           <p>
-            一覧では判断軸を短く見比べ、詳細ページでは preview と CSS / TSX 例を常時展開で確認できます。
+            一覧では判断軸を短く見比べ、詳細ページでは visual variation ごとの preview と CSS /
+            TSX 例を常時展開で確認できます。
             table 文脈の具体例は <Link to="/table/cell-truncation">cell-truncation</Link>{' '}
             に残しています。
           </p>
@@ -74,23 +75,24 @@ export default function EllipsisDisplayPatternPageContent(): ReactNode {
       }
       axisSection={
         <section className={`container margin-bottom--xl ${styles.axisSection}`}>
-          <Heading as="h2">省略表示の比較軸</Heading>
+          <Heading as="h2">表示制限の比較軸</Heading>
           <p className={styles.axisLead}>
             まずは「どこまで見せるか」と「全文へどう到達させるか」を整理し、必要な詳細パターンだけを読みます。
           </p>
           <PatternComparisonAxisGrid items={axisItems} layout="cards" />
           <p className={styles.axisNote}>
             長文セルを table 密度の観点で扱う具体例は{' '}
-            <Link to="/table/cell-truncation">/table/cell-truncation</Link>{' '}
-            を参照してください。このページでは generic な意思決定ガイドに絞っています。
+             <Link to="/table/cell-truncation">/table/cell-truncation</Link>{' '}
+            を参照してください。このページでは行動パターンの意思決定ガイドに絞っています。
           </p>
         </section>
       }
       listSection={
         <>
-          <Heading as="h2">パターンを比較する</Heading>
+          <Heading as="h2">行動パターンを比較する</Heading>
           <p>
-            一覧では全文到達方法の違いを短く見比べ、詳細ページで preview、課題・解決方法、CSS / TSX 例を深掘りします。
+            一覧では全文到達方法の違いを短く見比べ、詳細ページで visual variation、課題・解決方法、CSS /
+            TSX 例を深掘りします。
           </p>
           <PatternCompareCardGrid items={compareItems} />
         </>

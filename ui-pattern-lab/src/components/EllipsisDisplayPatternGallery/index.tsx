@@ -4,14 +4,11 @@ import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import type {
   ButtonReferenceGuide,
-  ButtonReferenceVariant,
 } from '@site/src/components/ButtonReferenceLayout';
 import EllipsisDisplayPatternMetadataPanel, {
   type EllipsisDisplayPatternMetadataItem,
 } from '@site/src/components/EllipsisDisplayPatternMetadataPanel';
-import PatternReferenceContent, {
-  buildReferenceCodeTabs,
-} from '@site/src/components/PatternReferenceContent';
+import PatternReferenceContent from '@site/src/components/PatternReferenceContent';
 import EllipsisDisplayPatternSnippetPanel from '@site/src/components/EllipsisDisplayPatternSnippetPanel';
 import type {
   EllipsisDisplayDemoKind,
@@ -19,6 +16,7 @@ import type {
 } from '@site/src/data/ellipsisDisplayPatternTypes';
 
 import styles from './styles.module.css';
+import {buildDisplayLimitVisualVariants} from './visualVariants';
 
 type Density = 'list' | 'detail';
 
@@ -257,115 +255,6 @@ function AccessibleDisclosureDemo({
   );
 }
 
-function buildSingleLineReferenceVariants(
-  entry: EllipsisDisplayPatternEntry,
-): readonly ButtonReferenceVariant[] {
-  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
-  const fixedVariants = singleLineExamples.map((example) => ({
-    id: `single-line-${example.label}`,
-    name: example.label,
-    description: example.meta,
-    preview: (
-      <article className={styles.singleLineCard}>
-        <span className={styles.singleLineLabel}>{example.label}</span>
-        <p className={styles.singleLineValue}>{example.value}</p>
-        <p className={styles.singleLineMeta}>{example.meta}</p>
-      </article>
-    ),
-    tabs,
-  }));
-
-  return [
-    ...fixedVariants,
-    {
-      id: 'single-line-responsive',
-      name: responsiveSingleLineExample.label,
-      description: responsiveSingleLineExample.meta,
-      preview: (
-        <div className={styles.resizableFrame}>
-          <article className={styles.singleLineCard}>
-            <span className={styles.singleLineLabel}>{responsiveSingleLineExample.label}</span>
-            <div className={styles.responsiveLineRow}>
-              <span className={styles.responsiveLinePrefix}>
-                {responsiveSingleLineExample.prefix}
-              </span>
-              <p className={styles.responsiveLineValue}>
-                {responsiveSingleLineExample.value}
-              </p>
-            </div>
-            <p className={styles.singleLineMeta}>{responsiveSingleLineExample.meta}</p>
-          </article>
-        </div>
-      ),
-      tabs,
-    },
-  ] as const;
-}
-
-function buildMultiLineClampReferenceVariants(
-  entry: EllipsisDisplayPatternEntry,
-): readonly ButtonReferenceVariant[] {
-  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
-
-  return clampExamples.map((example) => ({
-    id: `multi-line-${example.title}`,
-    name: example.title,
-    description: '3 行クランプを保ちながら一覧比較できる要約例です。',
-    preview: (
-      <article className={styles.clampCard}>
-        <Heading as="h4" className={styles.clampTitle}>
-          {example.title}
-        </Heading>
-        <p className={styles.clampSummary}>{example.summary}</p>
-      </article>
-    ),
-    tabs,
-  }));
-}
-
-function buildFullTextSupplementReferenceVariants(
-  entry: EllipsisDisplayPatternEntry,
-): readonly ButtonReferenceVariant[] {
-  const tabs = buildReferenceCodeTabs(entry.snippets?.items);
-
-  return supplementExamples.map((example) => ({
-    id: `full-text-${example.title}`,
-    name: example.title,
-    description: '要約と全文補足を近接配置し、hover 依存にしない構成です。',
-    preview: (
-      <article className={styles.supplementCard}>
-        <Heading as="h4" className={styles.supplementTitle}>
-          {example.title}
-        </Heading>
-        <p className={styles.supplementPreview}>{example.preview}</p>
-        <div className={styles.supplementFullText}>
-          <span className={styles.supplementLabel}>全文補足</span>
-          <p className={styles.supplementText}>{example.fullText}</p>
-        </div>
-      </article>
-    ),
-    tabs,
-  }));
-}
-
-function buildEllipsisReferenceVariants(
-  entry: EllipsisDisplayPatternEntry,
-): readonly ButtonReferenceVariant[] | null {
-  if (entry.id === 'single-line-ellipsis') {
-    return buildSingleLineReferenceVariants(entry);
-  }
-
-  if (entry.id === 'multi-line-clamp') {
-    return buildMultiLineClampReferenceVariants(entry);
-  }
-
-  if (entry.id === 'full-text-supplement') {
-    return buildFullTextSupplementReferenceVariants(entry);
-  }
-
-  return null;
-}
-
 function buildEllipsisReferenceGuides(
   entry: EllipsisDisplayPatternEntry,
 ): readonly ButtonReferenceGuide[] | undefined {
@@ -524,7 +413,7 @@ export default function EllipsisDisplayPatternGallery({
             label: item.label,
             value: item.value,
           }));
-          const detailVariants = buildEllipsisReferenceVariants(entry);
+          const detailVariants = buildDisplayLimitVisualVariants(entry.id);
           const detailGuides = buildEllipsisReferenceGuides(entry);
 
           if (density === 'detail') {
@@ -535,6 +424,7 @@ export default function EllipsisDisplayPatternGallery({
                     guides={detailGuides}
                     notes={detailNotes}
                     variantNote={entry.snippets?.snippetSummary}
+                    variantSectionLabel="バリエーション"
                     variants={detailVariants}
                   />
                 </article>

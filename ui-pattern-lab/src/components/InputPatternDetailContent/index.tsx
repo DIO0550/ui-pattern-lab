@@ -297,6 +297,7 @@ export default function InputPatternDetailContent({entryId}: Props): ReactNode {
       <PatternReferenceContent
         notes={buildNotes(entry.id)}
         variantNote={`${definition.detailDescription} 各 variant は 1 preview + 1 code panel として分離し、TSX と CSS を同じ panel のタブで見比べられるようにしています。`}
+        variantSectionLabel="状態"
         variants={buildVariants(entry.id)}
       />
     </div>

@@ -323,6 +323,149 @@
   overflow-wrap: anywhere;
 }
 
+.fadeRow {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.fadeValue {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-mask-image: linear-gradient(to right, #000 82%, transparent);
+  mask-image: linear-gradient(to right, #000 82%, transparent);
+}
+
+.gradientMeta {
+  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  border-radius: 999px;
+  color: var(--ifm-color-primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.24rem 0.58rem;
+  white-space: nowrap;
+}
+
+.chipRow {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.chipValue {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chip {
+  border: 1px solid var(--gallery-border);
+  border-radius: 999px;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.24rem 0.58rem;
+  white-space: nowrap;
+}
+
+.softClampCard {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ifm-color-primary) 7%, white) 0%, transparent 100%),
+    var(--gallery-surface);
+}
+
+.softClampSummary {
+  color: var(--ifm-font-color-base);
+}
+
+.denseList {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.denseRow {
+  border: 1px solid var(--gallery-border);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.75rem 0.85rem;
+}
+
+.denseRow strong {
+  font-size: 0.88rem;
+}
+
+.denseRowSummary {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.notePanels {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.notePanel {
+  border: 1px solid var(--gallery-border);
+  border-radius: 0.85rem;
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.85rem;
+}
+
+.wideVariantSurface {
+  width: 100%;
+}
+
+.pillDisclosureCard {
+  gap: 0.75rem;
+}
+
+.pillToggleRow {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.pillDisclosureButton {
+  align-items: center;
+  background: color-mix(in srgb, var(--ifm-color-primary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 35%, var(--gallery-border));
+  border-radius: 999px;
+  color: var(--ifm-color-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.45rem;
+  padding: 0.45rem 0.9rem;
+}
+
+.pillDisclosureButton:hover,
+.pillDisclosureButton:focus-visible {
+  background: color-mix(in srgb, var(--ifm-color-primary) 14%, transparent);
+}
+
+.pillStatusBadge {
+  background: color-mix(in srgb, var(--ifm-color-emphasis-300) 42%, transparent);
+  border-radius: 999px;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.24rem 0.58rem;
+}
+
 .emptyState {
   background: var(--gallery-surface);
   border: 1px dashed var(--gallery-border);
@@ -337,6 +480,10 @@
   }
 
   .detailMainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .notePanels {
     grid-template-columns: 1fr;
   }
 }

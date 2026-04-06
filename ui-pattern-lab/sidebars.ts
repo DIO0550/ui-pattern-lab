@@ -33,7 +33,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '省略表示',
+      label: '表示制限',
       link: {
         type: 'doc',
         id: 'ellipsis-display',

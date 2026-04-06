@@ -306,6 +306,7 @@ export default function InteractiveStatesReferenceContent({
     <ButtonReferenceLayout
       guides={guides}
       notes={notes}
+      variantSectionLabel="インタラクティブ状態"
       variants={variants}
     />
   );

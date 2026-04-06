@@ -169,6 +169,7 @@ export default function SpacingAndSizingReferenceContent({
     <ButtonReferenceLayout
       entry={entry}
       variantNote="サイズ差は高さだけでなく padding と icon gap も連動させ、touch target を損なわない基準を保ちます。"
+      variantSectionLabel="サイズ"
       variants={variants}
     />
   );
