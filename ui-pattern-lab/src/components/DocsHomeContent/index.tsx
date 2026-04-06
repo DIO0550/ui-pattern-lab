@@ -58,17 +58,17 @@ const ellipsisDisplayDetailLinks = ellipsisDisplayPatternEntries.map((entry) => 
 
 const ellipsisDisplayLinks = [
   {
-    title: '省略表示カテゴリ',
+    title: '表示制限カテゴリ',
     to: '/ellipsis-display',
     description:
-      'generic な省略表示カテゴリの入口です。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+      'list / card / summary / disclosure を横断する generic な表示制限カテゴリの入口です。compare と detail の導線をまとめて確認できます。',
     meta: 'カテゴリページ',
   },
   {
-    title: '省略表示パターン比較',
+    title: '表示制限パターン比較',
     to: '/patterns/ellipsis-display-designs',
     description:
-      '1行省略、複数行 clamp、全文補足、アクセシブルな開閉を横断して比較できます。',
+      '1行省略、複数行 clamp、全文補足、アクセシブルな開閉を行動パターンとして比較できます。',
     meta: '比較一覧',
   },
   ...ellipsisDisplayDetailLinks,
@@ -260,12 +260,12 @@ const categoryCards: CategoryCard[] = [
   },
   {
     id: 'ellipsis-display',
-    title: '省略表示',
+    title: '表示制限',
     description:
-      'list / card / summary / disclosure を横断する generic な省略表示カテゴリです。table 専用の `cell-truncation` は別ページに残しています。',
+      'list / card / summary / disclosure を横断する generic な表示制限カテゴリです。compare では行動パターン、detail では visual variation を扱います。',
     links: ellipsisDisplayLinks,
-    expandedMeta: 'クリックして省略表示関連の導線を閉じる',
-    collapsedMeta: 'クリックして省略表示関連の導線を表示',
+    expandedMeta: 'クリックして表示制限関連の導線を閉じる',
+    collapsedMeta: 'クリックして表示制限関連の導線を表示',
   },
   {
     id: 'button',

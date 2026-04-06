@@ -100,7 +100,7 @@ const config: Config = {
               to: '/table',
             },
             {
-              label: '省略表示',
+              label: '表示制限',
               to: '/ellipsis-display',
             },
             {
