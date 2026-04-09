@@ -101,6 +101,26 @@ const baseButtonPatternEntries = [
     demoKind: 'icon-and-compound-actions',
   },
   {
+    id: 'button-group',
+    title: 'ボタングループ',
+    summary:
+      '関連する action group / toggle group / split button を 1 まとまりの操作導線として整理します。',
+    problem:
+      '関連するボタンがばらばらに置かれると、どこまでが 1 セットの操作か伝わりにくく、toggle と実行ボタンの違いも曖昧になります。',
+    solution:
+      '`role="group"` でまとまりを示し、connected / separated / split の境界と優先順位を先に決めて、グループ内の責務を明確にします。',
+    whenToUse:
+      'ツールバー、カードアクション、表示切替、主操作 + 補助メニューなど、複数ボタンを近接配置して 1 コンテキストとして扱いたい場面に向いています。',
+    layoutNotes:
+      '横並びを基本にしつつ、密度が高い場面は connected、余白が必要なら separated、主操作 + 補助操作は split button として境界を残します。',
+    stateNotes:
+      'Button Group は配置と役割分担を扱い、pressed の意味づけ自体は toggle-and-selection で深掘りします。action group では各ボタンを独立実行として保ちます。',
+    accessibilityNotes:
+      'グループ全体には `role="group"` と名前を与え、split button は主操作と補助メニューを別々に読めるようにし、toggle group では選択状態を属性でも伝えます。',
+    tags: ['role=group', 'toggle group', 'split button'],
+    demoKind: 'button-group',
+  },
+  {
     id: 'toggle-and-selection',
     title: 'トグル・選択',
     summary:
