@@ -25,6 +25,7 @@ type SharedProps = {
   notes: readonly ButtonReferenceNote[];
   guides?: readonly ButtonReferenceGuide[];
   variantNote?: string;
+  variantSectionLabel?: string;
 };
 
 type SingleVariantProps = {
@@ -64,7 +65,7 @@ export function buildReferenceCodeTabs(
 
 /** Renders a single-pattern reference view using the shared split preview/code layout. */
 export default function PatternReferenceContent(props: Props): ReactNode {
-  const {guides, notes, variantNote} = props;
+  const {guides, notes, variantNote, variantSectionLabel} = props;
   const variants =
     'variants' in props
       ? props.variants
@@ -85,6 +86,7 @@ export default function PatternReferenceContent(props: Props): ReactNode {
       guides={guides}
       notes={notes}
       variantNote={resolvedVariantNote}
+      variantSectionLabel={variantSectionLabel}
       variants={variants}
     />
   );
