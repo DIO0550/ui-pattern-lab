@@ -218,6 +218,59 @@ export const buttonPatternSnippets: Record<
       },
     ],
   },
+  'button-group': {
+    snippetSummary:
+      '関連するボタンを `role="group"` で束ね、connected group と主操作の優先順位をそろえる最小例です。',
+    items: [
+      {
+        id: 'button-group-css',
+        label: 'CSS',
+        language: 'css',
+        code: `.actionGroup {
+  display: inline-flex;
+  gap: 0;
+}
+
+.actionGroup > * + * {
+  margin-inline-start: -1px;
+}
+
+.groupButton {
+  border-radius: 0;
+}
+
+.groupButton:first-child {
+  border-bottom-left-radius: 999px;
+  border-top-left-radius: 999px;
+}
+
+.groupButton:last-child {
+  border-bottom-right-radius: 999px;
+  border-top-right-radius: 999px;
+}`,
+        note:
+          'Button Group は見た目だけでなく、境界共有と近接配置で「同じ対象への操作群」だと読めることが重要です。',
+      },
+      {
+        id: 'button-group-tsx',
+        label: 'TSX',
+        language: 'tsx',
+        code: `<div aria-label="カード操作" className={styles.actionGroup} role="group">
+  <button className={styles.groupButton} type="button">
+    比較
+  </button>
+  <button className={styles.groupButton} type="button">
+    複製
+  </button>
+  <button className={styles.groupButtonPrimary} type="button">
+    公開
+  </button>
+</div>`,
+        note:
+          'pressed の意味づけが主役になる場合は toggle-and-selection へ分け、Button Group ではまずグループ境界と役割分担をそろえます。',
+      },
+    ],
+  },
   'toggle-and-selection': {
     snippetSummary:
       '`aria-pressed` を使ったトグルと、複数候補から 1 つを選ぶセグメント UI の最小例です。',

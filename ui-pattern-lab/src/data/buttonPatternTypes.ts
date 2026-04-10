@@ -3,6 +3,7 @@ export type ButtonPatternEntryId =
   | 'interactive-states'
   | 'destructive-actions'
   | 'icon-and-compound-actions'
+  | 'button-group'
   | 'toggle-and-selection'
   | 'spacing-and-sizing';
 

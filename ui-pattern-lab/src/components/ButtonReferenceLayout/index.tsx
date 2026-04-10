@@ -53,6 +53,7 @@ type EntryNoteSource = Pick<
 type ButtonReferenceLayoutProps = {
   guides?: readonly ButtonReferenceGuide[];
   variantNote?: string;
+  variantSectionLabel?: string;
   variants: readonly ButtonReferenceVariant[];
 } & (
   | {
@@ -320,6 +321,7 @@ export default function ButtonReferenceLayout({
   guides = [],
   notes,
   variantNote,
+  variantSectionLabel = 'バリアント',
   variants,
 }: ButtonReferenceLayoutProps): ReactNode {
   const resolvedNotes = notes ? [...notes] : entry ? buildDefaultNotes(entry) : [];
@@ -333,7 +335,7 @@ export default function ButtonReferenceLayout({
   return (
     <div className={styles.root}>
       <section className={styles.section}>
-        <div className={styles.sectionLabel}>バリアント</div>
+        <div className={styles.sectionLabel}>{variantSectionLabel}</div>
         {variantNote ? <p className={styles.variantNote}>{variantNote}</p> : null}
 
         <div className={styles.variantList}>

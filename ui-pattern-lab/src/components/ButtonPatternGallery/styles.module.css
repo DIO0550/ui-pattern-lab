@@ -363,6 +363,37 @@
   display: inline-flex;
 }
 
+.buttonGroupConnected {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.buttonGroupConnected > * + * {
+  margin-inline-start: -1px;
+}
+
+.buttonToolbar {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.groupLeadingButton {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.groupMiddleButton {
+  border-radius: 0;
+}
+
+.groupTrailingButton {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
 .splitPrimary {
   border-bottom-right-radius: 0;
   border-right-width: 0;

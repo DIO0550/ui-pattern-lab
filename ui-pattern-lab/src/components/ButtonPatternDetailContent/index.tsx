@@ -1,6 +1,7 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import ButtonPatternGallery from '@site/src/components/ButtonPatternGallery';
+import ButtonGroupReferenceContent from '@site/src/components/ButtonGroupReferenceContent';
 import DestructiveButtonReferenceContent from '@site/src/components/DestructiveButtonReferenceContent';
 import HierarchyButtonReferenceContent from '@site/src/components/HierarchyButtonReferenceContent';
 import IconAndCompoundReferenceContent from '@site/src/components/IconAndCompoundReferenceContent';
@@ -26,6 +27,7 @@ export default function ButtonPatternDetailContent({
   }
 
   const showSelectorReference = entry.id === 'toggle-and-selection';
+  const showButtonGroupReference = entry.id === 'button-group';
 
   const detailContent =
     entry.id === 'destructive-actions' ? (
@@ -36,6 +38,8 @@ export default function ButtonPatternDetailContent({
       <InteractiveStatesReferenceContent entry={entry} />
     ) : entry.id === 'icon-and-compound-actions' ? (
       <IconAndCompoundReferenceContent entry={entry} />
+    ) : entry.id === 'button-group' ? (
+      <ButtonGroupReferenceContent entry={entry} />
     ) : entry.id === 'toggle-and-selection' ? (
       <ToggleAndSelectionReferenceContent entry={entry} />
     ) : entry.id === 'spacing-and-sizing' ? (
@@ -64,6 +68,15 @@ export default function ButtonPatternDetailContent({
           を扱いたい場合は{' '}
           <Link to="/patterns/selector-designs">セレクタデザインパターン</Link>{' '}
           を参照してください。toggle-and-selection では押した瞬間に状態や表示モードが変わる UI を扱います。
+        </p>
+      ) : null}
+      {showButtonGroupReference ? (
+        <p className={styles.contextNote}>
+          button-group では複数ボタンのまとまりと役割分担を扱います。pressed の意味づけは{' '}
+          <Link to="/button/toggle-and-selection">トグル・選択</Link>、icon-only や split button
+          の individual affordance は{' '}
+          <Link to="/button/icon-and-compound-actions">アイコン・複合アクション</Link>{' '}
+          もあわせて参照してください。
         </p>
       ) : null}
       {detailContent}

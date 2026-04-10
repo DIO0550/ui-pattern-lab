@@ -18,6 +18,10 @@ const axisItems = [
     description: 'focus-visible を消さず、disabled と loading を別の意味として扱い、再実行防止も含めて設計します。',
   },
   {
+    title: 'グルーピング',
+    description: '関連操作を connected / separated / split のどれで束ねるか、toggle group と action group の責務を分けて設計します。',
+  },
+  {
     title: '余白・サイズ',
     description: 'compact / default / comfortable で min-height、padding、icon gap を連動させて整合を取ります。',
   },
@@ -42,11 +46,12 @@ export default function ButtonPatternPageContent(): ReactNode {
         <>
           <Heading as="h2">先に比較軸を整理する</Heading>
           <p>
-            ボタンの見た目そのものではなく、主行動の強さ、状態差分、危険操作、icon-only、
-            toggle、余白設計を横断で比較します。
+            ボタンの見た目そのものではなく、主行動の強さ、グルーピング、状態差分、危険操作、
+            icon-only、toggle、余白設計を横断で比較します。
           </p>
           <ul>
             <li>主行動と補助行動の優先順位</li>
+            <li>関連操作を group / split / toggle でどこまで束ねるか</li>
             <li>hover / focus-visible / disabled / loading の扱い分け</li>
             <li>destructive / warning / cancel の危険度設計</li>
             <li>padding、min-height、icon gap、touch target の基準</li>
@@ -63,7 +68,7 @@ export default function ButtonPatternPageContent(): ReactNode {
           </ul>
           <p>
             一覧では比較要点を短く見比べ、詳細ページでは preview と CSS / TSX サンプルを常時展開で確認できます。
-            余白・サイズの詳細ルールは「余白とサイズ設計」ページを正とします。
+            ボタングループの境界設計と、余白・サイズの詳細ルールは各 detail ページを正とします。
           </p>
         </>
       }
@@ -71,13 +76,14 @@ export default function ButtonPatternPageContent(): ReactNode {
         <section className={`container margin-bottom--xl ${styles.axisSection}`}>
           <Heading as="h2">ボタンの比較軸</Heading>
           <p className={styles.axisLead}>
-            まずは強調度と状態設計の違いを短く整理し、どのパターンを詳細で読むべきかを先に決めます。
+            まずは強調度、グルーピング、状態設計の違いを短く整理し、どのパターンを詳細で読むべきかを先に決めます。
           </p>
           <PatternComparisonAxisGrid items={axisItems} layout="cards" />
           <p className={styles.axisNote}>
             フォーム入力として 1 つの値を選ぶ radio / native select / combobox は{' '}
             <Link to="/patterns/selector-designs">セレクタデザインパターン</Link>{' '}
-            を参照してください。button / toggle は押した瞬間に状態や表示モードが変わる UI を扱います。
+            を参照してください。button-group は複数 action のまとまりを扱い、button / toggle
+            は押した瞬間に状態や表示モードが変わる UI を扱います。
           </p>
         </section>
       }

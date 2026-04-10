@@ -284,6 +284,52 @@ function IconAndCompoundActionsDemo(): ReactNode {
   );
 }
 
+function ButtonGroupDemo(): ReactNode {
+  return (
+    <div className={styles.demoFrame}>
+      <div className={styles.previewGrid}>
+        <PreviewCard
+          label="Connected action group"
+          description="関連する操作を 1 かたまりとして近接配置する基本形です。">
+          <div aria-label="カード操作" className={styles.buttonGroupConnected} role="group">
+            <button
+              className={clsx(
+                styles.demoButton,
+                styles.secondaryButton,
+                styles.groupLeadingButton,
+              )}
+              type="button">
+              比較
+            </button>
+            <button
+              className={clsx(
+                styles.demoButton,
+                styles.secondaryButton,
+                styles.groupMiddleButton,
+              )}
+              type="button">
+              複製
+            </button>
+            <button
+              className={clsx(
+                styles.demoButton,
+                styles.primaryButton,
+                styles.groupTrailingButton,
+              )}
+              type="button">
+              公開
+            </button>
+          </div>
+        </PreviewCard>
+      </div>
+      <p className={styles.demoNote}>
+        Button Group では近接配置と役割分担を扱い、pressed の意味づけそのものは
+        toggle パターン側で整理します。
+      </p>
+    </div>
+  );
+}
+
 function ToggleAndSelectionDemo(): ReactNode {
   const [isPinned, setIsPinned] = useState(false);
   const views = [
@@ -426,6 +472,7 @@ const demoByKind: Record<ButtonDemoKind, DemoRenderer> = {
   'interactive-states': InteractiveStatesDemo,
   'destructive-actions': DestructiveActionsDemo,
   'icon-and-compound-actions': IconAndCompoundActionsDemo,
+  'button-group': ButtonGroupDemo,
   'toggle-and-selection': ToggleAndSelectionDemo,
   'spacing-and-sizing': SpacingAndSizingDemo,
 };
