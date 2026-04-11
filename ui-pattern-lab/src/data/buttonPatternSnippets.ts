@@ -271,6 +271,63 @@ export const buttonPatternSnippets: Record<
       },
     ],
   },
+  'button-toolbar': {
+    snippetSummary:
+      '複数の button group / standalone action を 1 本の toolbar にまとめ、cluster label と wrap をそろえる例です。',
+    items: [
+      {
+        id: 'button-toolbar-css',
+        label: 'CSS',
+        language: 'css',
+        code: `.toolbar {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+}
+
+.toolbarGroup {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.toolbarLabel {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.toolbarDivider {
+  align-self: stretch;
+  border-inline-start: 1px solid color-mix(in srgb, var(--ifm-font-color-base) 14%, transparent);
+}`,
+        note:
+          'Button Toolbar は単一 group ではなく、複数 cluster を同じ作業文脈で並べる container として扱います。',
+      },
+      {
+        id: 'button-toolbar-tsx',
+        label: 'TSX',
+        language: 'tsx',
+        code: `<div aria-label="編集ツール" className={styles.toolbar} role="toolbar">
+  <div className={styles.toolbarGroup}>
+    <span className={styles.toolbarLabel}>書式</span>
+    <button className={styles.toolbarButton} type="button">太字</button>
+    <button className={styles.toolbarButton} type="button">斜体</button>
+  </div>
+  <span aria-hidden="true" className={styles.toolbarDivider} />
+  <div className={styles.toolbarGroup}>
+    <span className={styles.toolbarLabel}>表示</span>
+    <button aria-pressed={true} className={styles.toolbarButton} type="button">グリッド</button>
+    <button aria-pressed={false} className={styles.toolbarButton} type="button">リスト</button>
+  </div>
+</div>`,
+        note:
+          '1 つの button group に押し込めず、cluster label と toolbar 名で「どの作業帯か」を伝えるのが基本です。',
+      },
+    ],
+  },
   'toggle-and-selection': {
     snippetSummary:
       '`aria-pressed` を使ったトグルと、複数候補から 1 つを選ぶセグメント UI の最小例です。',

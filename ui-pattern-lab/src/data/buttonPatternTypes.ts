@@ -4,6 +4,7 @@ export type ButtonPatternEntryId =
   | 'destructive-actions'
   | 'icon-and-compound-actions'
   | 'button-group'
+  | 'button-toolbar'
   | 'toggle-and-selection'
   | 'spacing-and-sizing';
 

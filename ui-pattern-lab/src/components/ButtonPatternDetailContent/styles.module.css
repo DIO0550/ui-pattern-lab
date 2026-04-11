@@ -16,3 +16,13 @@
   margin: 0;
   max-width: 60rem;
 }
+
+.contextNote {
+  background: color-mix(in srgb, var(--ifm-card-background-color) 86%, var(--ifm-color-primary) 4%);
+  border: 1px solid color-mix(in srgb, var(--ifm-font-color-base) 10%, transparent);
+  border-radius: 1rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 60rem;
+  padding: 0.9rem 1rem;
+}

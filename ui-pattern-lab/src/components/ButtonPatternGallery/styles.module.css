@@ -517,3 +517,45 @@
     grid-template-columns: 1fr;
   }
 }
+
+.toolbarFrame {
+  align-items: center;
+  background: color-mix(in srgb, var(--ifm-card-background-color) 84%, var(--ifm-color-primary) 4%);
+  border: 1px solid color-mix(in srgb, var(--ifm-font-color-base) 10%, transparent);
+  border-radius: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 0.9rem;
+  padding: 0.75rem 0.85rem;
+}
+
+.toolbarCluster {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.toolbarLabel {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.toolbarDivider {
+  align-self: stretch;
+  border-inline-start: 1px solid color-mix(in srgb, var(--ifm-font-color-base) 12%, transparent);
+  min-height: 2rem;
+}
+
+.toolbarCount {
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.toolbarNarrow {
+  max-width: 20rem;
+}

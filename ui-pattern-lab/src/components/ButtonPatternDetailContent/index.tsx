@@ -2,6 +2,7 @@ import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
 import ButtonPatternGallery from '@site/src/components/ButtonPatternGallery';
 import ButtonGroupReferenceContent from '@site/src/components/ButtonGroupReferenceContent';
+import ButtonToolbarReferenceContent from '@site/src/components/ButtonToolbarReferenceContent';
 import DestructiveButtonReferenceContent from '@site/src/components/DestructiveButtonReferenceContent';
 import HierarchyButtonReferenceContent from '@site/src/components/HierarchyButtonReferenceContent';
 import IconAndCompoundReferenceContent from '@site/src/components/IconAndCompoundReferenceContent';
@@ -28,6 +29,7 @@ export default function ButtonPatternDetailContent({
 
   const showSelectorReference = entry.id === 'toggle-and-selection';
   const showButtonGroupReference = entry.id === 'button-group';
+  const showButtonToolbarReference = entry.id === 'button-toolbar';
 
   const detailContent =
     entry.id === 'destructive-actions' ? (
@@ -40,6 +42,8 @@ export default function ButtonPatternDetailContent({
       <IconAndCompoundReferenceContent entry={entry} />
     ) : entry.id === 'button-group' ? (
       <ButtonGroupReferenceContent entry={entry} />
+    ) : entry.id === 'button-toolbar' ? (
+      <ButtonToolbarReferenceContent entry={entry} />
     ) : entry.id === 'toggle-and-selection' ? (
       <ToggleAndSelectionReferenceContent entry={entry} />
     ) : entry.id === 'spacing-and-sizing' ? (
@@ -77,6 +81,13 @@ export default function ButtonPatternDetailContent({
           の individual affordance は{' '}
           <Link to="/button/icon-and-compound-actions">アイコン・複合アクション</Link>{' '}
           もあわせて参照してください。
+        </p>
+      ) : null}
+      {showButtonToolbarReference ? (
+        <p className={styles.contextNote}>
+          ボタンツールバーでは複数 cluster を束ねる container を扱います。1 つの group 境界そのものは{' '}
+          <Link to="/button/button-group">ボタングループ</Link>、input や結果件数が主役の toolbar は{' '}
+          <Link to="/controller/sort-filter-toolbar">sort / filter toolbar</Link> を参照してください。
         </p>
       ) : null}
       {detailContent}

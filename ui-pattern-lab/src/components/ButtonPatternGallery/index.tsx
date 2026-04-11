@@ -330,6 +330,126 @@ function ButtonGroupDemo(): ReactNode {
   );
 }
 
+function ButtonToolbarDemo(): ReactNode {
+  return (
+    <div className={styles.demoFrame}>
+      <div className={styles.previewGrid}>
+        <PreviewCard
+          label="書式ツールバー"
+          description="作業文脈ごとに button 群を cluster として並べます。">
+          <div className={styles.buttonStack}>
+            <div aria-label="編集ツール" className={styles.toolbarFrame} role="toolbar">
+              <div className={styles.toolbarCluster}>
+                <span className={styles.toolbarLabel}>書式</span>
+                <div
+                  aria-label="文字装飾"
+                  className={styles.buttonGroupConnected}
+                  role="group">
+                  <button
+                    aria-pressed="true"
+                    className={clsx(
+                      styles.demoButton,
+                      styles.secondaryButton,
+                      styles.compactButton,
+                      styles.groupLeadingButton,
+                      styles.isSelected,
+                    )}
+                    type="button">
+                    太字
+                  </button>
+                  <button
+                    className={clsx(
+                      styles.demoButton,
+                      styles.secondaryButton,
+                      styles.compactButton,
+                      styles.groupMiddleButton,
+                    )}
+                    type="button">
+                    斜体
+                  </button>
+                  <button
+                    className={clsx(
+                      styles.demoButton,
+                      styles.secondaryButton,
+                      styles.compactButton,
+                      styles.groupTrailingButton,
+                    )}
+                    type="button">
+                    引用
+                  </button>
+                </div>
+              </div>
+              <span aria-hidden="true" className={styles.toolbarDivider} />
+              <div className={styles.toolbarCluster}>
+                <span className={styles.toolbarLabel}>挿入</span>
+                <button
+                  className={clsx(
+                    styles.demoButton,
+                    styles.secondaryButton,
+                    styles.compactButton,
+                  )}
+                  type="button">
+                  リンク
+                </button>
+              </div>
+            </div>
+            <p className={styles.selectionNote}>
+              ボタングループを内包しつつ、toolbar 全体で編集文脈をまとめます。
+            </p>
+          </div>
+        </PreviewCard>
+        <PreviewCard
+          label="一括操作ツールバー"
+          description="独立アクションと group を同じ帯で扱う例です。">
+          <div className={styles.buttonStack}>
+            <div aria-label="選択中アイテムの操作" className={styles.toolbarFrame} role="toolbar">
+              <span className={styles.toolbarCount}>12件を選択中</span>
+              <span aria-hidden="true" className={styles.toolbarDivider} />
+              <div className={styles.toolbarCluster}>
+                <span className={styles.toolbarLabel}>一括操作</span>
+                <button
+                  className={clsx(
+                    styles.demoButton,
+                    styles.secondaryButton,
+                    styles.compactButton,
+                  )}
+                  type="button">
+                  アーカイブ
+                </button>
+                <button
+                  className={clsx(
+                    styles.demoButton,
+                    styles.secondaryButton,
+                    styles.compactButton,
+                  )}
+                  type="button">
+                  担当を付与
+                </button>
+              </div>
+              <span aria-hidden="true" className={styles.toolbarDivider} />
+              <button
+                className={clsx(
+                  styles.demoButton,
+                  styles.primaryButton,
+                  styles.compactButton,
+                )}
+                type="button">
+                CSVを書き出す
+              </button>
+            </div>
+            <p className={styles.selectionNote}>
+              input や result count が主役になる場合は controller 側の toolbar へ分けます。
+            </p>
+          </div>
+        </PreviewCard>
+      </div>
+      <p className={styles.demoNote}>
+        ボタンツールバーは container を扱い、1 つの group 境界そのものはボタングループで整理します。
+      </p>
+    </div>
+  );
+}
+
 function ToggleAndSelectionDemo(): ReactNode {
   const [isPinned, setIsPinned] = useState(false);
   const views = [
@@ -473,6 +593,7 @@ const demoByKind: Record<ButtonDemoKind, DemoRenderer> = {
   'destructive-actions': DestructiveActionsDemo,
   'icon-and-compound-actions': IconAndCompoundActionsDemo,
   'button-group': ButtonGroupDemo,
+  'button-toolbar': ButtonToolbarDemo,
   'toggle-and-selection': ToggleAndSelectionDemo,
   'spacing-and-sizing': SpacingAndSizingDemo,
 };

@@ -121,6 +121,26 @@ const baseButtonPatternEntries = [
     demoKind: 'button-group',
   },
   {
+    id: 'button-toolbar',
+    title: 'ボタンツールバー',
+    summary:
+      '複数の button group や補助 action を 1 本の操作帯として整理し、道具箱の文脈を明確にします。',
+    problem:
+      '関連操作がページに散らばると、どこまでが同じ作業文脈か読み取りにくく、group ごとの役割も崩れやすくなります。',
+    solution:
+      '`role="toolbar"` と cluster 単位のラベルを用い、同じ作業に属する button 群と standalone action を 1 つの帯にまとめます。',
+    whenToUse:
+      'リッチテキスト編集、一覧の一括操作、表示切替など、複数の button 群を同じ作業コンテキストで並べたい場面に向いています。',
+    layoutNotes:
+      'cluster ごとに gap、divider、wrap の基準をそろえ、Button Group は toolbar の内部要素として扱います。',
+    stateNotes:
+      'toolbar 自体は container であり、pressed や disabled の意味は各 button に委ねます。現在値は cluster 単位の label や補助文で補います。',
+    accessibilityNotes:
+      'toolbar には名前を付け、グループ化が必要な箇所だけ `role="group"` を重ねます。input 主体の filter bar は controller 系へ分けます。',
+    tags: ['role=toolbar', '複数クラスター', '一括操作'],
+    demoKind: 'button-toolbar',
+  },
+  {
     id: 'toggle-and-selection',
     title: 'トグル・選択',
     summary:
