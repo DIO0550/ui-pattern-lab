@@ -82,6 +82,13 @@ const buttonLinks = [
       'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
     meta: 'カテゴリページ',
   },
+  {
+    title: 'ボタンパターン比較',
+    to: '/patterns/button-designs',
+    description:
+      '強調度、状態、ボタングループ、ツールバー、余白設計を横断して見比べられます。',
+    meta: '比較一覧',
+  },
   ...buttonDetailLinks,
 ];
 
@@ -329,7 +336,7 @@ const quickStartCards: readonly QuickStartCard[] = [
     eyebrow: '比較の入口',
     title: 'ボタンの判断軸から入る',
     to: '/patterns/button-designs',
-    description: '強調度、状態、危険操作、余白設計をまとめて見比べる代表的な比較ページです。',
+    description: '強調度、状態、グルーピング、ツールバー構成、余白設計をまとめて見比べる代表的な比較ページです。',
     meta: '主要カテゴリ',
   },
   {

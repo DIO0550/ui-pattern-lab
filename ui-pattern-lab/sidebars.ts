@@ -62,6 +62,7 @@ const sidebars: SidebarsConfig = {
         'button/destructive-actions',
         'button/icon-and-compound-actions',
         'button/button-group',
+        'button/button-toolbar',
         'button/toggle-and-selection',
         'button/spacing-and-sizing',
       ],
