@@ -3,6 +3,7 @@ import {useState} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import {badgePatternEntries} from '@site/src/data/badgePatternEntries';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import {controllerPatternEntries} from '@site/src/data/controllerPatternEntries';
@@ -24,6 +25,13 @@ const tableLinks = tablePatternEntries.map((entry) => ({
 const buttonDetailLinks = buttonPatternEntries.map((entry) => ({
   title: entry.title,
   to: `/button/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const badgeDetailLinks = badgePatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/badge/${entry.id}`,
   description: entry.summary,
   meta: '詳細ページ',
 }));
@@ -90,6 +98,24 @@ const buttonLinks = [
     meta: '比較一覧',
   },
   ...buttonDetailLinks,
+];
+
+const badgeLinks = [
+  {
+    title: 'バッジカテゴリ',
+    to: '/badge',
+    description:
+      'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'バッジパターン比較',
+    to: '/patterns/badge-designs',
+    description:
+      'Filled / Outlined / Soft / Surface の違いと、色や件数表示の収まりを比較できます。',
+    meta: '比較一覧',
+  },
+  ...badgeDetailLinks,
 ];
 
 const checkboxLinks = [
@@ -191,6 +217,7 @@ type CategoryId =
   | 'table'
   | 'ellipsis-display'
   | 'button'
+  | 'badge'
   | 'checkbox'
   | 'selector'
   | 'progress'
@@ -282,6 +309,15 @@ const categoryCards: CategoryCard[] = [
     links: buttonLinks,
     expandedMeta: 'クリックしてボタン関連の導線を閉じる',
     collapsedMeta: 'クリックしてボタン関連の導線を表示',
+  },
+  {
+    id: 'badge',
+    title: 'バッジ',
+    description:
+      '補足ラベルとしての badge を扱い、variant、色、件数表示の収まりを比較できるカテゴリです。',
+    links: badgeLinks,
+    expandedMeta: 'クリックしてバッジ関連の導線を閉じる',
+    collapsedMeta: 'クリックしてバッジ関連の導線を表示',
   },
   {
     id: 'checkbox',

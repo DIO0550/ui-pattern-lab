@@ -69,6 +69,17 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'バッジ',
+      link: {
+        type: 'doc',
+        id: 'badge',
+      },
+      collapsible: true,
+      collapsed: false,
+      items: ['badge/text-and-number-badge'],
+    },
+    {
+      type: 'category',
       label: 'チェックボックス',
       link: {
         type: 'doc',
