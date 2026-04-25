@@ -1,0 +1,129 @@
+.widePreview {
+  padding: 1rem;
+}
+
+.previewStack {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.previewGrid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+.previewCard {
+  background: color-mix(
+    in srgb,
+    var(--ifm-background-surface-color) 88%,
+    var(--ifm-color-emphasis-100)
+  );
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 1rem;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.85rem;
+}
+
+.previewLabel {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.badge {
+  --badge-accent: var(--ifm-color-emphasis-700);
+  --badge-contrast: #ffffff;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.875rem;
+  font-weight: 700;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.7rem;
+  white-space: nowrap;
+}
+
+.countBadge {
+  font-variant-numeric: tabular-nums;
+  min-width: 3.2rem;
+}
+
+.filledVariant {
+  background: var(--badge-accent);
+  border-color: var(--badge-accent);
+  color: var(--badge-contrast);
+}
+
+.outlinedVariant {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--badge-accent) 54%, transparent);
+  color: var(--badge-accent);
+}
+
+.softVariant {
+  background: color-mix(in srgb, var(--badge-accent) 13%, var(--ifm-background-surface-color));
+  border-color: transparent;
+  color: var(--badge-accent);
+}
+
+.surfaceVariant {
+  background: var(--ifm-background-surface-color);
+  border-color: color-mix(in srgb, var(--badge-accent) 18%, var(--ifm-color-emphasis-300));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--badge-accent) 8%, transparent);
+  color: var(--badge-accent);
+}
+
+.toneDefault {
+  --badge-accent: var(--ifm-color-emphasis-700);
+}
+
+.tonePrimary {
+  --badge-accent: var(--ifm-color-primary);
+}
+
+.toneSuccess {
+  --badge-accent: var(--ifm-color-success);
+}
+
+.toneWarning {
+  --badge-accent: #b86500;
+  --badge-contrast: #ffffff;
+}
+
+.toneError {
+  --badge-accent: var(--ifm-color-danger);
+}
+
+.toneInfo {
+  --badge-accent: #1474c4;
+}
+
+.previewNote {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+  margin: 0;
+}
+
+[data-theme='dark'] .previewCard {
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+@media screen and (max-width: 640px) {
+  .widePreview {
+    padding: 0.75rem;
+  }
+
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
+}
