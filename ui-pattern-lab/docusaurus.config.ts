@@ -124,6 +124,14 @@ const config: Config = {
               to: '/controller',
             },
             {
+              label: 'ページネーション',
+              to: '/pagination',
+            },
+            {
+              label: 'ページネーション比較',
+              to: '/patterns/pagination-designs',
+            },
+            {
               label: 'テキストフィールド',
               to: '/input',
             },
