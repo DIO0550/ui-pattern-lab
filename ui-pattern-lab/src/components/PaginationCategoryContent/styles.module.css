@@ -1,0 +1,42 @@
+.root {
+  display: grid;
+  gap: 2rem;
+}
+
+.lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 56rem;
+}
+
+.section {
+  display: grid;
+  gap: 1rem;
+}
+
+.sectionLead {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+@media screen and (max-width: 640px) {
+  .root {
+    gap: 1.5rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

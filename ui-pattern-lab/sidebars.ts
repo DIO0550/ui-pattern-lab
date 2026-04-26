@@ -191,6 +191,21 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'ページネーション',
+      link: {
+        type: 'doc',
+        id: 'pagination',
+      },
+      collapsible: true,
+      collapsed: false,
+      items: [
+        'pagination/page-numbers',
+        'pagination/load-more',
+        'pagination/infinite-scroll',
+      ],
+    },
+    {
+      type: 'category',
       label: 'テキストフィールド',
       link: {
         type: 'doc',

@@ -9,6 +9,7 @@ import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import {controllerPatternEntries} from '@site/src/data/controllerPatternEntries';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
 import {inputPatternEntries} from '@site/src/data/inputPatternEntries';
+import {paginationPatternEntries} from '@site/src/data/paginationPatternEntries';
 import {progressPatternEntries} from '@site/src/data/progressPatternEntries';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
 import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
@@ -46,6 +47,13 @@ const checkboxDetailLinks = checkboxPatternEntries.map((entry) => ({
 const progressDetailLinks = progressPatternEntries.map((entry) => ({
   title: entry.title,
   to: `/progress/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const paginationDetailLinks = paginationPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/pagination/${entry.id}`,
   description: entry.summary,
   meta: '詳細ページ',
 }));
@@ -154,6 +162,24 @@ const progressLinks = [
   ...progressDetailLinks,
 ];
 
+const paginationLinks = [
+  {
+    title: 'ページネーションカテゴリ',
+    to: '/pagination',
+    description:
+      'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'ページネーションパターン比較',
+    to: '/patterns/pagination-designs',
+    description:
+      'page numbers / load more / infinite scroll を比較し、page size control の適用範囲も整理できます。',
+    meta: '比較一覧',
+  },
+  ...paginationDetailLinks,
+];
+
 const controllerLinks = [
   {
     title: '表示制御カテゴリ',
@@ -222,6 +248,7 @@ type CategoryId =
   | 'selector'
   | 'progress'
   | 'controller'
+  | 'pagination'
   | 'input';
 
 type CategoryCard = {
@@ -357,6 +384,15 @@ const categoryCards: CategoryCard[] = [
     collapsedMeta: 'クリックして表示制御関連の導線を表示',
   },
   {
+    id: 'pagination',
+    title: 'ページネーション',
+    description:
+      'page numbers / load more / infinite scroll を比較し、位置把握・追加読込・footer 到達性・page size control の違いを確認できるカテゴリです。',
+    links: paginationLinks,
+    expandedMeta: 'クリックしてページネーション関連の導線を閉じる',
+    collapsedMeta: 'クリックしてページネーション関連の導線を表示',
+  },
+  {
     id: 'input',
     title: 'テキストフィールド',
     description:
@@ -390,6 +426,14 @@ const quickStartCards: readonly QuickStartCard[] = [
     description:
       'segmented control、tabs、pagination、range slider の責務境界を整理できます。',
     meta: '導線を把握',
+  },
+  {
+    eyebrow: '閲覧状態',
+    title: 'ページネーションを比較する',
+    to: '/patterns/pagination-designs',
+    description:
+      'page numbers / load more / infinite scroll を見比べ、page size control をどこへ置くか整理できます。',
+    meta: '新規カテゴリ',
   },
 ] as const;
 
@@ -540,7 +584,7 @@ export default function DocsHomeContent(): ReactNode {
     {
       label: '収録カテゴリ',
       value: `${categoryCards.length} categories`,
-      description: 'テキストフィールド、表示制御、table、ellipsis まで横断して確認できます。',
+      description: 'ページネーション、テキストフィールド、表示制御、table、ellipsis まで横断して確認できます。',
     },
     {
       label: '導線の深さ',

@@ -1,0 +1,205 @@
+.root {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.detailRoot {
+  gap: 1rem;
+}
+
+.stateGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+.stateCard {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.stateHeader,
+.toolbarRow,
+.pageNav,
+.pageSizeField {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stateLabel {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: var(--ifm-color-emphasis-100);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.stateText,
+.summaryText,
+.helperText,
+.demoNote,
+.emptyLabel {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.controllerShell {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.95rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 1rem;
+  background: var(--ifm-card-background-color, var(--ifm-background-surface-color));
+}
+
+.pageSizeField {
+  justify-content: flex-start;
+  font-size: 0.9rem;
+}
+
+.pageSizeSelect {
+  min-inline-size: 6rem;
+  min-block-size: 2.3rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  background: white;
+  font: inherit;
+}
+
+.pageButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 2.5rem;
+  min-block-size: 2.5rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  background: white;
+  color: var(--ifm-color-emphasis-800);
+  font: inherit;
+  font-weight: 700;
+}
+
+.pageButtonCurrent {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary);
+  color: white;
+}
+
+.pageButtonDisabled {
+  opacity: 0.45;
+}
+
+.helperText {
+  min-block-size: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.resultSurface {
+  display: grid;
+}
+
+.searchGrid,
+.adminList {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.searchCard,
+.adminRow {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0.9rem;
+  background: var(--ifm-color-emphasis-0);
+}
+
+.searchCard {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.tableShell {
+  display: grid;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0.9rem;
+  overflow: hidden;
+}
+
+.tableHead,
+.tableRow {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  padding: 0.75rem 0.85rem;
+}
+
+.tableHead {
+  background: var(--ifm-color-emphasis-100);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.tableRow + .tableRow {
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.adminBody {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #075985;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.demoNote {
+  font-size: 0.95rem;
+}
+
+[data-theme='dark'] .stateCard,
+[data-theme='dark'] .controllerShell,
+[data-theme='dark'] .searchCard,
+[data-theme='dark'] .adminRow,
+[data-theme='dark'] .tableShell {
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+[data-theme='dark'] .stateCard {
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.92) 0%,
+    rgba(30, 41, 59, 0.92) 100%
+  );
+}
+
+[data-theme='dark'] .pageButton,
+[data-theme='dark'] .pageSizeSelect {
+  border-color: var(--ifm-color-emphasis-400);
+  background: rgba(15, 23, 42, 0.82);
+  color: var(--ifm-color-emphasis-100);
+}
