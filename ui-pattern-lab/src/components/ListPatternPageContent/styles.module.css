@@ -1,0 +1,15 @@
+.axisSection {
+  display: grid;
+  gap: 1rem;
+}
+
+.axisLead,
+.axisNote {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.axisNote {
+  max-width: 58rem;
+}

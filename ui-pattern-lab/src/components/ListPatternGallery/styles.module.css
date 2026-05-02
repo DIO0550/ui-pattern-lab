@@ -1,0 +1,235 @@
+.root {
+  --list-surface: var(--ifm-card-background-color, var(--ifm-background-surface-color));
+  --list-border: var(--ifm-color-emphasis-200);
+  --list-muted: var(--ifm-color-emphasis-700);
+  --list-emphasis: var(--ifm-color-primary);
+  display: block;
+}
+
+[data-theme='dark'] .root {
+  --list-border: var(--ifm-color-emphasis-300);
+  --list-muted: var(--ifm-color-emphasis-600);
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.detailGrid {
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+.detailContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--list-surface);
+  border: 1px solid var(--list-border);
+  border-radius: 0.75rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+  padding: 1rem;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cardTitle {
+  display: -webkit-box;
+  margin-bottom: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.cardSummary {
+  color: var(--list-muted);
+  display: -webkit-box;
+  line-height: 1.55;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  background: color-mix(in srgb, var(--list-emphasis) 12%, transparent);
+  border-radius: 999px;
+  color: var(--ifm-font-color-base);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+}
+
+.demoPanel {
+  background: color-mix(in srgb, var(--list-emphasis) 3%, var(--list-surface));
+  border: 1px solid var(--list-border);
+  border-radius: 0.75rem;
+  min-width: 0;
+  padding: 0.9rem;
+}
+
+.detailPreviewPanel .previewLabel,
+.detailPreviewPanel .demoNote {
+  display: none;
+}
+
+.demoFrame {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.previewLabel {
+  color: var(--list-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.plainList,
+.dividedList,
+.cardList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.plainList {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.plainItem {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.dividedList {
+  border-block: 1px solid var(--list-border);
+}
+
+.dividedItem {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 0.8rem 0;
+}
+
+.dividedItem + .dividedItem {
+  border-top: 1px solid var(--list-border);
+}
+
+.cardList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cardItem {
+  background: var(--list-surface);
+  border: 1px solid var(--list-border);
+  border-radius: 0.75rem;
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.85rem;
+}
+
+.itemMain {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.itemTitle {
+  color: var(--ifm-font-color-base);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.itemDescription {
+  color: var(--list-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.itemFooter {
+  align-items: center;
+  display: flex;
+  gap: 0.65rem;
+  justify-content: space-between;
+}
+
+.trailingMeta {
+  color: var(--list-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.trailingAction {
+  background: var(--ifm-color-primary);
+  border: 0;
+  border-radius: 0.5rem;
+  color: var(--ifm-color-primary-contrast-foreground);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+}
+
+.trailingAction:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+.demoNote {
+  color: var(--list-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.emptyState {
+  border: 1px dashed var(--list-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+@media screen and (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dividedItem {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .trailingMeta {
+    white-space: normal;
+  }
+}

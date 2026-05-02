@@ -9,6 +9,7 @@ import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
 import {controllerPatternEntries} from '@site/src/data/controllerPatternEntries';
 import {ellipsisDisplayPatternEntries} from '@site/src/data/ellipsisDisplayPatternEntries';
 import {inputPatternEntries} from '@site/src/data/inputPatternEntries';
+import {listPatternEntries} from '@site/src/data/listPatternEntries';
 import {paginationPatternEntries} from '@site/src/data/paginationPatternEntries';
 import {progressPatternEntries} from '@site/src/data/progressPatternEntries';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
@@ -23,6 +24,31 @@ const tableLinks = tablePatternEntries.map((entry) => ({
   to: `/table/${entry.id}`,
   description: entry.summary,
 }));
+
+const listDetailLinks = listPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/list/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const listLinks = [
+  {
+    title: 'リストカテゴリ',
+    to: '/list',
+    description:
+      'カテゴリの入口ページです。list の比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'リストパターン比較',
+    to: '/patterns/list-designs',
+    description:
+      'plain / divided / card list を style、item content、behavior の判断軸で比較できます。',
+    meta: '比較一覧',
+  },
+  ...listDetailLinks,
+];
 
 const buttonDetailLinks = buttonPatternEntries.map((entry) => ({
   title: entry.title,
@@ -267,6 +293,7 @@ type QuickStartCard = LinkCard & {
 
 type CategoryId =
   | 'table'
+  | 'list'
   | 'ellipsis-display'
   | 'button'
   | 'badge'
@@ -345,6 +372,15 @@ const categoryCards: CategoryCard[] = [
     links: tableLinks,
     expandedMeta: 'クリックしてサブカテゴリを閉じる',
     collapsedMeta: 'クリックしてサブカテゴリを表示',
+  },
+  {
+    id: 'list',
+    title: 'リスト',
+    description:
+      'plain / divided / card の見せ方を比較し、message list、settings list、notification list の使い分けを確認できるカテゴリです。',
+    links: listLinks,
+    expandedMeta: 'クリックしてリスト関連の導線を閉じる',
+    collapsedMeta: 'クリックしてリスト関連の導線を表示',
   },
   {
     id: 'ellipsis-display',

@@ -33,6 +33,21 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'リスト',
+      link: {
+        type: 'doc',
+        id: 'list',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: [
+        'list/plain-list',
+        'list/divided-list',
+        'list/card-list',
+      ],
+    },
+    {
+      type: 'category',
       label: '表示制限',
       link: {
         type: 'doc',

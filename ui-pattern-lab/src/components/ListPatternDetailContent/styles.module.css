@@ -1,0 +1,19 @@
+.root {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.backLinks {
+  align-items: center;
+  color: var(--ifm-color-emphasis-700);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+}
+
+.lead {
+  line-height: 1.7;
+  margin: 0;
+  max-width: 54rem;
+}
