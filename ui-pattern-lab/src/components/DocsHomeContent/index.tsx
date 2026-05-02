@@ -14,6 +14,7 @@ import {progressPatternEntries} from '@site/src/data/progressPatternEntries';
 import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategories';
 import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
 import {tablePatternEntries} from '@site/src/data/tablePatternEntries';
+import {tabsPatternEntries} from '@site/src/data/tabsPatternEntries';
 
 import styles from './styles.module.css';
 
@@ -54,6 +55,13 @@ const progressDetailLinks = progressPatternEntries.map((entry) => ({
 const paginationDetailLinks = paginationPatternEntries.map((entry) => ({
   title: entry.title,
   to: `/pagination/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const tabsDetailLinks = tabsPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/tabs/${entry.id}`,
   description: entry.summary,
   meta: '詳細ページ',
 }));
@@ -180,6 +188,24 @@ const paginationLinks = [
   ...paginationDetailLinks,
 ];
 
+const tabsLinks = [
+  {
+    title: 'タブカテゴリ',
+    to: '/tabs',
+    description:
+      'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'タブパターン比較',
+    to: '/patterns/tabs-designs',
+    description:
+      '下線型 / ピル型 / ボックス型 / 縦型を比較し、panel 切り替えとしての適材適所を整理できます。',
+    meta: '比較一覧',
+  },
+  ...tabsDetailLinks,
+];
+
 const controllerLinks = [
   {
     title: '表示制御カテゴリ',
@@ -249,6 +275,7 @@ type CategoryId =
   | 'progress'
   | 'controller'
   | 'pagination'
+  | 'tabs'
   | 'input';
 
 type CategoryCard = {
@@ -391,6 +418,15 @@ const categoryCards: CategoryCard[] = [
     links: paginationLinks,
     expandedMeta: 'クリックしてページネーション関連の導線を閉じる',
     collapsedMeta: 'クリックしてページネーション関連の導線を表示',
+  },
+  {
+    id: 'tabs',
+    title: 'タブ',
+    description:
+      '下線型、ピル型、ボックス型、縦型を比較し、同一ページ内の panel 切り替えとしての tabs を確認できるカテゴリです。',
+    links: tabsLinks,
+    expandedMeta: 'クリックしてタブ関連の導線を閉じる',
+    collapsedMeta: 'クリックしてタブ関連の導線を表示',
   },
   {
     id: 'input',

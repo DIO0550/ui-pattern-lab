@@ -206,6 +206,22 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'タブ',
+      link: {
+        type: 'doc',
+        id: 'tabs',
+      },
+      collapsible: true,
+      collapsed: false,
+      items: [
+        'tabs/underline-tabs',
+        'tabs/pill-tabs',
+        'tabs/boxed-tabs',
+        'tabs/vertical-tabs',
+      ],
+    },
+    {
+      type: 'category',
       label: 'テキストフィールド',
       link: {
         type: 'doc',

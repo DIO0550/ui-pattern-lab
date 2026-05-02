@@ -1,0 +1,74 @@
+.flowList,
+.asideList,
+.comparisonNoteList {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+}
+
+.flowList {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.summaryNote,
+.axisLead {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.axisSection {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.matrixWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 1rem;
+}
+
+.matrixTable {
+  width: 100%;
+  min-width: 58rem;
+  border-collapse: collapse;
+  background: var(--ifm-card-background-color);
+}
+
+.matrixTable th,
+.matrixTable td {
+  padding: 1rem;
+  border-block-end: 1px solid var(--ifm-color-emphasis-200);
+  vertical-align: top;
+}
+
+.axisHeader,
+.axisCell {
+  width: 11rem;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.columnHeader {
+  min-width: 13rem;
+}
+
+.columnTitle,
+.columnDescription {
+  display: block;
+}
+
+.columnDescription,
+.matrixCell {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.92rem;
+}
+
+.noteBlock,
+.comparisonNoteSection {
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 22%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--ifm-color-primary) 7%, transparent);
+}
+
+.comparisonNoteSection {
+  margin-block-start: 1.5rem;
+}
