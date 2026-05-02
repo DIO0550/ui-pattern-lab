@@ -64,6 +64,17 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'アコーディオン',
+      link: {
+        type: 'doc',
+        id: 'accordion',
+      },
+      collapsible: true,
+      collapsed: false,
+      items: ['accordion/disclosure-accordion'],
+    },
+    {
+      type: 'category',
       label: 'ボタン',
       link: {
         type: 'doc',

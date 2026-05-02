@@ -1,0 +1,16 @@
+.root {
+  display: grid;
+  gap: 2rem;
+}
+
+.lead,
+.sectionLead {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.section {
+  display: grid;
+  gap: 1rem;
+}

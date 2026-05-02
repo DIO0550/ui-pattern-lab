@@ -1,0 +1,433 @@
+.widePreview {
+  padding: 1rem;
+}
+
+.previewStack {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.previewFrame {
+  display: grid;
+  gap: 0;
+}
+
+.accordion {
+  display: grid;
+}
+
+.accordionItem {
+  background: var(--ifm-background-surface-color);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.accordionHeading {
+  margin: 0;
+}
+
+.accordionTrigger {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  gap: 1rem;
+  justify-content: space-between;
+  min-height: 4rem;
+  padding: 1rem 1.1rem;
+  text-align: left;
+  width: 100%;
+}
+
+.accordionTrigger:hover {
+  background: color-mix(in srgb, var(--ifm-color-primary) 6%, transparent);
+}
+
+.accordionTrigger:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ifm-color-primary) 45%, transparent);
+  outline-offset: -3px;
+}
+
+.triggerContent {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.titleRow {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.itemTitle {
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.itemMeta {
+  background: color-mix(in srgb, var(--ifm-color-primary) 10%, var(--ifm-background-surface-color));
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 20%, var(--ifm-color-emphasis-200));
+  border-radius: 999px;
+  color: var(--ifm-color-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+}
+
+.itemSummary {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.accordionChevron {
+  border-color: var(--ifm-color-emphasis-700);
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  display: block;
+  flex: 0 0 auto;
+  height: 0.62rem;
+  margin-right: 0.25rem;
+  transform: rotate(45deg);
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
+  width: 0.62rem;
+}
+
+.accordionChevronOpen {
+  border-color: var(--ifm-color-primary);
+  transform: rotate(-135deg);
+}
+
+.accordionPanel {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.75;
+  padding: 0 1.1rem 1.1rem;
+}
+
+.accordionPanel[hidden] {
+  display: none;
+}
+
+.accordionPanel p {
+  margin: 0;
+}
+
+.singleVariant {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0.4rem;
+  overflow: hidden;
+}
+
+.singleVariant .accordionItem {
+  border-left: 3px solid transparent;
+}
+
+.singleVariant .accordionItem:has(.accordionTrigger[aria-expanded='true']) {
+  background: color-mix(in srgb, var(--ifm-color-primary) 4%, var(--ifm-background-surface-color));
+  border-left-color: var(--ifm-color-primary);
+}
+
+.singleVariant .accordionItem + .accordionItem {
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.multipleVariant {
+  gap: 0.85rem;
+}
+
+.multipleVariant .accordionItem {
+  border: 1px solid color-mix(in srgb, var(--ifm-color-emphasis-300) 80%, transparent);
+  border-radius: 0.85rem;
+  box-shadow: 0 0.55rem 1.35rem color-mix(in srgb, var(--ifm-color-emphasis-500) 9%, transparent);
+  overflow: hidden;
+}
+
+.multipleVariant .accordionItem:has(.accordionTrigger[aria-expanded='true']) {
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 36%, var(--ifm-color-emphasis-200));
+  box-shadow: 0 0.8rem 1.7rem color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+}
+
+.multipleVariant .accordionTrigger {
+  min-height: 4.5rem;
+}
+
+.multipleVariant .itemMeta {
+  background: color-mix(in srgb, var(--ifm-color-success) 12%, var(--ifm-background-surface-color));
+  border-color: color-mix(in srgb, var(--ifm-color-success) 24%, var(--ifm-color-emphasis-200));
+  color: var(--ifm-color-success);
+}
+
+.containedVariant {
+  align-items: start;
+  background:
+    radial-gradient(
+      circle at top right,
+      color-mix(in srgb, var(--ifm-color-primary) 16%, transparent),
+      transparent 42%
+    ),
+    color-mix(in srgb, var(--ifm-color-primary) 5%, var(--ifm-background-surface-color));
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 24%, var(--ifm-color-emphasis-200));
+  border-radius: 0 0 1rem 1rem;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  padding: 1rem;
+}
+
+.settingsHeader {
+  background:
+    linear-gradient(
+      135deg,
+      var(--ifm-color-emphasis-900),
+      color-mix(in srgb, var(--ifm-color-primary) 38%, var(--ifm-color-emphasis-900))
+    );
+  border-radius: 1rem 1rem 0 0;
+  color: #ffffff;
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.1rem 1.2rem;
+}
+
+.settingsHeader p {
+  color: color-mix(in srgb, #ffffff 78%, transparent);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.settingsHeaderRow {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.settingsHeaderRow span {
+  background: color-mix(in srgb, #ffffff 14%, transparent);
+  border: 1px solid color-mix(in srgb, #ffffff 22%, transparent);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.3rem 0.6rem;
+}
+
+.settingsEyebrow {
+  color: color-mix(in srgb, #ffffff 72%, transparent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.multiHeader {
+  background: color-mix(in srgb, var(--ifm-color-success) 8%, var(--ifm-background-surface-color));
+  border: 1px solid color-mix(in srgb, var(--ifm-color-success) 24%, var(--ifm-color-emphasis-200));
+  border-radius: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+  display: grid;
+  gap: 0.2rem;
+  margin-bottom: 0.75rem;
+  padding: 0.9rem 1rem;
+}
+
+.multiHeader strong {
+  color: var(--ifm-font-color-base);
+}
+
+.multiEyebrow {
+  color: var(--ifm-color-success);
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.containedVariant .accordionItem {
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 18%, var(--ifm-color-emphasis-200));
+  border-radius: 1rem;
+  box-shadow: 0 0.9rem 1.8rem color-mix(in srgb, var(--ifm-color-emphasis-500) 10%, transparent);
+  overflow: hidden;
+}
+
+.containedVariant .accordionItem:has(.accordionTrigger[aria-expanded='true']) {
+  background: color-mix(in srgb, var(--ifm-color-primary) 4%, var(--ifm-background-surface-color));
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 38%, var(--ifm-color-emphasis-200));
+}
+
+.containedVariant .accordionTrigger {
+  align-items: flex-start;
+  min-height: 8.5rem;
+  padding: 1rem;
+}
+
+.containedVariant .accordionPanel {
+  background: color-mix(in srgb, var(--ifm-color-primary) 3%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--ifm-color-primary) 14%, var(--ifm-color-emphasis-200));
+  margin-inline: 0;
+  padding: 1rem;
+}
+
+.containedVariant .triggerContent {
+  gap: 0.75rem;
+}
+
+.containedVariant .titleRow {
+  align-items: flex-start;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.containedVariant .itemMeta {
+  width: max-content;
+}
+
+.cardIcon {
+  align-items: center;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--ifm-color-primary) 92%, #ffffff),
+      var(--ifm-color-primary)
+    );
+  border-radius: 0.8rem;
+  color: #ffffff;
+  display: inline-flex;
+  font-size: 0.82rem;
+  font-weight: 900;
+  height: 2.25rem;
+  justify-content: center;
+  width: 2.25rem;
+}
+
+.faqVariant {
+  background: color-mix(in srgb, var(--ifm-color-emphasis-100) 48%, transparent);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 1rem;
+  gap: 0.6rem;
+  padding: 0.8rem;
+}
+
+.faqHeader {
+  background: color-mix(in srgb, var(--ifm-color-primary) 6%, var(--ifm-background-surface-color));
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 16%, var(--ifm-color-emphasis-200));
+  border-radius: 1rem;
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+  padding: 1.1rem;
+}
+
+.faqHeader strong {
+  font-size: 1.2rem;
+}
+
+.faqHeader p {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.faqEyebrow {
+  color: var(--ifm-color-primary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.faqVariant .accordionItem {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0.85rem;
+  overflow: hidden;
+}
+
+.faqVariant .accordionItem:has(.accordionTrigger[aria-expanded='true']) {
+  border-color: color-mix(in srgb, var(--ifm-color-primary) 30%, var(--ifm-color-emphasis-200));
+}
+
+.faqVariant .accordionTrigger {
+  min-height: 4.4rem;
+  padding: 1rem;
+}
+
+.faqVariant .accordionPanel:not([hidden]) {
+  background: color-mix(in srgb, var(--ifm-color-primary) 4%, var(--ifm-background-surface-color));
+  border-top: 1px solid color-mix(in srgb, var(--ifm-color-primary) 14%, var(--ifm-color-emphasis-200));
+  font-size: 0.96rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto 1fr;
+  line-height: 1.85;
+  padding: 1rem;
+}
+
+.faqVariant .itemTitle {
+  font-size: 1.02rem;
+}
+
+.faqVariant .itemMeta {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-700);
+}
+
+.questionMark,
+.answerMark {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  font-weight: 900;
+  height: 1.8rem;
+  justify-content: center;
+  width: 1.8rem;
+}
+
+.questionMark {
+  background: var(--ifm-color-primary);
+  color: #ffffff;
+}
+
+.answerMark {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 22%, var(--ifm-color-emphasis-200));
+  color: var(--ifm-color-primary);
+  margin-top: 0.1rem;
+}
+
+.previewNote {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+  margin: 0;
+}
+
+[data-theme='dark'] .containedVariant .accordionItem {
+  box-shadow: none;
+}
+
+[data-theme='dark'] .settingsHeader {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-font-color-base);
+}
+
+@media screen and (max-width: 640px) {
+  .widePreview {
+    padding: 0.75rem;
+  }
+
+  .accordionTrigger {
+    min-height: 3rem;
+    padding: 0.8rem;
+  }
+
+  .accordionPanel {
+    padding: 0 0.8rem 0.9rem;
+  }
+}

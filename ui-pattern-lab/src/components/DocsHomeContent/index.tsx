@@ -3,6 +3,7 @@ import {useState} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
+import {accordionPatternEntries} from '@site/src/data/accordionPatternEntries';
 import {badgePatternEntries} from '@site/src/data/badgePatternEntries';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
@@ -106,6 +107,13 @@ const ellipsisDisplayDetailLinks = ellipsisDisplayPatternEntries.map((entry) => 
   meta: '詳細ページ',
 }));
 
+const accordionDetailLinks = accordionPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/accordion/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
 const ellipsisDisplayLinks = [
   {
     title: '表示制限カテゴリ',
@@ -122,6 +130,24 @@ const ellipsisDisplayLinks = [
     meta: '比較一覧',
   },
   ...ellipsisDisplayDetailLinks,
+];
+
+const accordionLinks = [
+  {
+    title: 'アコーディオンカテゴリ',
+    to: '/accordion',
+    description:
+      'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'アコーディオンパターン比較',
+    to: '/patterns/accordion-designs',
+    description:
+      '単一開閉 / 複数開閉 / カード型 / FAQ 型を比較し、情報を畳む範囲と見出し設計を整理できます。',
+    meta: '比較一覧',
+  },
+  ...accordionDetailLinks,
 ];
 
 const buttonLinks = [
@@ -295,6 +321,7 @@ type CategoryId =
   | 'table'
   | 'list'
   | 'ellipsis-display'
+  | 'accordion'
   | 'button'
   | 'badge'
   | 'checkbox'
@@ -390,6 +417,15 @@ const categoryCards: CategoryCard[] = [
     links: ellipsisDisplayLinks,
     expandedMeta: 'クリックして表示制限関連の導線を閉じる',
     collapsedMeta: 'クリックして表示制限関連の導線を表示',
+  },
+  {
+    id: 'accordion',
+    title: 'アコーディオン',
+    description:
+      '見出し単位で本文を開閉し、FAQ、設定、仕様詳細などを段階的に読ませるカテゴリです。',
+    links: accordionLinks,
+    expandedMeta: 'クリックしてアコーディオン関連の導線を閉じる',
+    collapsedMeta: 'クリックしてアコーディオン関連の導線を表示',
   },
   {
     id: 'button',
