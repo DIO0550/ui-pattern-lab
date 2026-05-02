@@ -32,6 +32,12 @@ const relatedResources: readonly RelatedResource[] = [
     to: '/selector',
   },
   {
+    title: 'チェックボックス',
+    description:
+      '複数選択やフォーム送信前提の値入力と、即時反映する switch の境界を確認できます。',
+    to: '/checkbox',
+  },
+  {
     title: 'テーブル',
     description:
       'pagination や sort / density が効く先の table layout や column 構成は table カテゴリが担当します。',
@@ -65,6 +71,17 @@ function buildContextNote(entryId: ControllerPatternEntryId): ReactNode | null {
         mode toggle だけで済むなら{' '}
         <Link to="/controller/segmented-view-switcher">segmented view switcher</Link>{' '}
         の方が軽量です。
+      </>
+    );
+  }
+
+  if (entryId === 'switch') {
+    return (
+      <>
+        即時反映される on / off 設定だけを扱い、複数選択やフォーム送信前提の値は{' '}
+        <Link to="/checkbox">チェックボックス</Link> へ分けます。view mode の切り替えなら{' '}
+        <Link to="/controller/segmented-view-switcher">segmented view switcher</Link>、単発 action
+        なら <Link to="/button">ボタン</Link> を参照してください。
       </>
     );
   }

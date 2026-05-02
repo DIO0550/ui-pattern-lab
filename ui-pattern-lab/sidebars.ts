@@ -197,6 +197,7 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'controller/segmented-view-switcher',
+        'controller/switch',
         'controller/tabs-inline-panel-switcher',
         'controller/sort-filter-toolbar',
         'controller/pagination-and-page-size-controller',

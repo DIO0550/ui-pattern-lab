@@ -184,6 +184,278 @@ const [activeMode, setActiveMode] = useState<ViewMode>('grid');
       },
     ],
   },
+  switch: {
+    snippetSummary:
+      'on / off 設定を即時反映する switch の variant です。default、icon 付き、label 配置、settings list を 1 variant ずつ分けています。',
+    items: [
+      {
+        id: 'switch-default-css',
+        label: 'Default CSS',
+        language: 'css',
+        code: `.switchRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.switch {
+  position: relative;
+  inline-size: 3rem;
+  block-size: 1.65rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ifm-color-emphasis-300);
+  cursor: pointer;
+}
+
+.switchThumb {
+  position: absolute;
+  inset-block-start: 0.2rem;
+  inset-inline-start: 0.2rem;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  border-radius: 999px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+  transition: transform 140ms ease;
+}
+
+.switch[aria-checked='true'] {
+  background: var(--ifm-color-primary);
+}
+
+.switch[aria-checked='true'] .switchThumb {
+  transform: translateX(1.35rem);
+}
+
+.switch:focus-visible {
+  outline: 3px solid var(--ifm-color-primary);
+  outline-offset: 3px;
+}`,
+        note:
+          'default は最小の binary setting として扱います。label と switch を近接させ、`aria-checked` と見た目の on/off を同期します。',
+      },
+      {
+        id: 'switch-default-tsx',
+        label: 'Default TSX',
+        language: 'tsx',
+        code: `const [enabled, setEnabled] = useState(true);
+
+<div className={styles.switchRow}>
+  <button
+    aria-checked={enabled}
+    aria-label="自動保存を切り替える"
+    className={styles.switch}
+    onClick={() => setEnabled((current) => !current)}
+    role="switch"
+    type="button">
+    <span aria-hidden="true" className={styles.switchThumb} />
+  </button>
+  <span>自動保存</span>
+</div>`,
+        note:
+          'button + `role="switch"` で実装する場合は `aria-checked` を必ず更新します。native checkbox を使う場合も label と checked state を同期します。',
+      },
+      {
+        id: 'switch-with-icons-css',
+        label: 'With Icons CSS',
+        language: 'css',
+        code: `.iconSwitch {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  inline-size: 3.75rem;
+  block-size: 1.85rem;
+  border: 0;
+  border-radius: 999px;
+  background: #d1d5db;
+  color: #475569;
+  cursor: pointer;
+}
+
+.iconSwitch[data-state='on'] {
+  background: #0f766e;
+  color: white;
+}
+
+.iconSwitchIcon {
+  z-index: 1;
+  display: inline-flex;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.iconSwitchThumb {
+  position: absolute;
+  inset-block-start: 0.2rem;
+  inset-inline-start: 0.22rem;
+  inline-size: 1.45rem;
+  block-size: 1.45rem;
+  border-radius: 999px;
+  background: white;
+  transition: transform 140ms ease;
+}
+
+.iconSwitch[data-state='on'] .iconSwitchThumb {
+  transform: translateX(1.86rem);
+}`,
+        note:
+          'icon は補助表現に留め、accessible name は text label 側で担保します。on/off を icon だけに依存しないことが重要です。',
+      },
+      {
+        id: 'switch-with-icons-tsx',
+        label: 'With Icons TSX',
+        language: 'tsx',
+        code: `const [quietHours, setQuietHours] = useState(false);
+
+<button
+  aria-checked={quietHours}
+  aria-label="集中モードを切り替える"
+  className={styles.iconSwitch}
+  data-state={quietHours ? 'on' : 'off'}
+  onClick={() => setQuietHours((current) => !current)}
+  role="switch"
+  type="button">
+  <span aria-hidden="true" className={styles.iconSwitchIcon}>月</span>
+  <span aria-hidden="true" className={styles.iconSwitchIcon}>太陽</span>
+  <span aria-hidden="true" className={styles.iconSwitchThumb} />
+</button>`,
+        note:
+          '状態の意味が曖昧な icon は避け、必要なら隣接する label / helper text で「何を切り替えるか」を明示します。',
+      },
+      {
+        id: 'switch-with-labels-css',
+        label: 'With Labels CSS',
+        language: 'css',
+        code: `.labeledSwitchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.labeledSwitchText {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.labeledSwitchText strong {
+  color: var(--ifm-color-emphasis-900);
+}
+
+.labeledSwitchText span {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.9rem;
+}`,
+        note:
+          'label left / label right は情報密度で使い分けます。説明が必要な設定は label block と switch を左右に分けると scanning しやすくなります。',
+      },
+      {
+        id: 'switch-with-labels-tsx',
+        label: 'With Labels TSX',
+        language: 'tsx',
+        code: `const [digestEnabled, setDigestEnabled] = useState(true);
+
+<div className={styles.labeledSwitchRow}>
+  <span className={styles.labeledSwitchText} id="digest-label">
+    <strong>週次ダイジェスト</strong>
+    <span>毎週月曜に更新内容をまとめて受け取る</span>
+  </span>
+  <button
+    aria-checked={digestEnabled}
+    aria-labelledby="digest-label"
+    className={styles.switch}
+    onClick={() => setDigestEnabled((current) => !current)}
+    role="switch"
+    type="button">
+    <span aria-hidden="true" className={styles.switchThumb} />
+  </button>
+</div>`,
+        note:
+          '説明付き layout では `aria-labelledby` で label block と switch を結び、クリック可能領域と読み上げ名を一致させます。',
+      },
+      {
+        id: 'switch-settings-list-css',
+        label: 'Settings List CSS',
+        language: 'css',
+        code: `.settingsList {
+  display: grid;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.settingsItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.settingsItem + .settingsItem {
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.switchLoading {
+  cursor: wait;
+  opacity: 0.72;
+}`,
+        note:
+          'settings list では row ごとに label、description、loading state、switch をまとめます。非同期保存中は同じ row 内で状態を返します。',
+      },
+      {
+        id: 'switch-settings-list-tsx',
+        label: 'Settings List TSX',
+        language: 'tsx',
+        code: `const [settings, setSettings] = useState({
+  releaseNotes: true,
+  betaFeatures: false,
+});
+const [savingKey, setSavingKey] = useState<keyof typeof settings | null>(null);
+
+function toggleSetting(key: keyof typeof settings): void {
+  setSavingKey(key);
+  setSettings((current) => ({...current, [key]: !current[key]}));
+  window.setTimeout(() => setSavingKey(null), 600);
+}
+
+<div className={styles.settingsList}>
+  {[
+    ['releaseNotes', 'リリース通知', '重要な更新を公開時に受け取る'],
+    ['betaFeatures', 'ベータ機能', '検証中の機能をこの workspace で有効にする'],
+  ].map(([key, label, description]) => {
+    const settingKey = key as keyof typeof settings;
+    const isSaving = savingKey === settingKey;
+
+    return (
+      <div className={styles.settingsItem} key={settingKey}>
+        <span id={\`\${settingKey}-label\`}>
+          <strong>{label}</strong>
+          <span>{description}</span>
+        </span>
+        <button
+          aria-busy={isSaving}
+          aria-checked={settings[settingKey]}
+          aria-labelledby={\`\${settingKey}-label\`}
+          className={clsx(styles.switch, isSaving && styles.switchLoading)}
+          disabled={isSaving}
+          onClick={() => toggleSetting(settingKey)}
+          role="switch"
+          type="button">
+          <span aria-hidden="true" className={styles.switchThumb} />
+        </button>
+      </div>
+    );
+  })}
+</div>`,
+        note:
+          'loading state は保存完了前の二重操作を防ぐために使います。実 API では optimistic update / rollback / error 表示の方針を別途決めます。',
+      },
+    ],
+  },
   'tabs-inline-panel-switcher': {
     snippetSummary:
       '同一ページ内で panel を切り替える tablist / tabpanel の骨格です。キーボード移動と active panel の結びつきを先に固定します。',

@@ -122,7 +122,8 @@
 
 .detailPreviewPanel .demoNote,
 .detailPreviewPanel .sliderHint,
-.detailPreviewPanel .segmentedDemoState {
+.detailPreviewPanel .segmentedDemoState,
+.detailPreviewPanel .switchSavingText {
   display: none;
 }
 
@@ -190,7 +191,9 @@
 
 [data-theme='dark'] .mockSurface,
 [data-theme='dark'] .mockToolbar,
-[data-theme='dark'] .segmentedResultPanel {
+[data-theme='dark'] .segmentedResultPanel,
+[data-theme='dark'] .switchVariantBlock,
+[data-theme='dark'] .switchSettingsList {
   border-color: var(--ifm-color-emphasis-300);
   background: linear-gradient(
     180deg,
@@ -217,7 +220,9 @@
 }
 
 [data-theme='dark'] .tabPanelDescription,
-[data-theme='dark'] .toolbarStatusText {
+[data-theme='dark'] .toolbarStatusText,
+[data-theme='dark'] .switchStateText,
+[data-theme='dark'] .switchDescriptionBlock span {
   color: var(--ifm-color-emphasis-200);
 }
 
@@ -355,6 +360,159 @@
   background: #ecfccb;
   border-color: #bef264;
   color: #3f6212;
+}
+
+.switchVariantGrid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.switchVariantBlock,
+.switchSettingsList {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0.9rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.switchInlineRow,
+.switchLabelLayout,
+.switchSettingsHeader,
+.switchSettingsItem {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.switchInlineRow,
+.switchSettingsHeader,
+.switchSettingsItem {
+  justify-content: space-between;
+}
+
+.switchLabelLayout {
+  justify-content: flex-start;
+}
+
+.switchControl {
+  position: relative;
+  flex: 0 0 auto;
+  inline-size: 3.1rem;
+  block-size: 1.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ifm-color-emphasis-300);
+  cursor: pointer;
+  transition:
+    background-color 140ms ease,
+    opacity 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.switchControl[aria-checked='true'] {
+  background: #0f766e;
+}
+
+.switchControl:focus-visible {
+  outline: 3px solid var(--ifm-color-primary);
+  outline-offset: 3px;
+}
+
+.switchControl:disabled {
+  cursor: wait;
+}
+
+.switchThumb {
+  position: absolute;
+  inset-block-start: 0.22rem;
+  inset-inline-start: 0.22rem;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  border-radius: 999px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+  transition: transform 140ms ease;
+}
+
+.switchControl[aria-checked='true'] .switchThumb {
+  transform: translateX(1.4rem);
+}
+
+.switchControlLoading {
+  opacity: 0.72;
+}
+
+.switchControlWithIcons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  inline-size: 3.8rem;
+  color: #475569;
+}
+
+.switchControlWithIcons[data-state='on'] {
+  color: white;
+}
+
+.switchControlWithIcons .switchThumb {
+  inline-size: 1.32rem;
+  block-size: 1.32rem;
+}
+
+.switchControlWithIcons[aria-checked='true'] .switchThumb {
+  transform: translateX(1.9rem);
+}
+
+.switchIcon {
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.switchLabelText {
+  color: var(--ifm-color-emphasis-900);
+  font-weight: 700;
+}
+
+.switchStateText,
+.switchSavingText {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.switchSettingsList {
+  gap: 0;
+}
+
+.switchSettingsHeader {
+  padding-bottom: 0.75rem;
+}
+
+.switchSettingsItem {
+  padding-block: 0.85rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.switchDescriptionBlock {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.switchDescriptionBlock strong {
+  color: var(--ifm-color-emphasis-900);
+}
+
+.switchDescriptionBlock span {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .mockButtonDisabled {
@@ -608,6 +766,10 @@
 
 @media screen and (max-width: 996px) {
   .detailMainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .switchVariantGrid {
     grid-template-columns: 1fr;
   }
 }

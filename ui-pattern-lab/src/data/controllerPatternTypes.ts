@@ -1,5 +1,6 @@
 export type ControllerPatternEntryId =
   | 'segmented-view-switcher'
+  | 'switch'
   | 'tabs-inline-panel-switcher'
   | 'sort-filter-toolbar'
   | 'pagination-and-page-size-controller'
@@ -8,6 +9,7 @@ export type ControllerPatternEntryId =
 
 export type ControllerPatternFamily =
   | 'view-switch'
+  | 'binary-setting'
   | 'scope-control'
   | 'continuous-adjustment';
 

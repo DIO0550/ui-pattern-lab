@@ -10,6 +10,26 @@ import styles from './styles.module.css';
 
 const axisItems = [
   {
+    title: 'state の表現',
+    description:
+      'switch は on / off、segmented switch は selected mode、tabs は active panel、pagination は current page のように、状態の名前と反映先を先に決めます。',
+  },
+  {
+    title: 'size と密度',
+    description:
+      'settings list の switch は行内で 44px 以上の touch target を確保し、toolbar や table 周辺の control は情報密度に合わせて compact / regular を使い分けます。',
+  },
+  {
+    title: 'icon の必要性',
+    description:
+      'icon は状態理解の補助に留め、label や accessible name を置き換えません。on / off の意味が icon だけで伝わらない場合は text label を優先します。',
+  },
+  {
+    title: 'layout とラベル位置',
+    description:
+      'switch は label left / label right / description 付き / settings list を分け、tabs や toolbar は control と反映先の距離を短く保ちます。',
+  },
+  {
     title: '連続値か離散値か',
     description:
       'view mode や section 切り替えではなく、price range や volume のような連続値を動かしたいなら range slider の候補が強くなります。',
@@ -42,6 +62,7 @@ const axisItems = [
 ] as const;
 
 const decisionFlowItems = [
+  'on / off 設定を切り替えた直後に保存・反映するなら `switch`。',
   '同一 view の local UI state を 2〜4 候補から即時に切り替えるなら `segmented-view-switcher`。',
   '同じページ枠の panel / context を切り替え、`tablist` / `tabpanel` や arrow key を前提にするなら `tabs-inline-panel-switcher`。',
   '一覧全体の並び替え・絞り込み・active filter をまとめて扱うなら `sort-filter-toolbar`。',
@@ -69,7 +90,7 @@ export default function ControllerPatternPageContent(): ReactNode {
           <Heading as="h2">どの controller pattern を選ぶか</Heading>
           <p>
             controller 系 UI は「押せるかどうか」ではなく、何を切り替える control なのかで選びます。
-            mode switch、inline panel、dataset scope、continuous adjustment
+            binary setting、mode switch、inline panel、dataset scope、continuous adjustment
             のどれに当たるかを先に決め、同じ view の local UI state をその場で切り替えるのか、panel semantics や永続化まで含めるのかを切り分けると、button や selector、tabs との境界も整理しやすくなります。
           </p>
           <ol className={styles.flowList}>
@@ -115,8 +136,8 @@ export default function ControllerPatternPageContent(): ReactNode {
         <section className={`container margin-bottom--xl ${styles.axisSection}`}>
           <Heading as="h2">表示制御の比較軸</Heading>
           <p className={styles.axisLead}>
-            連続値かどうか、候補数、即時反映と視覚フィードバック、ドラッグ操作の必要性、既存カテゴリとの境界、主要セマンティクスの
-            6 軸で比べると、controller 系 UI の責務がぶれにくくなります。
+            state、size、icon、layout、連続値かどうか、候補数、即時反映と視覚フィードバック、ドラッグ操作の必要性、既存カテゴリとの境界、主要セマンティクスの
+            10 軸で比べると、controller 系 UI の責務がぶれにくくなります。
           </p>
           <PatternComparisonAxisGrid items={axisItems} layout="cards" />
           <p className={styles.axisNote}>
@@ -124,8 +145,8 @@ export default function ControllerPatternPageContent(): ReactNode {
             <Link to="/selector">セレクタ</Link>、複数選択の input は{' '}
             <Link to="/checkbox">チェックボックス</Link>、一覧レイアウトそのものは{' '}
             <Link to="/table">テーブル</Link> を参照してください。表示制御カテゴリでは「view state
-            をその場でどう変えるか」を比較し、panel switch が必要なら tabs、URL 同期や永続化が主体なら別の state
-            管理責務へ切り分けます。
+            をその場でどう変えるか」を比較します。switch は即時反映される binary setting に限定し、panel
+            switch が必要なら tabs、URL 同期や永続化が主体なら別の state 管理責務へ切り分けます。
           </p>
         </section>
       }

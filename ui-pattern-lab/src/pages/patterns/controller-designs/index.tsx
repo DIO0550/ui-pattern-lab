@@ -14,7 +14,7 @@ export default function ControllerDesignPatternsPage(): ReactNode {
             表示制御デザインパターン
           </Heading>
           <p className="hero__subtitle">
-            segmented control、tabs、sort / filter toolbar、pagination、range slider、
+            switch、segmented control、tabs、sort / filter toolbar、pagination、range slider、
             quantity stepper を比較し、どの controller が view state をどう変えるかを先に整理できます。
           </p>
         </div>

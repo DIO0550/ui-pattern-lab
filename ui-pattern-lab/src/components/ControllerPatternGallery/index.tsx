@@ -56,6 +56,40 @@ const segmentedViewModeDefinitions: Readonly<
 
 const segmentedViewPreviewItems = ['Orders', 'Returns', 'Scheduled', 'Drafts'] as const;
 
+const switchDemoSettingOrder = ['comments', 'mentions', 'beta'] as const;
+
+type SwitchDemoSettingId = (typeof switchDemoSettingOrder)[number];
+
+type SwitchDemoSettings = Record<SwitchDemoSettingId, boolean>;
+
+type SwitchDemoSettingDefinition = {
+  label: string;
+  description: string;
+};
+
+const DEFAULT_SWITCH_DEMO_SETTINGS: SwitchDemoSettings = {
+  comments: true,
+  mentions: false,
+  beta: true,
+};
+
+const switchDemoSettingDefinitions: Readonly<
+  Record<SwitchDemoSettingId, SwitchDemoSettingDefinition>
+> = {
+  comments: {
+    label: 'コメント通知',
+    description: '担当している item にコメントが付いたらすぐ受け取る',
+  },
+  mentions: {
+    label: 'メンション通知',
+    description: '自分宛ての mention だけを優先して通知する',
+  },
+  beta: {
+    label: 'ベータ機能',
+    description: '検証中の workflow をこの workspace で有効にする',
+  },
+};
+
 const tabsInlinePanelOrder = ['overview', 'activity', 'settings'] as const;
 
 type TabsInlinePanelId = (typeof tabsInlinePanelOrder)[number];
@@ -365,6 +399,182 @@ function SegmentedViewSwitcherDemo(): ReactNode {
   );
 }
 
+function SwitchControl({
+  checked,
+  label,
+  loading = false,
+  onChange,
+  variant = 'default',
+}: {
+  checked: boolean;
+  label: string;
+  loading?: boolean;
+  onChange: () => void;
+  variant?: 'default' | 'icon';
+}): ReactNode {
+  if (variant === 'icon') {
+    return (
+      <button
+        aria-checked={checked}
+        aria-label={label}
+        className={clsx(styles.switchControl, styles.switchControlWithIcons)}
+        data-state={checked ? 'on' : 'off'}
+        disabled={loading}
+        onClick={onChange}
+        role="switch"
+        type="button">
+        <span aria-hidden="true" className={styles.switchIcon}>
+          月
+        </span>
+        <span aria-hidden="true" className={styles.switchIcon}>
+          太陽
+        </span>
+        <span aria-hidden="true" className={styles.switchThumb} />
+      </button>
+    );
+  }
+
+  return (
+    <button
+      aria-busy={loading || undefined}
+      aria-checked={checked}
+      aria-label={label}
+      className={clsx(styles.switchControl, loading && styles.switchControlLoading)}
+      disabled={loading}
+      onClick={onChange}
+      role="switch"
+      type="button">
+      <span aria-hidden="true" className={styles.switchThumb} />
+    </button>
+  );
+}
+
+function SwitchDemo(): ReactNode {
+  const [defaultEnabled, setDefaultEnabled] = useState(true);
+  const [iconEnabled, setIconEnabled] = useState(false);
+  const [labelLeftEnabled, setLabelLeftEnabled] = useState(true);
+  const [labelRightEnabled, setLabelRightEnabled] = useState(false);
+  const [settings, setSettings] = useState<SwitchDemoSettings>(
+    DEFAULT_SWITCH_DEMO_SETTINGS,
+  );
+  const [savingSettingId, setSavingSettingId] =
+    useState<SwitchDemoSettingId | null>(null);
+
+  /**
+   * Simulates an async save so the switch loading state can be compared.
+   */
+  function toggleSetting(settingId: SwitchDemoSettingId): void {
+    setSavingSettingId(settingId);
+    setSettings((currentSettings) => ({
+      ...currentSettings,
+      [settingId]: !currentSettings[settingId],
+    }));
+
+    window.setTimeout(() => {
+      setSavingSettingId(null);
+    }, 700);
+  }
+
+  return (
+    <div className={styles.demoPanel}>
+      <div className={styles.switchVariantGrid}>
+        <section className={styles.switchVariantBlock} aria-labelledby="switch-default-title">
+          <span className={styles.mockEyebrow} id="switch-default-title">
+            default
+          </span>
+          <div className={styles.switchInlineRow}>
+            <SwitchControl
+              checked={defaultEnabled}
+              label="自動保存を切り替える"
+              onChange={() => setDefaultEnabled((current) => !current)}
+            />
+            <span className={styles.switchLabelText}>自動保存</span>
+          </div>
+          <output aria-live="polite" className={styles.switchStateText}>
+            {defaultEnabled ? 'ON: 編集内容を即時保存' : 'OFF: 手動保存'}
+          </output>
+        </section>
+
+        <section className={styles.switchVariantBlock} aria-labelledby="switch-icon-title">
+          <span className={styles.mockEyebrow} id="switch-icon-title">
+            with icons
+          </span>
+          <div className={styles.switchInlineRow}>
+            <SwitchControl
+              checked={iconEnabled}
+              label="集中モードを切り替える"
+              onChange={() => setIconEnabled((current) => !current)}
+              variant="icon"
+            />
+            <span className={styles.switchLabelText}>集中モード</span>
+          </div>
+          <output aria-live="polite" className={styles.switchStateText}>
+            {iconEnabled ? '通知を抑制中' : '通常通知'}
+          </output>
+        </section>
+
+        <section className={styles.switchVariantBlock} aria-labelledby="switch-label-title">
+          <span className={styles.mockEyebrow} id="switch-label-title">
+            with labels
+          </span>
+          <div className={styles.switchLabelLayout}>
+            <span className={styles.switchLabelText}>Label left</span>
+            <SwitchControl
+              checked={labelLeftEnabled}
+              label="公開状態を切り替える"
+              onChange={() => setLabelLeftEnabled((current) => !current)}
+            />
+          </div>
+          <div className={styles.switchLabelLayout}>
+            <SwitchControl
+              checked={labelRightEnabled}
+              label="メール通知を切り替える"
+              onChange={() => setLabelRightEnabled((current) => !current)}
+            />
+            <span className={styles.switchLabelText}>Label right</span>
+          </div>
+        </section>
+      </div>
+
+      <section className={styles.switchSettingsList} aria-labelledby="switch-settings-title">
+        <div className={styles.switchSettingsHeader}>
+          <span className={styles.mockEyebrow} id="switch-settings-title">
+            settings list
+          </span>
+          <span className={styles.switchStateText}>即時保存</span>
+        </div>
+        {switchDemoSettingOrder.map((settingId) => {
+          const setting = switchDemoSettingDefinitions[settingId];
+          const isSaving = savingSettingId === settingId;
+
+          return (
+            <div className={styles.switchSettingsItem} key={settingId}>
+              <span className={styles.switchDescriptionBlock}>
+                <strong>{setting.label}</strong>
+                <span>{setting.description}</span>
+                {isSaving ? (
+                  <span className={styles.switchSavingText}>保存中</span>
+                ) : null}
+              </span>
+              <SwitchControl
+                checked={settings[settingId]}
+                label={`${setting.label}を切り替える`}
+                loading={isSaving}
+                onChange={() => toggleSetting(settingId)}
+              />
+            </div>
+          );
+        })}
+      </section>
+
+      <p className={styles.demoNote}>
+        checkbox は複数選択やフォーム値、switch は即時反映される binary setting として責務を分ける demo
+        です。
+      </p>
+    </div>
+  );
+}
+
 function TabsInlinePanelSwitcherDemo(): ReactNode {
   const tabListLabelId = useId();
   const tabIdBase = useId();
@@ -652,6 +862,7 @@ function QuantityStepperControlDemo(): ReactNode {
 
 const demoByKind: Record<ControllerPatternEntry['demoKind'], DemoRenderer> = {
   'segmented-view-switcher': SegmentedViewSwitcherDemo,
+  switch: SwitchDemo,
   'tabs-inline-panel-switcher': TabsInlinePanelSwitcherDemo,
   'sort-filter-toolbar': SortFilterToolbarDemo,
   'pagination-and-page-size-controller': PaginationAndPageSizeControllerDemo,

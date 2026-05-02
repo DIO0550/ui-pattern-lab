@@ -42,6 +42,27 @@ const baseControllerPatternEntries = [
     demoKind: 'segmented-view-switcher',
   },
   {
+    id: 'switch',
+    title: 'switch',
+    summary:
+      '通知、feature flag、公開状態のような on / off 設定を、その場で即時反映する二択 input パターンです。',
+    problem:
+      'checkbox と同じ見た目や配置で扱うと、複数選択のフォーム値なのか、保存を伴う即時切り替えなのかが曖昧になります。',
+    solution:
+      'switch を binary setting の即時反映に限定し、状態・ラベル位置・説明・保存中 feedback を近接させて、切り替え結果がすぐ反映される control として見せます。',
+    whenToUse:
+      'settings toggle、feature flag、notification preference、公開 / 非公開のように、単一設定を on / off へ切り替えた直後に反映したい場面に向いています。',
+    comparisonTip:
+      '複数選択やフォーム送信まで値を保持する用途は checkbox、少数の view mode 切り替えは segmented view switcher、単発 action は button に残します。switch は即時反映される二択設定だけを扱います。',
+    interactionNotes:
+      'label left / label right / description 付き / settings list を分けて設計し、保存中は loading state で再操作を抑制します。切り替え後に別画面遷移を発生させず、状態の変化を近くの text や status で補います。',
+    accessibilityNotes:
+      '`role=\"switch\"` と `aria-checked`、または native checkbox と明確な label の組み合わせで実装します。Tab で到達でき、Space で切り替えられること、disabled / loading の理由が見えることを baseline にします。',
+    tags: ['binary setting', 'immediate save', 'on/off'],
+    controllerFamily: 'binary-setting',
+    demoKind: 'switch',
+  },
+  {
     id: 'tabs-inline-panel-switcher',
     title: 'tabs inline panel switcher',
     summary:

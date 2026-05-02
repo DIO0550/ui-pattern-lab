@@ -41,15 +41,15 @@ export default function ControllerCategoryContent(): ReactNode {
     <div className={`container margin-vert--lg ${styles.root}`}>
       <p className={styles.lead}>
         表示制御カテゴリでは、単発 action やフォーム送信前提の値選択ではなく、画面上の内容や view state
-        をその場で切り替える UI を扱います。まず比較ページで `view switch`、`scope control`、
-        `continuous adjustment` の違いを整理してから、個別 pattern の detail page へ進めます。
+        をその場で切り替える UI を扱います。まず比較ページで `binary setting`、`view switch`、
+        `scope control`、`continuous adjustment` の違いを整理してから、個別 pattern の detail page へ進めます。
       </p>
 
       <section className={styles.section}>
         <Heading as="h2">まず比較ページで判断する</Heading>
         <p className={styles.sectionLead}>
-          segmented switch、tabs、sort / filter toolbar、pagination、range slider、quantity
-          stepper の違いは、何を切り替える control なのかを比較一覧で横断的に確認するのがおすすめです。
+          switch、segmented switch、tabs、sort / filter toolbar、pagination、range slider、
+          quantity stepper の違いは、何を切り替える control なのかを比較一覧で横断的に確認するのがおすすめです。
         </p>
         <div className={styles.grid}>
           <PatternCatalogCard
