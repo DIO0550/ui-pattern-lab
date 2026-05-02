@@ -146,3 +146,6 @@ vite.config.ts.timestamp-*
 # local spec workflow artifacts
 .specs/
 .codex
+
+# local TODO notes
+TODO/
