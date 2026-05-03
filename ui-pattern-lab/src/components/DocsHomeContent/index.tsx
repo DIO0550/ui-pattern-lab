@@ -5,6 +5,7 @@ import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import {accordionPatternEntries} from '@site/src/data/accordionPatternEntries';
 import {alertPatternEntries} from '@site/src/data/alertPatternEntries';
+import {avatarPatternEntries} from '@site/src/data/avatarPatternEntries';
 import {badgePatternEntries} from '@site/src/data/badgePatternEntries';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
@@ -62,6 +63,13 @@ const buttonDetailLinks = buttonPatternEntries.map((entry) => ({
 const badgeDetailLinks = badgePatternEntries.map((entry) => ({
   title: entry.title,
   to: `/badge/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const avatarDetailLinks = avatarPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/avatar/${entry.id}`,
   description: entry.summary,
   meta: '詳細ページ',
 }));
@@ -192,6 +200,24 @@ const badgeLinks = [
     meta: '比較一覧',
   },
   ...badgeDetailLinks,
+];
+
+const avatarLinks = [
+  {
+    title: 'アバターカテゴリ',
+    to: '/avatar',
+    description:
+      'カテゴリの入口ページです。単体、グループ、ラベル付きアバターの比較一覧と詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'アバターパターン比較',
+    to: '/patterns/avatar-designs',
+    description:
+      'size / shape / fallback / indicator / composition の判断軸で avatar の使い分けを比較できます。',
+    meta: '比較一覧',
+  },
+  ...avatarDetailLinks,
 ];
 
 const alertLinks = [
@@ -350,6 +376,7 @@ type CategoryId =
   | 'accordion'
   | 'button'
   | 'badge'
+  | 'avatar'
   | 'alert'
   | 'checkbox'
   | 'selector'
@@ -471,6 +498,15 @@ const categoryCards: CategoryCard[] = [
     links: badgeLinks,
     expandedMeta: 'クリックしてバッジ関連の導線を閉じる',
     collapsedMeta: 'クリックしてバッジ関連の導線を表示',
+  },
+  {
+    id: 'avatar',
+    title: 'アバター',
+    description:
+      '人物、組織、Bot などの主体表示を扱い、fallback、group、label 付き表示を比較できるカテゴリです。',
+    links: avatarLinks,
+    expandedMeta: 'クリックしてアバター関連の導線を閉じる',
+    collapsedMeta: 'クリックしてアバター関連の導線を表示',
   },
   {
     id: 'alert',

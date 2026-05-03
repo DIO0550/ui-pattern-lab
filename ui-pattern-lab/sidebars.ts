@@ -106,6 +106,21 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'アバター',
+      link: {
+        type: 'doc',
+        id: 'avatar',
+      },
+      collapsible: true,
+      collapsed: false,
+      items: [
+        'avatar/standalone-avatar',
+        'avatar/avatar-group',
+        'avatar/avatar-with-label',
+      ],
+    },
+    {
+      type: 'category',
       label: 'アラート',
       link: {
         type: 'doc',

@@ -1,0 +1,185 @@
+.widePreview {
+  padding: 1rem;
+}
+
+.previewStack {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.avatarSizes,
+.avatarStack {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.avatarSizes .avatar:nth-child(1) {
+  block-size: 2rem;
+  font-size: 0.75rem;
+  inline-size: 2rem;
+}
+
+.avatarSizes .avatar:nth-child(3) {
+  block-size: 3.5rem;
+  font-size: 1rem;
+  inline-size: 3.5rem;
+}
+
+.avatar {
+  align-items: center;
+  background: #eef3f8;
+  border: 1px solid color-mix(in srgb, #315f7d 18%, transparent);
+  border-radius: 999px;
+  color: #24465f;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.875rem;
+  font-weight: 800;
+  inline-size: 2.5rem;
+  justify-content: center;
+  line-height: 1;
+  block-size: 2.5rem;
+  overflow: hidden;
+}
+
+.imagePattern {
+  background:
+    radial-gradient(circle at 50% 34%, #c87965 0 18%, transparent 19%),
+    radial-gradient(circle at 50% 108%, #315f7d 0 42%, transparent 43%),
+    linear-gradient(135deg, #f1d8c8, #d4e8ef);
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+.icon {
+  block-size: 1.2rem;
+  fill: none;
+  inline-size: 1.2rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.toneBlue {
+  background: #eef3f8;
+  color: #24465f;
+}
+
+.toneGreen {
+  background: #eaf5f1;
+  color: #1b6654;
+}
+
+.toneGold {
+  background: #f6efd9;
+  color: #7a5b18;
+}
+
+.tonePink {
+  background: #f8e9ee;
+  color: #8b3f58;
+}
+
+.toneNeutral {
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-emphasis-800);
+}
+
+.avatarGroup {
+  align-items: center;
+  display: flex;
+  padding-left: 0.6rem;
+}
+
+.avatarGroup .avatar {
+  margin-left: -0.6rem;
+  outline: 2px solid var(--ifm-background-surface-color);
+}
+
+.personInline,
+.personCard,
+.personRow {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.personCard,
+.personRow {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 0.75rem;
+  padding: 0.8rem;
+}
+
+.personText {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.personText strong,
+.personText span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.personText span,
+.presenceText {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.875rem;
+}
+
+.statusBadge {
+  border: 1px solid color-mix(in srgb, #12805c 38%, transparent);
+  border-radius: 999px;
+  color: #12805c;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  margin-left: auto;
+  padding: 0.2rem 0.55rem;
+  white-space: nowrap;
+}
+
+.presenceText {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.personList {
+  display: grid;
+  gap: 0.65rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.previewNote {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+  margin: 0;
+}
+
+[data-theme='dark'] .personCard,
+[data-theme='dark'] .personRow {
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+@media screen and (max-width: 640px) {
+  .widePreview {
+    padding: 0.75rem;
+  }
+
+  .personCard,
+  .personRow {
+    align-items: flex-start;
+  }
+
+  .statusBadge,
+  .presenceText {
+    margin-left: 0;
+  }
+}
