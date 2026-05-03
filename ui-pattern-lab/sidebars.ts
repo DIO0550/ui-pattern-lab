@@ -48,6 +48,39 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'カード',
+      link: {
+        type: 'doc',
+        id: 'card',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['card/content-card'],
+    },
+    {
+      type: 'category',
+      label: 'チップ・タグ',
+      link: {
+        type: 'doc',
+        id: 'chip-tag',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['chip-tag/chip-tag-token'],
+    },
+    {
+      type: 'category',
+      label: 'セパレーター',
+      link: {
+        type: 'doc',
+        id: 'separator',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['separator/structural-separator'],
+    },
+    {
+      type: 'category',
       label: '表示制限',
       link: {
         type: 'doc',
@@ -244,6 +277,28 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'スライダー',
+      link: {
+        type: 'doc',
+        id: 'slider',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['slider/range-slider'],
+    },
+    {
+      type: 'category',
+      label: 'テキストエリア',
+      link: {
+        type: 'doc',
+        id: 'textarea',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['textarea/multiline-textarea'],
+    },
+    {
+      type: 'category',
       label: 'ページネーション',
       link: {
         type: 'doc',
@@ -256,6 +311,105 @@ const sidebars: SidebarsConfig = {
         'pagination/load-more',
         'pagination/infinite-scroll',
       ],
+    },
+    {
+      type: 'category',
+      label: 'パンくずリスト',
+      link: {
+        type: 'doc',
+        id: 'breadcrumb',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['breadcrumb/hierarchy-breadcrumb'],
+    },
+    {
+      type: 'category',
+      label: 'ナビゲーションメニュー',
+      link: {
+        type: 'doc',
+        id: 'navigation-menu',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['navigation-menu/primary-navigation-menu'],
+    },
+    {
+      type: 'category',
+      label: 'ドロップダウンメニュー',
+      link: {
+        type: 'doc',
+        id: 'dropdown-menu',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['dropdown-menu/dropdown-action-menu'],
+    },
+    {
+      type: 'category',
+      label: 'ダイアログ・モーダル',
+      link: {
+        type: 'doc',
+        id: 'dialog-modal',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['dialog-modal/modal-dialog'],
+    },
+    {
+      type: 'category',
+      label: 'ドロワー・シート',
+      link: {
+        type: 'doc',
+        id: 'drawer-sheet',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['drawer-sheet/drawer-sheet-panel'],
+    },
+    {
+      type: 'category',
+      label: 'ポップオーバー',
+      link: {
+        type: 'doc',
+        id: 'popover',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['popover/popover-panel'],
+    },
+    {
+      type: 'category',
+      label: 'ツールチップ',
+      link: {
+        type: 'doc',
+        id: 'tooltip',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['tooltip/short-tooltip'],
+    },
+    {
+      type: 'category',
+      label: 'ホバーカード',
+      link: {
+        type: 'doc',
+        id: 'hover-card',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['hover-card/hover-preview-card'],
+    },
+    {
+      type: 'category',
+      label: 'トースト・スナックバー',
+      link: {
+        type: 'doc',
+        id: 'toast-snackbar',
+      },
+      collapsible: true,
+      collapsed: true,
+      items: ['toast-snackbar/toast-feedback'],
     },
     {
       type: 'category',

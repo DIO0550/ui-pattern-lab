@@ -19,6 +19,10 @@ import {groupSelectorPatternEntries} from '@site/src/data/selectorPatternCategor
 import {selectorPatternEntries} from '@site/src/data/selectorPatternEntries';
 import {tablePatternEntries} from '@site/src/data/tablePatternEntries';
 import {tabsPatternEntries} from '@site/src/data/tabsPatternEntries';
+import {
+  type TodoPatternCategoryId,
+  todoPatternCategories,
+} from '@site/src/data/todoPatternData';
 
 import styles from './styles.module.css';
 
@@ -384,7 +388,8 @@ type CategoryId =
   | 'controller'
   | 'pagination'
   | 'tabs'
-  | 'input';
+  | 'input'
+  | TodoPatternCategoryId;
 
 type CategoryCard = {
   id: CategoryId;
@@ -443,6 +448,35 @@ const selectorSections: LinkSection[] = groupSelectorPatternEntries(selectorPatt
     })),
   }),
 );
+
+const todoCategoryCards: CategoryCard[] = todoPatternCategories.map((category) => ({
+  id: category.id,
+  title: category.label,
+  description: category.summary,
+  links: [
+    {
+      title: `${category.label}カテゴリ`,
+      to: `/${category.slug}`,
+      description:
+        'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+      meta: 'カテゴリページ',
+    },
+    {
+      title: `${category.label}パターン比較`,
+      to: category.comparePath,
+      description: category.axes.map((axis) => axis.title).join(' / '),
+      meta: '比較一覧',
+    },
+    ...category.entries.map((entry) => ({
+      title: entry.title,
+      to: `/${category.slug}/${entry.id}`,
+      description: entry.summary,
+      meta: '詳細ページ',
+    })),
+  ],
+  expandedMeta: `クリックして${category.label}関連の導線を閉じる`,
+  collapsedMeta: `クリックして${category.label}関連の導線を表示`,
+}));
 
 const categoryCards: CategoryCard[] = [
   {
@@ -581,6 +615,7 @@ const categoryCards: CategoryCard[] = [
     expandedMeta: 'クリックしてテキストフィールド関連の導線を閉じる',
     collapsedMeta: 'クリックしてテキストフィールド関連の導線を表示',
   },
+  ...todoCategoryCards,
 ];
 
 const quickStartCards: readonly QuickStartCard[] = [
