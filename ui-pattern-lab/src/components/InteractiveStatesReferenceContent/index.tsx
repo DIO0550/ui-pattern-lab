@@ -21,7 +21,7 @@ function buildDetailNotes(stateValue: string, accessibilityValue: string) {
 const variants = [
   {
     id: 'default',
-    name: 'Default',
+    name: '標準',
     description: '通常時の基準となる状態です。',
     detailNotes: buildDetailNotes(
       '通常時を基準に高さ・余白・ラベル長を固定しておくと、hover や loading に切り替わっても幅が揺れにくくなります。',
@@ -66,7 +66,7 @@ const variants = [
   },
   {
     id: 'hover',
-    name: 'Hover',
+    name: 'ホバー',
     description: '操作可能だと分かる軽い反応を加えます。',
     detailNotes: buildDetailNotes(
       'hover は押下前の予告として扱い、selected や active と意味が混ざらない程度の差分にとどめます。',
@@ -113,7 +113,7 @@ const variants = [
   },
   {
     id: 'focus-visible',
-    name: 'Focus visible',
+    name: 'フォーカス表示',
     description: 'キーボード移動時の輪郭を消しません。',
     detailNotes: buildDetailNotes(
       'focus-visible は hover と別軸の状態として扱い、outline や offset が border / shadow に埋もれないように保ちます。',
@@ -160,7 +160,7 @@ const variants = [
   },
   {
     id: 'disabled',
-    name: 'Disabled',
+    name: '無効',
     description: '入力待ちなど、実行できない理由がある状態です。',
     detailNotes: buildDetailNotes(
       'disabled は未入力や権限不足のように実行不能な理由が明確なときだけ使い、単なる保留状態とは分けて扱います。',
@@ -202,7 +202,7 @@ const variants = [
   },
   {
     id: 'loading',
-    name: 'Loading',
+    name: '読み込み中',
     description: '処理中は再実行を防ぎ、状態を明示します。',
     detailNotes: buildDetailNotes(
       'loading は二重送信防止と進行中の可視化を同時に担うため、spinner を足してもラベル幅と gap を崩さない前提で設計します。',

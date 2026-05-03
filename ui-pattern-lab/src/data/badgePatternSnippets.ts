@@ -7,11 +7,11 @@ import type {
 type BadgeToneId = 'default' | 'primary' | 'success' | 'warning' | 'error' | 'info';
 
 const badgeToneExamples = [
-  {count: '0', label: 'Default', text: '下書き', tone: 'default'},
+  {count: '0', label: '標準', text: '下書き', tone: 'default'},
   {count: '8', label: 'Primary', text: '新着', tone: 'primary'},
   {count: '24', label: 'Success', text: '確認済み', tone: 'success'},
   {count: '3', label: 'Warning', text: '要確認', tone: 'warning'},
-  {count: '2', label: 'Error', text: '差し戻し', tone: 'error'},
+  {count: '2', label: 'エラー', text: '差し戻し', tone: 'error'},
   {count: '99+', label: 'Info', text: '更新情報', tone: 'info'},
 ] as const satisfies ReadonlyArray<{
   count: string;

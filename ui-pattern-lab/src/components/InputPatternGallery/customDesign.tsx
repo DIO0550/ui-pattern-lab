@@ -89,29 +89,29 @@ export const customDesignPreviewDefinitions = [
 export const customDesignStateDefinitions = [
   {
     id: 'default',
-    label: 'default',
+    label: '標準',
     description: '通常時の見た目です。ラベル、placeholder、helper を基準状態として確認します。',
     helperText: '公開ページに表示される名称です。',
     placeholder: '例: Pattern Lab',
   },
   {
     id: 'error',
-    label: 'error',
-    description: 'error 時の輪郭色、メッセージ、input 本体の見え方を確認します。',
+    label: 'エラー',
+    description: 'エラー時の輪郭色、メッセージ、input 本体の見え方を確認します。',
     errorText: '2 文字以上で入力してください。',
     value: 'P',
   },
   {
     id: 'disabled',
-    label: 'disabled',
-    description: 'disabled 時のトーンダウンと入力不可状態を確認します。',
+    label: '無効',
+    description: '無効時のトーンダウンと入力不可状態を確認します。',
     helperText: 'ロール設定によりこの項目は固定です。',
     value: 'system-generated',
   },
 ] as const satisfies readonly CustomDesignStateDefinition[];
 
 function StateBadge({state}: {state: CustomDesignStateId}): ReactNode {
-  return <span className={styles.stateBadge}>{state}</span>;
+  return <span className={styles.stateBadge}>{getCustomDesignStateDefinition(state).label}</span>;
 }
 
 export function getCustomDesignPreviewDefinition(

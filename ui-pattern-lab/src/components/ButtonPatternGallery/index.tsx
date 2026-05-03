@@ -104,7 +104,7 @@ function InteractiveStatesDemo(): ReactNode {
     <div className={styles.demoFrame}>
       <div className={styles.previewGrid}>
         <PreviewCard
-          label="Default"
+          label="標準"
           description="通常時の基準となる状態です。">
           <button
             className={clsx(styles.demoButton, styles.primaryButton)}
@@ -113,7 +113,7 @@ function InteractiveStatesDemo(): ReactNode {
           </button>
         </PreviewCard>
         <PreviewCard
-          label="Hover"
+          label="ホバー"
           description="操作可能だと分かる軽い反応を加えます。">
           <button
             className={clsx(
@@ -126,7 +126,7 @@ function InteractiveStatesDemo(): ReactNode {
           </button>
         </PreviewCard>
         <PreviewCard
-          label="Focus visible"
+          label="フォーカス表示"
           description="キーボード移動時の輪郭を消しません。">
           <button
             className={clsx(
@@ -139,7 +139,7 @@ function InteractiveStatesDemo(): ReactNode {
           </button>
         </PreviewCard>
         <PreviewCard
-          label="Disabled"
+          label="無効"
           description="入力待ちなど、実行できない理由がある状態です。">
           <button
             className={clsx(styles.demoButton, styles.secondaryButton)}
@@ -149,7 +149,7 @@ function InteractiveStatesDemo(): ReactNode {
           </button>
         </PreviewCard>
         <PreviewCard
-          label="Loading"
+          label="読み込み中"
           description="処理中は再実行を防ぎ、状態を明示します。">
           <button
             aria-busy="true"
@@ -527,21 +527,21 @@ function SpacingAndSizingDemo(): ReactNode {
   const sizeExamples = [
     {
       id: 'compact',
-      label: 'Compact',
+      label: 'コンパクト',
       description: '高密度なツールバーや補助操作向けです。',
       buttonClassName: styles.compactButton,
       specs: ['min-height: 2rem', 'padding: 0.35rem 0.7rem', 'icon gap: 0.35rem'],
     },
     {
       id: 'default',
-      label: 'Default',
+      label: '標準',
       description: '一般的なフォームや一覧での標準です。',
       buttonClassName: styles.defaultButton,
       specs: ['min-height: 2.5rem', 'padding: 0.5rem 0.9rem', 'icon gap: 0.5rem'],
     },
     {
       id: 'comfortable',
-      label: 'Comfortable',
+      label: 'ゆったり',
       description: 'タッチ中心の画面や主 CTA に向きます。',
       buttonClassName: styles.comfortableButton,
       specs: ['min-height: 2.75rem', 'padding: 0.65rem 1.1rem', 'icon gap: 0.65rem'],

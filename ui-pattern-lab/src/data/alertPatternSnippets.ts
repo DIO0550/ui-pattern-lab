@@ -27,7 +27,7 @@ const alertSeverityExamples = [
   },
   {
     body: '3 件の項目に修正が必要です。',
-    label: 'Error',
+    label: 'エラー',
     severity: 'error',
     title: '送信できません',
   },

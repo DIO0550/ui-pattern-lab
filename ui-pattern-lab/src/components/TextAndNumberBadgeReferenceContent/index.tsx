@@ -39,8 +39,8 @@ const badgeToneDefinitions: Readonly<
     }
   >
 > = {
-  default: {count: '0', label: 'Default', text: '下書き'},
-  error: {count: '2', label: 'Error', text: '差し戻し'},
+  default: {count: '0', label: '標準', text: '下書き'},
+  error: {count: '2', label: 'エラー', text: '差し戻し'},
   info: {count: '99+', label: 'Info', text: '更新情報'},
   primary: {count: '8', label: 'Primary', text: '新着'},
   success: {count: '24', label: 'Success', text: '確認済み'},

@@ -11,7 +11,7 @@ type Props = {
 const variants = [
   {
     id: 'compact',
-    name: 'Compact',
+    name: 'コンパクト',
     description: '高密度なツールバーや補助操作向けです。',
     preview: (
       <button
@@ -24,7 +24,7 @@ const variants = [
         <span aria-hidden="true" className={galleryStyles.buttonIcon}>
           +
         </span>
-        Compact
+        コンパクト
       </button>
     ),
     tabs: [
@@ -47,21 +47,21 @@ const variants = [
         label: 'TSX',
         code: `<button className={styles.buttonCompact} type="button">
   <span aria-hidden="true">+</span>
-  Compact
+  コンパクト
 </button>`,
         highlightedHtml: `<span class="punct">&lt;</span><span class="tag">button</span>
   <span class="attr">className</span><span class="punct">=</span><span class="punct">{</span><span class="str">styles.buttonCompact</span><span class="punct">}</span>
   <span class="attr">type</span><span class="punct">=</span><span class="str">"button"</span>
 <span class="punct">&gt;</span>
   <span class="punct">&lt;</span><span class="tag">span</span> <span class="attr">aria-hidden</span><span class="punct">=</span><span class="str">"true"</span><span class="punct">&gt;</span>+<span class="punct">&lt;/</span><span class="tag">span</span><span class="punct">&gt;</span>
-  Compact
+  コンパクト
 <span class="punct">&lt;/</span><span class="tag">button</span><span class="punct">&gt;</span>`,
       },
     ],
   },
   {
     id: 'default',
-    name: 'Default',
+    name: '標準',
     description: '一般的なフォームや一覧での標準です。',
     preview: (
       <button
@@ -74,7 +74,7 @@ const variants = [
         <span aria-hidden="true" className={galleryStyles.buttonIcon}>
           +
         </span>
-        Default
+        標準
       </button>
     ),
     tabs: [
@@ -97,21 +97,21 @@ const variants = [
         label: 'TSX',
         code: `<button className={styles.buttonDefault} type="button">
   <span aria-hidden="true">+</span>
-  Default
+  標準
 </button>`,
         highlightedHtml: `<span class="punct">&lt;</span><span class="tag">button</span>
   <span class="attr">className</span><span class="punct">=</span><span class="punct">{</span><span class="str">styles.buttonDefault</span><span class="punct">}</span>
   <span class="attr">type</span><span class="punct">=</span><span class="str">"button"</span>
 <span class="punct">&gt;</span>
   <span class="punct">&lt;</span><span class="tag">span</span> <span class="attr">aria-hidden</span><span class="punct">=</span><span class="str">"true"</span><span class="punct">&gt;</span>+<span class="punct">&lt;/</span><span class="tag">span</span><span class="punct">&gt;</span>
-  Default
+  標準
 <span class="punct">&lt;/</span><span class="tag">button</span><span class="punct">&gt;</span>`,
       },
     ],
   },
   {
     id: 'comfortable',
-    name: 'Comfortable',
+    name: 'ゆったり',
     description: 'タッチ中心の画面や主 CTA に向きます。',
     preview: (
       <button
@@ -124,7 +124,7 @@ const variants = [
         <span aria-hidden="true" className={galleryStyles.buttonIcon}>
           +
         </span>
-        Comfortable
+        ゆったり
       </button>
     ),
     tabs: [
@@ -147,14 +147,14 @@ const variants = [
         label: 'TSX',
         code: `<button className={styles.buttonComfortable} type="button">
   <span aria-hidden="true">+</span>
-  Comfortable
+  ゆったり
 </button>`,
         highlightedHtml: `<span class="punct">&lt;</span><span class="tag">button</span>
   <span class="attr">className</span><span class="punct">=</span><span class="punct">{</span><span class="str">styles.buttonComfortable</span><span class="punct">}</span>
   <span class="attr">type</span><span class="punct">=</span><span class="str">"button"</span>
 <span class="punct">&gt;</span>
   <span class="punct">&lt;</span><span class="tag">span</span> <span class="attr">aria-hidden</span><span class="punct">=</span><span class="str">"true"</span><span class="punct">&gt;</span>+<span class="punct">&lt;/</span><span class="tag">span</span><span class="punct">&gt;</span>
-  Comfortable
+  ゆったり
 <span class="punct">&lt;/</span><span class="tag">button</span><span class="punct">&gt;</span>`,
       },
     ],

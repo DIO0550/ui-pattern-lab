@@ -150,7 +150,7 @@ export default function TodoPatternDetailContent({categoryId, entryId}: Props): 
             <span>{category.label}カテゴリへ戻る</span>
           </Link>
         </nav>
-        <p className={styles.eyebrow}>Reference</p>
+        <p className={styles.eyebrow}>リファレンス</p>
         <Heading as="h1">{entry.title}</Heading>
         <p className={styles.summary}>{entry.summary}</p>
       </section>
@@ -181,7 +181,7 @@ export default function TodoPatternDetailContent({categoryId, entryId}: Props): 
               value: entry.accessibilityNote,
             },
           ]}
-          variantNote="各 variant は独立した preview と code panel として分けています。"
+          variantNote="各バリアントは独立したプレビューとコードパネルとして分けています。"
           variantSectionLabel="バリアント"
           variants={variants}
         />

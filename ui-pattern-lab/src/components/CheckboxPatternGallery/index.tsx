@@ -566,7 +566,7 @@ function StatesAndAccessibilityDemo(): ReactNode {
           </div>
         </PreviewCard>
         <PreviewCard
-          label="Focus visible"
+          label="フォーカス表示"
           description="キーボード移動時の輪郭を消しません。">
           <CheckboxField
             className={styles.focusField}
@@ -576,7 +576,7 @@ function StatesAndAccessibilityDemo(): ReactNode {
           />
         </PreviewCard>
         <PreviewCard
-          label="Disabled"
+          label="無効"
           description="操作不可の理由を文言でも補います。">
           <CheckboxField
             control={<DemoCheckbox checked disabled readOnly />}
@@ -585,7 +585,7 @@ function StatesAndAccessibilityDemo(): ReactNode {
           />
         </PreviewCard>
         <PreviewCard
-          label="Error"
+          label="エラー"
           description="aria-invalid と補助文をセットで示します。">
           <CheckboxField
             className={styles.errorField}
@@ -596,7 +596,7 @@ function StatesAndAccessibilityDemo(): ReactNode {
           />
         </PreviewCard>
         <PreviewCard
-          label="Mixed"
+          label="一部選択"
           description="一部選択中は mixed を視覚差分でも示します。">
           <CheckboxField
             control={<DemoCheckbox aria-checked="mixed" indeterminate readOnly />}
@@ -866,7 +866,7 @@ function buildCheckboxStateReferenceVariants(): readonly ButtonReferenceVariant[
     },
     {
       id: 'focus-visible',
-      name: 'Focus visible',
+      name: 'フォーカス表示',
       description: 'キーボード移動時の輪郭を示す状態です。',
       previewClassName: styles.compactReferenceVariantPreview,
       preview: (
@@ -911,7 +911,7 @@ function buildCheckboxStateReferenceVariants(): readonly ButtonReferenceVariant[
     },
     {
       id: 'disabled',
-      name: 'Disabled',
+      name: '無効',
       description: '操作不可の理由を補う状態です。',
       previewClassName: styles.compactReferenceVariantPreview,
       preview: (
@@ -953,7 +953,7 @@ function buildCheckboxStateReferenceVariants(): readonly ButtonReferenceVariant[
     },
     {
       id: 'error',
-      name: 'Error',
+      name: 'エラー',
       description: 'aria-invalid と補助文を併記する状態です。',
       previewClassName: styles.compactReferenceVariantPreview,
       preview: (
@@ -1020,7 +1020,7 @@ const errorId = 'terms-error';
     },
     {
       id: 'mixed',
-      name: 'Mixed',
+      name: '一部選択',
       description: '一部選択中を示す状態です。',
       previewClassName: styles.compactReferenceVariantPreview,
       preview: (

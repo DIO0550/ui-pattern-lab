@@ -194,7 +194,7 @@ function VariantCodePanel({
       <div className={styles.variantCodeWrap}>
         <div className={styles.variantCodeBar}>
           <div className={styles.variantCodeTabs}>
-            <span className={styles.variantCodeLabel}>Code</span>
+            <span className={styles.variantCodeLabel}>コード</span>
           </div>
         </div>
         <div className={styles.variantCodeEmpty}>実装例は準備中です。</div>
@@ -250,7 +250,7 @@ function VariantCodePanel({
               }
             }}
             type="button">
-            Copy
+            コピー
           </button>
         </div>
       </div>

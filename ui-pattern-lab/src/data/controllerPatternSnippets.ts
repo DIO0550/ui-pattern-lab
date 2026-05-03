@@ -190,7 +190,7 @@ const [activeMode, setActiveMode] = useState<ViewMode>('grid');
     items: [
       {
         id: 'switch-default-css',
-        label: 'Default CSS',
+        label: '標準 CSS',
         language: 'css',
         code: `.switchRow {
   display: inline-flex;
@@ -237,7 +237,7 @@ const [activeMode, setActiveMode] = useState<ViewMode>('grid');
       },
       {
         id: 'switch-default-tsx',
-        label: 'Default TSX',
+        label: '標準 TSX',
         language: 'tsx',
         code: `const [enabled, setEnabled] = useState(true);
 

@@ -287,7 +287,7 @@ export default function InputPatternDetailContent({entryId}: Props): ReactNode {
         </ol>
       </nav>
       <p className={styles.lead}>
-        このページでは「{entry.title}」の default / error / disabled preview に加えて、対応する TSX / CSS サンプルと設計メモをまとめて確認できます。一覧へ戻る場合は{' '}
+        このページでは「{entry.title}」の標準 / エラー / 無効プレビューに加えて、対応する TSX / CSS サンプルと設計メモをまとめて確認できます。一覧へ戻る場合は{' '}
         <Link to={INPUT_PATTERN_PAGE_PATH}>自作テキストフィールドデザイン</Link>、カテゴリ全体へ戻る場合は{' '}
         <Link to={INPUT_CATEGORY_PATH}>テキストフィールド</Link> を参照してください。
       </p>
@@ -296,7 +296,7 @@ export default function InputPatternDetailContent({entryId}: Props): ReactNode {
       </p>
       <PatternReferenceContent
         notes={buildNotes(entry.id)}
-        variantNote={`${definition.detailDescription} 各 variant は 1 preview + 1 code panel として分離し、TSX と CSS を同じ panel のタブで見比べられるようにしています。`}
+        variantNote={`${definition.detailDescription} 各バリアントは 1 プレビュー + 1 コードパネルとして分離し、TSX と CSS を同じパネルのタブで見比べられるようにしています。`}
         variantSectionLabel="状態"
         variants={buildVariants(entry.id)}
       />

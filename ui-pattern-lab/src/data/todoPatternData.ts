@@ -152,19 +152,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'slash',
-            title: 'Slash separator',
+            title: 'スラッシュ区切り',
             summary: 'docs や設定画面で軽く見せる slash 区切り。',
             labels: ['ホーム', '/', '設定', '/', '通知'],
           },
           {
             id: 'chevron',
-            title: 'Chevron separator',
+            title: '山括弧区切り',
             summary: 'プロダクト階層を強めに示す chevron 区切り。',
             labels: ['商品', '>', '家具', '>', 'チェア'],
           },
           {
             id: 'collapsed',
-            title: 'Collapsed menu',
+            title: '省略メニュー',
             summary: '深い階層で中間 item を折りたたむ表示。',
             labels: ['ホーム', '...', '権限', 'メンバー招待'],
           },
@@ -207,25 +207,25 @@ export const todoPatternCategories = [
         [
           {
             id: 'vertical',
-            title: 'Vertical',
+            title: '縦型',
             summary: '画像、本文、アクションを上から読む標準カード。',
             labels: ['ヘッダー', 'プレビュー画像', '本文', '詳細を見る'],
           },
           {
             id: 'horizontal',
-            title: 'Horizontal',
+            title: '横型',
             summary: '小さな画像と要約を横に並べる一覧向けカード。',
             labels: ['サムネイル', '製品名', '在庫あり', '比較する'],
           },
           {
             id: 'overlay',
-            title: 'Overlay',
+            title: 'オーバーレイ',
             summary: 'メディア上に短いラベルと主アクションを重ねるカード。',
             labels: ['新着', '特集記事', '読む'],
           },
           {
             id: 'interactive',
-            title: 'Interactive',
+            title: '操作可能',
             summary: 'hover / focus / selected を持つ選択可能カード。',
             labels: ['選択中', 'チームプラン', '月額見積もり'],
           },
@@ -268,19 +268,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'readonly',
-            title: 'Readonly tag',
+            title: '読み取り専用タグ',
             summary: '分類や属性を非操作ラベルとして表示します。',
             labels: ['Design', 'React', 'Accessible'],
           },
           {
             id: 'filter',
-            title: 'Filter chip',
+            title: 'フィルターチップ',
             summary: 'active / inactive が切り替わる絞り込み token。',
             labels: ['在庫あり', '送料無料', 'セール対象'],
           },
           {
             id: 'removable',
-            title: 'Removable chip',
+            title: '削除可能チップ',
             summary: '選択済み条件を x button で外せる token。',
             labels: ['東京 x', 'リモート x', '正社員 x'],
           },
@@ -323,19 +323,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'confirmation',
-            title: 'Confirmation',
+            title: '確認',
             summary: '短い確認と cancel / confirm を持つ基本形。',
             labels: ['変更を保存しますか', 'キャンセル', '保存'],
           },
           {
             id: 'form',
-            title: 'Form modal',
+            title: 'フォームモーダル',
             summary: 'フォーム入力を modal 内で完了させる構成。',
             labels: ['メンバーを招待', 'メールアドレス', '招待する'],
           },
           {
             id: 'destructive',
-            title: 'Destructive guard',
+            title: '危険操作ガード',
             summary: '取り消しづらい操作を確認する危険操作用。',
             labels: ['プロジェクトを削除', 'この操作は元に戻せません', '削除する'],
           },
@@ -378,19 +378,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'side',
-            title: 'Side drawer',
+            title: 'サイドドロワー',
             summary: '詳細確認や編集を右側から出す desktop 向け。',
             labels: ['詳細パネル', 'ステータス', '保存'],
           },
           {
             id: 'bottom',
-            title: 'Bottom sheet',
+            title: 'ボトムシート',
             summary: 'モバイルで片手操作しやすい下部 sheet。',
             labels: ['共有', 'リンクをコピー', '閉じる'],
           },
           {
             id: 'filter',
-            title: 'Filter drawer',
+            title: 'フィルタードロワー',
             summary: '一覧の絞り込み条件をまとめて編集する drawer。',
             labels: ['絞り込み', '価格帯', '適用する'],
           },
@@ -433,19 +433,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'actions',
-            title: 'Action list',
+            title: 'アクションリスト',
             summary: '編集、複製、共有などの短い操作一覧。',
             labels: ['開く', '名前を変更', '複製'],
           },
           {
             id: 'grouped',
-            title: 'Grouped menu',
+            title: 'グループメニュー',
             summary: '関連操作を separator で分ける menu。',
             labels: ['表示', '並び替え', '---', '設定'],
           },
           {
             id: 'destructive',
-            title: 'Destructive item',
+            title: '危険操作項目',
             summary: '削除などの危険操作を末尾に分離する menu。',
             labels: ['アーカイブ', '---', '削除'],
           },
@@ -488,19 +488,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'profile',
-            title: 'Profile preview',
+            title: 'プロフィールプレビュー',
             summary: '人物やチームの要約を見せる hover card。',
             labels: ['佐藤 葵', 'Product Designer', '最近の投稿 12件'],
           },
           {
             id: 'term',
-            title: 'Term preview',
+            title: '用語プレビュー',
             summary: '用語や略語の補足説明を表示する card。',
             labels: ['ARIA', 'アクセシビリティ API への意味づけ'],
           },
           {
             id: 'object',
-            title: 'Object summary',
+            title: '対象サマリー',
             summary: 'ファイルや案件の状態を短く見せる preview。',
             labels: ['見積書.pdf', '更新 2時間前', '承認待ち'],
           },
@@ -543,19 +543,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'horizontal',
-            title: 'Horizontal nav',
+            title: '横型ナビゲーション',
             summary: '上部に主要セクションを並べる desktop navigation。',
             labels: ['概要', 'プロダクト', '料金', 'サポート'],
           },
           {
             id: 'sidebar',
-            title: 'Sidebar nav',
+            title: 'サイドバーナビゲーション',
             summary: '管理画面や docs で縦方向に階層を見せる navigation。',
             labels: ['ダッシュボード', 'ユーザー', '設定'],
           },
           {
             id: 'mega',
-            title: 'Mega menu',
+            title: 'メガメニュー',
             summary: '複数カテゴリをまとめて展開する大規模 navigation。',
             labels: ['製品', '分析', '自動化', '連携'],
           },
@@ -598,19 +598,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'quick-edit',
-            title: 'Quick edit',
+            title: 'クイック編集',
             summary: '短い値をその場で編集する popover。',
             labels: ['表示名', 'Team Alpha', '保存'],
           },
           {
             id: 'picker',
-            title: 'Picker',
+            title: 'ピッカー',
             summary: '日付や色などの候補を近くで選ぶ popover。',
             labels: ['今日', '明日', '来週'],
           },
           {
             id: 'helper',
-            title: 'Context helper',
+            title: '文脈ヘルパー',
             summary: '補足説明と軽い action をまとめる helper。',
             labels: ['権限とは', '閲覧者は編集できません', '詳しく見る'],
           },
@@ -653,19 +653,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'horizontal',
-            title: 'Horizontal',
+            title: '横型',
             summary: 'フォームやカード内の縦方向グループを分ける線。',
             labels: ['プロフィール', '---', '通知設定'],
           },
           {
             id: 'vertical',
-            title: 'Vertical',
+            title: '縦型',
             summary: 'toolbar 内で action group を分ける縦線。',
             labels: ['元に戻す', '|', '保存', '|', '公開'],
           },
           {
             id: 'labelled',
-            title: 'Labelled divider',
+            title: 'ラベル付き区切り',
             summary: '日付や区分名を中央に持つ区切り。',
             labels: ['--- 今日 ---', '更新履歴'],
           },
@@ -708,19 +708,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'single',
-            title: 'Single value',
+            title: '単一値',
             summary: '音量や透明度など 1 つの連続値を調整します。',
             labels: ['音量', '64%', '0 - 100'],
           },
           {
             id: 'range',
-            title: 'Range value',
+            title: '範囲値',
             summary: '価格帯など最小値と最大値を調整します。',
             labels: ['価格帯', '3,000円', '12,000円'],
           },
           {
             id: 'stepped',
-            title: 'Stepped value',
+            title: '段階値',
             summary: '段階のある値を tick とラベルで示します。',
             labels: ['密度', '標準', 'ゆったり'],
           },
@@ -763,19 +763,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'fixed',
-            title: 'Fixed height',
+            title: '固定高さ',
             summary: 'コメントなどの短い複数行入力。',
             labels: ['コメント', '3 行固定', '任意'],
           },
           {
             id: 'auto-grow',
-            title: 'Auto grow',
+            title: '自動伸長',
             summary: '入力量に応じて高さが伸びる説明欄。',
             labels: ['説明', '入力に合わせて拡張', '最大 8 行'],
           },
           {
             id: 'validation',
-            title: 'Validation',
+            title: 'バリデーション',
             summary: '文字数とエラーを明示する textarea。',
             labels: ['フィードバック', '12 / 200', '必須項目です'],
           },
@@ -818,19 +818,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'success',
-            title: 'Success toast',
+            title: '成功トースト',
             summary: '保存完了など軽い成功結果を知らせます。',
             labels: ['保存しました', '今すぐ確認'],
           },
           {
             id: 'undo',
-            title: 'Undo snackbar',
+            title: '取り消しスナックバー',
             summary: '取り消し action を短時間だけ提供します。',
             labels: ['アーカイブしました', '元に戻す'],
           },
           {
             id: 'stacked',
-            title: 'Stacked notifications',
+            title: '積み上げ通知',
             summary: '複数通知を重ねて扱う表示。',
             labels: ['同期完了', 'コメントが追加されました', '招待を送信しました'],
           },
@@ -873,19 +873,19 @@ export const todoPatternCategories = [
         [
           {
             id: 'icon-label',
-            title: 'Icon label',
+            title: 'アイコンラベル',
             summary: 'アイコンボタンの意味を短く補足します。',
             labels: ['保存', '共有', '削除'],
           },
           {
             id: 'disabled-reason',
-            title: 'Disabled reason',
+            title: '無効理由',
             summary: '無効化の理由を短く説明します。',
             labels: ['権限がありません', '入力後に有効になります'],
           },
           {
             id: 'placement',
-            title: 'Placement',
+            title: '配置',
             summary: 'top / right / bottom / left の配置差を確認します。',
             labels: ['上', '右', '下', '左'],
           },

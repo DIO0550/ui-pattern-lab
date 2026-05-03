@@ -21,7 +21,7 @@ const axisItems = [
   },
   {
     description:
-      'Default / Primary / Success / Warning / Error / Info の色は意味づけの補助に使い、テキストでも内容が分かるようにします。',
+      '標準 / 主要 / 成功 / 警告 / エラー / 情報の色は意味づけの補助に使い、テキストでも内容が分かるようにします。',
     title: '色で何を補足するか',
   },
   {

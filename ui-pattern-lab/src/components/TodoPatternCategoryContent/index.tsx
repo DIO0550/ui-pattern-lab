@@ -45,14 +45,14 @@ export default function TodoPatternCategoryContent({categoryId}: Props): ReactNo
       <section className={`container margin-bottom--xl ${styles.cardSection}`}>
         <div className={styles.sectionHeader}>
           <p className={styles.eyebrow}>詳細ページ</p>
-          <Heading as="h2">variant とコード</Heading>
+          <Heading as="h2">バリアントとコード</Heading>
         </div>
         <div className={styles.grid}>
           {category.entries.map((entry) => (
             <PatternCatalogCard
               badge={entry.tags[0]}
               description={entry.summary}
-              eyebrow="Reference"
+              eyebrow="リファレンス"
               key={entry.id}
               meta={entry.tags.slice(1).join(' / ')}
               title={entry.title}

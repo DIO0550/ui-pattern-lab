@@ -42,7 +42,7 @@ const alertSeverityDefinitions: Readonly<
 > = {
   error: {
     body: '3 件の項目に修正が必要です。',
-    label: 'Error',
+    label: 'エラー',
     title: '送信できません',
   },
   info: {
