@@ -1,0 +1,30 @@
+.flowList {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding-left: 1.35rem;
+}
+
+.summaryNote,
+.axisLead,
+.axisNote {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.summaryNote {
+  margin-top: 1rem;
+}
+
+.asideList {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+  padding-left: 1.2rem;
+}
+
+.axisSection {
+  display: grid;
+  gap: 1rem;
+}
