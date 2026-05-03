@@ -106,6 +106,17 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'アラート',
+      link: {
+        type: 'doc',
+        id: 'alert',
+      },
+      collapsible: true,
+      collapsed: false,
+      items: ['alert/contextual-alert'],
+    },
+    {
+      type: 'category',
       label: 'チェックボックス',
       link: {
         type: 'doc',

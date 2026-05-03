@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import {accordionPatternEntries} from '@site/src/data/accordionPatternEntries';
+import {alertPatternEntries} from '@site/src/data/alertPatternEntries';
 import {badgePatternEntries} from '@site/src/data/badgePatternEntries';
 import {buttonPatternEntries} from '@site/src/data/buttonPatternEntries';
 import {checkboxPatternEntries} from '@site/src/data/checkboxPatternEntries';
@@ -61,6 +62,13 @@ const buttonDetailLinks = buttonPatternEntries.map((entry) => ({
 const badgeDetailLinks = badgePatternEntries.map((entry) => ({
   title: entry.title,
   to: `/badge/${entry.id}`,
+  description: entry.summary,
+  meta: '詳細ページ',
+}));
+
+const alertDetailLinks = alertPatternEntries.map((entry) => ({
+  title: entry.title,
+  to: `/alert/${entry.id}`,
   description: entry.summary,
   meta: '詳細ページ',
 }));
@@ -184,6 +192,24 @@ const badgeLinks = [
     meta: '比較一覧',
   },
   ...badgeDetailLinks,
+];
+
+const alertLinks = [
+  {
+    title: 'アラートカテゴリ',
+    to: '/alert',
+    description:
+      'カテゴリの入口ページです。比較一覧と個別の詳細ページへの導線をまとめて確認できます。',
+    meta: 'カテゴリページ',
+  },
+  {
+    title: 'アラートパターン比較',
+    to: '/patterns/alert-designs',
+    description:
+      'severity、visual style、behavior を分けて、ページ内に残る feedback を比較できます。',
+    meta: '比較一覧',
+  },
+  ...alertDetailLinks,
 ];
 
 const checkboxLinks = [
@@ -324,6 +350,7 @@ type CategoryId =
   | 'accordion'
   | 'button'
   | 'badge'
+  | 'alert'
   | 'checkbox'
   | 'selector'
   | 'progress'
@@ -444,6 +471,15 @@ const categoryCards: CategoryCard[] = [
     links: badgeLinks,
     expandedMeta: 'クリックしてバッジ関連の導線を閉じる',
     collapsedMeta: 'クリックしてバッジ関連の導線を表示',
+  },
+  {
+    id: 'alert',
+    title: 'アラート',
+    description:
+      'ページ内に残る feedback を扱い、severity、visual style、behavior の責務を分けて確認できるカテゴリです。',
+    links: alertLinks,
+    expandedMeta: 'クリックしてアラート関連の導線を閉じる',
+    collapsedMeta: 'クリックしてアラート関連の導線を表示',
   },
   {
     id: 'checkbox',
